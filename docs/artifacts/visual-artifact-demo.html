@@ -6,19 +6,19 @@
   <meta name="color-scheme" content="light dark">
   <title>Visual Grammar</title>
   <style>:root {
-  --va-accent: #635bff;
-  --va-accent-soft: #eeecff;
-  --va-on-accent-soft: #28224f;
-  --va-background: #f6f7fb;
+  --va-accent: #054a91;
+  --va-accent-soft: #dbe4ee;
+  --va-on-accent-soft: #054a91;
+  --va-background: #f7fafc;
   --va-surface: #ffffff;
-  --va-text: #172033;
-  --va-muted: #62708a;
-  --va-border: #dfe3ec;
-  --va-success: #138a5b;
-  --va-warning: #a15c00;
-  --va-danger: #c23b4a;
-  --va-code-bg: #111827;
-  --va-code-text: #e5edf9;
+  --va-text: #17324d;
+  --va-muted: #526b84;
+  --va-border: #c4d3e1;
+  --va-success: #054a91;
+  --va-warning: #f17300;
+  --va-danger: #f17300;
+  --va-code-bg: #054a91;
+  --va-code-text: #dbe4ee;
   --va-radius: 16px;
   --va-shadow: 0 12px 36px rgb(23 32 51 / 10%);
   --va-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -45,14 +45,16 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
   padding: clamp(28px, 6vw, 64px);
   color: white;
   border-radius: calc(var(--va-radius) * 1.5);
-  background: linear-gradient(135deg, #161b33, color-mix(in srgb, var(--va-accent) 75%, #161b33));
+  background: linear-gradient(120deg, #054a91 0%, #054a91 78%, #f17300 78%, #f17300 100%);
   box-shadow: var(--va-shadow);
 }
 .va-eyebrow { margin: 0 0 8px; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .78; }
 .va-title { max-width: 820px; margin: 0; font-size: clamp(2.15rem, 7vw, 4.8rem); line-height: .98; letter-spacing: -.045em; }
 .va-purpose { max-width: 740px; margin: 20px 0 0; font-size: clamp(1rem, 2vw, 1.2rem); opacity: .86; }
-.va-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.va-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; align-items: center; }
 .va-badge { padding: 5px 10px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; background: rgb(255 255 255 / 10%); font-size: .78rem; font-weight: 700; }
+.va-theme-toggle { padding: 5px 10px; border: 1px solid rgb(255 255 255 / 40%); border-radius: 999px; color: white; background: rgb(255 255 255 / 14%); cursor: pointer; font-size: .78rem; font-weight: 700; }
+.va-theme-toggle:hover { background: rgb(255 255 255 / 24%); }
 .va-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; margin-top: 28px; align-items: start; }
 .va-toc { position: sticky; top: 24px; padding: 18px; border: 1px solid var(--va-border); border-radius: var(--va-radius); background: var(--va-surface); }
 .va-toc strong { display: block; margin-bottom: 8px; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--va-muted); }
@@ -94,7 +96,7 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
 .va-callout-warning { border-left-color: var(--va-warning); background: color-mix(in srgb, var(--va-warning) 8%, var(--va-surface)); }
 .va-callout-danger { border-left-color: var(--va-danger); background: color-mix(in srgb, var(--va-danger) 8%, var(--va-surface)); }
 .va-method { display: inline-block; min-width: 58px; margin-right: 10px; padding: 3px 8px; border-radius: 6px; color: white; text-align: center; font: 700 .72rem var(--va-font-mono); }
-.va-get { background: #1677c8; } .va-post { background: #168561; } .va-put, .va-patch { background: #ae6900; } .va-delete { background: #c23b4a; }
+.va-get { background: #054a91; } .va-post { background: #3e7cb1; } .va-put, .va-patch, .va-delete { background: #f17300; }
 .va-operation { margin-top: 16px; border: 1px solid var(--va-border); border-radius: 12px; overflow: hidden; }
 .va-operation summary { padding: 15px 18px; cursor: pointer; background: color-mix(in srgb, var(--va-surface) 92%, var(--va-accent-soft)); font-weight: 700; }
 .va-operation-body { padding: 18px; border-top: 1px solid var(--va-border); }
@@ -108,9 +110,9 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
 .va-step-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 .va-step-content p { margin: 5px 0 0; color: var(--va-muted); }
 .va-step-status { padding: 2px 8px; border-radius: 999px; font-size: .7rem; font-weight: 800; text-transform: uppercase; }
-.va-step-complete { color: var(--va-success); background: color-mix(in srgb, var(--va-success) 12%, transparent); }
-.va-step-current { color: var(--va-accent); background: var(--va-accent-soft); }
-.va-step-pending { color: var(--va-muted); background: var(--va-background); }
+.va-step-complete { color: #054a91; border: 1px solid #81a4cd; background: #dbe4ee; }
+.va-step-current { color: #ffffff; border: 1px solid #f17300; background: #f17300; }
+.va-step-pending { color: #526b84; border: 1px solid #c4d3e1; background: #f7fafc; }
 .va-image-component { margin-inline: 0; }
 .va-image { width: 100%; border-radius: 12px; border: 1px solid var(--va-border); background: var(--va-background); }
 .va-caption { margin: 10px 0 0; color: var(--va-muted); font-size: .88rem; }
@@ -123,18 +125,6 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
   .va-toc { position: static; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --va-background: #0e1320;
-    --va-surface: #171e2e;
-    --va-text: #edf1fa;
-    --va-muted: #a7b1c5;
-    --va-border: #303a4f;
-    --va-accent-soft: #292653;
-    --va-on-accent-soft: #f1efff;
-    --va-shadow: 0 12px 36px rgb(0 0 0 / 32%);
-  }
-}
 @media print {
   :root { --va-background: #fff; --va-surface: #fff; --va-text: #111; --va-border: #ccc; }
   body { background: white; }
@@ -149,7 +139,7 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
 <body>
   <noscript>This artifact requires JavaScript to render its local components.</noscript>
   <va-document></va-document>
-  <script id="artifact-data" type="application/json">{"title":"Visual Grammar","kind":"Complete component showcase","purpose":"A demonstration of the reusable visual primitives used to build reports, plans, documentation, and evidence without purpose-specific presentation code.","status":"Ready","source":"yeseh/skills","revision":"working tree","theme":{"accent":"#6d5dfc","accent-soft":"#efedff","radius":"18px"},"components":[{"type":"section","id":"content","title":"Content and emphasis","description":"Sections create hierarchy; prose and callouts communicate the substance.","children":[{"type":"prose","id":"rich-prose","title":"Rich prose","markdown":"# A small visual grammar\n\nArtifacts combine **reusable primitives** rather than report-specific widgets. Prose supports _emphasis_, [safe links](https://example.com), and `inline code`.\n\n## Why composition matters\n\n- Plans can combine narrative, decisions, and implementation steps.\n- Documentation can combine examples, reference tables, and API contracts.\n- Evidence reports can combine transcripts, screenshots, and outcomes.\n\n> The artifact adapter decides what the content means. The renderer decides how it looks."},{"type":"section","id":"callout-collection","title":"Callout tones","description":"Generic tones communicate emphasis without embedding domain-specific states.","children":[{"type":"callout","id":"neutral-callout","title":"Neutral context","tone":"neutral","markdown":"Use neutral callouts for supporting context that should remain visible."},{"type":"callout","id":"info-callout","title":"Information","tone":"info","markdown":"Use info for guidance, references, and details worth noticing."},{"type":"callout","id":"success-callout","title":"Successful outcome","tone":"success","markdown":"The renderer completed and produced a **self-contained artifact**."},{"type":"callout","id":"warning-callout","title":"Review required","tone":"warning","markdown":"This decision has an open question that should be resolved before implementation."},{"type":"callout","id":"danger-callout","title":"Action blocked","tone":"danger","markdown":"A required dependency is unavailable. Do not present the workflow as complete."}]}]},{"type":"section","id":"code-examples","title":"Code and transcripts","description":"One code primitive handles snippets, copyable commands, diffs, and terminal output.","children":[{"type":"code","id":"source-snippet","title":"Source with highlighted lines","description":"Line numbers and highlights focus attention without changing copied content.","filename":"artifact.config.js","language":"javascript","mode":"plain","copy":true,"lineNumbers":true,"highlights":["2-5"],"content":"export const artifact = {\n  title: \"Release readiness\",\n  status: \"ready\",\n  components: buildComponents(),\n  theme: { accent: \"#6d5dfc\" },\n};"},{"type":"code","id":"copyable-command","title":"Copyable command","description":"Commands are ordinary shell code with copying enabled.","language":"shell","mode":"plain","copy":true,"content":"node .agents/skills/visual-artifact/scripts/render.mjs artifact.json"},{"type":"code","id":"diff-example","title":"Unified diff","description":"Diff mode distinguishes additions and removals.","filename":"src/config.ts","language":"diff","mode":"diff","copy":false,"content":"@@ -1,3 +1,3 @@\n-export const timeout = 5_000;\n+export const timeout = 10_000;\n export const retries = 3;"},{"type":"code","id":"terminal-transcript","title":"Terminal transcript","description":"Terminal mode preserves commands and their observed output.","language":"shell","mode":"terminal","copy":true,"highlights":[4],"content":"$ npm test -- --runInBand\n\nPASS src/artifact.test.js\nTests: 8 passed, 8 total\nTime: 1.42 s"}]},{"type":"section","id":"structured-content","title":"Structured content","description":"Tables and steps present comparable facts and ordered progress.","children":[{"type":"table","id":"component-matrix","title":"Component matrix","description":"The visual grammar stays small while supporting multiple artifact types.","columns":[{"key":"primitive","label":"Primitive"},{"key":"purpose","label":"Purpose"},{"key":"examples","label":"Typical uses"}],"rows":[{"primitive":"Prose","purpose":"Narrative content","examples":"Plans, summaries, documentation"},{"primitive":"Code","purpose":"Exact technical content","examples":"Commands, source, diffs, transcripts"},{"primitive":"Callout","purpose":"Semantic emphasis","examples":"Notes, outcomes, risks, blockers"},{"primitive":"Image","purpose":"Visual evidence","examples":"Screenshots, diagrams, mockups"}]},{"type":"steps","id":"delivery-steps","title":"Delivery path","items":[{"title":"Compose the manifest","description":"Arrange generic components into the document hierarchy.","status":"complete"},{"title":"Render the artifact","description":"Bundle content, styles, scripts, and local assets into one HTML file.","status":"complete"},{"title":"Share with stakeholders","description":"Review the standalone artifact in a browser or attach it to the work item.","status":"current"},{"title":"Collect feedback","description":"Revise the source manifest without redesigning the presentation.","status":"pending"}]}]},{"type":"section","id":"visual-evidence","title":"Visual evidence","description":"Images embed into the final document, keeping the artifact portable.","children":[{"type":"image","id":"architecture-image","title":"Composition model","source":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjQyMCIgdmlld0JveD0iMCAwIDEyMDAgNDIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+CiAgPHRpdGxlIGlkPSJ0aXRsZSI+VmlzdWFsIGFydGlmYWN0IGNvbXBvc2l0aW9uIG1vZGVsPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+U291cmNlIGRhdGEgZmxvd3MgdGhyb3VnaCBhbiBhcnRpZmFjdCBhZGFwdGVyIGludG8gZ2VuZXJpYyB2aXN1YWwgcHJpbWl0aXZlcyBhbmQgdGhlbiBpbnRvIHRoZSBIVE1MIHJlbmRlcmVyLjwvZGVzYz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmFja2dyb3VuZCIgeDE9IjAiIHgyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMTcxZTM2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzMxMmI2OSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSIxMCIgc3RkRGV2aWF0aW9uPSIxMiIgZmxvb2Qtb3BhY2l0eT0iLjE4Ii8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDIwIiByeD0iMjgiIGZpbGw9InVybCgjYmFja2dyb3VuZCkiLz4KICA8ZyBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWx0ZXI9InVybCgjc2hhZG93KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MCAxMjUpIj4KICAgICAgPHJlY3Qgd2lkdGg9IjIzMCIgaGVpZ2h0PSIxNzAiIHJ4PSIyMCIgZmlsbD0iI2ZmZmZmZiIvPgogICAgICA8dGV4dCB4PSIxMTUiIHk9IjU1IiBmaWxsPSIjNmQ1ZGZjIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNzAwIj5TT1VSQ0U8L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iOTMiIGZpbGw9IiMxNzIwMzMiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3NTAiPkV2aWRlbmNlIG9yIHBsYW48L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iMTI2IiBmaWxsPSIjNjI3MDhhIiBmb250LXNpemU9IjE2Ij5TdHJ1Y3R1cmVkIGRvbWFpbiBkYXRhPC90ZXh0PgogICAgPC9nPgogICAgPHBhdGggZD0iTTMyMCAyMTBoOTAiIHN0cm9rZT0iI2M5YzNmZiIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxwYXRoIGQ9Im0zOTggMTk0IDE4IDE2LTE4IDE2IiBmaWxsPSJub25lIiBzdHJva2U9IiNjOWMzZmYiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzAgMTI1KSI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMzAiIGhlaWdodD0iMTcwIiByeD0iMjAiIGZpbGw9IiNlZmVkZmYiLz4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI1NSIgZmlsbD0iIzZkNWRmYyIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjcwMCI+QURBUFRFUjwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI5MyIgZmlsbD0iIzE3MjAzMyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9Ijc1MCI+Q29tcG9zZTwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSIxMjYiIGZpbGw9IiM0ZjQ3N2YiIGZvbnQtc2l6ZT0iMTYiPk1hcCBtZWFuaW5nIHRvIHByaW1pdGl2ZXM8L3RleHQ+CiAgICA8L2c+CiAgICA8cGF0aCBkPSJNNjgwIDIxMGg5MCIgc3Ryb2tlPSIjYzljM2ZmIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPHBhdGggZD0ibTc1OCAxOTQgMTggMTYtMTggMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M5YzNmZiIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc5MCA3NSkiPgogICAgICA8cmVjdCB3aWR0aD0iMzQwIiBoZWlnaHQ9IjI3MCIgcng9IjIwIiBmaWxsPSIjZmZmZmZmIi8+CiAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iNDgiIGZpbGw9IiM2ZDVkZmMiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiPlZJU1VBTCBHUkFNTUFSPC90ZXh0PgogICAgICA8ZyBmaWxsPSIjZjJmM2Y4IiBzdHJva2U9IiNkZmUzZWMiPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMzUiIHk9IjE0MSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSIxNDEiIHdpZHRoPSIxMjUiIGhlaWdodD0iNDgiIHJ4PSIxMiIvPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSIyMDciIHdpZHRoPSIyNzAiIGhlaWdodD0iMzQiIHJ4PSIxMiIvPgogICAgICA8L2c+CiAgICAgIDxnIGZpbGw9IiMxNzIwMzMiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI2NTAiPgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxMDYiPlByb3NlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjI0MyIgeT0iMTA2Ij5Db2RlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxNzIiPkNhbGxvdXQ8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iMjQzIiB5PSIxNzIiPlRhYmxlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iMjMwIj5IVE1MIHJlbmRlcmVyPC90ZXh0PgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K","alt":"Diagram showing source data passing through an artifact adapter into the visual grammar and HTML renderer.","caption":"Purpose-specific adapters compose generic visual primitives; the renderer remains independent of report semantics."}]},{"type":"section","id":"api-reference","title":"OpenAPI reference","description":"OpenAPI remains specialized because its structured reference behavior provides substantial leverage.","children":[{"type":"openapi","id":"artifact-service-api","title":"Artifact Service API","spec":{"openapi":"3.1.0","info":{"title":"Artifact Service","version":"1.0.0","description":"Renders structured manifests into portable visual artifacts."},"paths":{"/artifacts":{"post":{"summary":"Render an artifact","requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ArtifactManifest"}}}},"responses":{"201":{"description":"Self-contained artifact created","content":{"text/html":{"schema":{"type":"string"}}}},"422":{"description":"Manifest validation failed","content":{"application/problem+json":{"schema":{"type":"object"}}}}}}},"/artifacts/{artifactId}":{"get":{"summary":"Retrieve a rendered artifact","parameters":[{"name":"artifactId","in":"path","required":true,"description":"Stable artifact identifier.","schema":{"type":"string"}}],"responses":{"200":{"description":"Rendered HTML artifact","content":{"text/html":{"schema":{"type":"string"}}}},"404":{"description":"Artifact not found"}}}}},"components":{"schemas":{"ArtifactManifest":{"type":"object","required":["title","components"],"properties":{"title":{"type":"string"},"components":{"type":"array","items":{"type":"object"}}}}}}}}]}]}</script>
+  <script id="artifact-data" type="application/json">{"title":"Visual Grammar","kind":"Complete component showcase","purpose":"A demonstration of the reusable visual primitives used to build reports, plans, documentation, and evidence without purpose-specific presentation code.","status":"Ready","source":"yeseh/skills","revision":"working tree","theme":{"accent":"#054a91","accent-soft":"#dbe4ee","on-accent-soft":"#054a91","background":"#f7fafc","surface":"#ffffff","text":"#17324d","muted":"#526b84","border":"#c4d3e1","success":"#054a91","warning":"#f17300","danger":"#f17300","code-bg":"#054a91","code-text":"#dbe4ee","radius":"18px"},"components":[{"type":"section","id":"content","title":"Content and emphasis","description":"Sections create hierarchy; prose and callouts communicate the substance.","children":[{"type":"prose","id":"rich-prose","title":"Rich prose","markdown":"# A small visual grammar\n\nArtifacts combine **reusable primitives** rather than report-specific widgets. Prose supports _emphasis_, [safe links](https://example.com), and `inline code`.\n\n## Why composition matters\n\n- Plans can combine narrative, decisions, and implementation steps.\n- Documentation can combine examples, reference tables, and API contracts.\n- Evidence reports can combine transcripts, screenshots, and outcomes.\n\n> The artifact adapter decides what the content means. The renderer decides how it looks."},{"type":"section","id":"callout-collection","title":"Callout tones","description":"Generic tones communicate emphasis without embedding domain-specific states.","children":[{"type":"callout","id":"neutral-callout","title":"Neutral context","tone":"neutral","markdown":"Use neutral callouts for supporting context that should remain visible."},{"type":"callout","id":"info-callout","title":"Information","tone":"info","markdown":"Use info for guidance, references, and details worth noticing."},{"type":"callout","id":"success-callout","title":"Successful outcome","tone":"success","markdown":"The renderer completed and produced a **self-contained artifact**."},{"type":"callout","id":"warning-callout","title":"Review required","tone":"warning","markdown":"This decision has an open question that should be resolved before implementation."},{"type":"callout","id":"danger-callout","title":"Action blocked","tone":"danger","markdown":"A required dependency is unavailable. Do not present the workflow as complete."}]}]},{"type":"section","id":"code-examples","title":"Code and transcripts","description":"One code primitive handles snippets, copyable commands, diffs, and terminal output.","children":[{"type":"code","id":"source-snippet","title":"Source with highlighted lines","description":"Line numbers and highlights focus attention without changing copied content.","filename":"artifact.config.js","language":"javascript","mode":"plain","copy":true,"lineNumbers":true,"highlights":["2-5"],"content":"export const artifact = {\n  title: \"Release readiness\",\n  status: \"ready\",\n  components: buildComponents(),\n  theme: { accent: \"#054a91\" },\n};"},{"type":"code","id":"copyable-command","title":"Copyable command","description":"Commands are ordinary shell code with copying enabled.","language":"shell","mode":"plain","copy":true,"content":"node .agents/skills/visual-artifact/scripts/render.mjs artifact.json"},{"type":"code","id":"diff-example","title":"Unified diff","description":"Diff mode distinguishes additions and removals.","filename":"src/config.ts","language":"diff","mode":"diff","copy":false,"content":"@@ -1,3 +1,3 @@\n-export const timeout = 5_000;\n+export const timeout = 10_000;\n export const retries = 3;"},{"type":"code","id":"terminal-transcript","title":"Terminal transcript","description":"Terminal mode preserves commands and their observed output.","language":"shell","mode":"terminal","copy":true,"highlights":[4],"content":"$ npm test -- --runInBand\n\nPASS src/artifact.test.js\nTests: 8 passed, 8 total\nTime: 1.42 s"}]},{"type":"section","id":"structured-content","title":"Structured content","description":"Tables and steps present comparable facts and ordered progress.","children":[{"type":"table","id":"component-matrix","title":"Component matrix","description":"The visual grammar stays small while supporting multiple artifact types.","columns":[{"key":"primitive","label":"Primitive"},{"key":"purpose","label":"Purpose"},{"key":"examples","label":"Typical uses"}],"rows":[{"primitive":"Prose","purpose":"Narrative content","examples":"Plans, summaries, documentation"},{"primitive":"Code","purpose":"Exact technical content","examples":"Commands, source, diffs, transcripts"},{"primitive":"Callout","purpose":"Semantic emphasis","examples":"Notes, outcomes, risks, blockers"},{"primitive":"Image","purpose":"Visual evidence","examples":"Screenshots, diagrams, mockups"}]},{"type":"steps","id":"delivery-steps","title":"Delivery path","items":[{"title":"Compose the manifest","description":"Arrange generic components into the document hierarchy.","status":"complete"},{"title":"Render the artifact","description":"Bundle content, styles, scripts, and local assets into one HTML file.","status":"complete"},{"title":"Share with stakeholders","description":"Review the standalone artifact in a browser or attach it to the work item.","status":"current"},{"title":"Collect feedback","description":"Revise the source manifest without redesigning the presentation.","status":"pending"}]}]},{"type":"section","id":"visual-evidence","title":"Visual evidence","description":"Images embed into the final document, keeping the artifact portable.","children":[{"type":"image","id":"architecture-image","title":"Composition model","source":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjQyMCIgdmlld0JveD0iMCAwIDEyMDAgNDIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+CiAgPHRpdGxlIGlkPSJ0aXRsZSI+VmlzdWFsIGFydGlmYWN0IGNvbXBvc2l0aW9uIG1vZGVsPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+U291cmNlIGRhdGEgZmxvd3MgdGhyb3VnaCBhbiBhcnRpZmFjdCBhZGFwdGVyIGludG8gZ2VuZXJpYyB2aXN1YWwgcHJpbWl0aXZlcyBhbmQgdGhlbiBpbnRvIHRoZSBIVE1MIHJlbmRlcmVyLjwvZGVzYz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmFja2dyb3VuZCIgeDE9IjAiIHgyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDU0YTkxIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzNlN2NiMSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSIxMCIgc3RkRGV2aWF0aW9uPSIxMiIgZmxvb2Qtb3BhY2l0eT0iLjE4Ii8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDIwIiByeD0iMjgiIGZpbGw9InVybCgjYmFja2dyb3VuZCkiLz4KICA8ZyBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWx0ZXI9InVybCgjc2hhZG93KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MCAxMjUpIj4KICAgICAgPHJlY3Qgd2lkdGg9IjIzMCIgaGVpZ2h0PSIxNzAiIHJ4PSIyMCIgZmlsbD0iI2ZmZmZmZiIvPgogICAgICA8dGV4dCB4PSIxMTUiIHk9IjU1IiBmaWxsPSIjMDU0YTkxIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNzAwIj5TT1VSQ0U8L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iOTMiIGZpbGw9IiMwNTRhOTEiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3NTAiPkV2aWRlbmNlIG9yIHBsYW48L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iMTI2IiBmaWxsPSIjM2U3Y2IxIiBmb250LXNpemU9IjE2Ij5TdHJ1Y3R1cmVkIGRvbWFpbiBkYXRhPC90ZXh0PgogICAgPC9nPgogICAgPHBhdGggZD0iTTMyMCAyMTBoOTAiIHN0cm9rZT0iIzgxYTRjZCIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxwYXRoIGQ9Im0zOTggMTk0IDE4IDE2LTE4IDE2IiBmaWxsPSJub25lIiBzdHJva2U9IiM4MWE0Y2QiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzAgMTI1KSI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMzAiIGhlaWdodD0iMTcwIiByeD0iMjAiIGZpbGw9IiNkYmU0ZWUiLz4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI1NSIgZmlsbD0iIzA1NGE5MSIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjcwMCI+QURBUFRFUjwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI5MyIgZmlsbD0iIzA1NGE5MSIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9Ijc1MCI+Q29tcG9zZTwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSIxMjYiIGZpbGw9IiMzZTdjYjEiIGZvbnQtc2l6ZT0iMTYiPk1hcCBtZWFuaW5nIHRvIHByaW1pdGl2ZXM8L3RleHQ+CiAgICA8L2c+CiAgICA8cGF0aCBkPSJNNjgwIDIxMGg5MCIgc3Ryb2tlPSIjODFhNGNkIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPHBhdGggZD0ibTc1OCAxOTQgMTggMTYtMTggMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzgxYTRjZCIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc5MCA3NSkiPgogICAgICA8cmVjdCB3aWR0aD0iMzQwIiBoZWlnaHQ9IjI3MCIgcng9IjIwIiBmaWxsPSIjZmZmZmZmIi8+CiAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iNDgiIGZpbGw9IiMwNTRhOTEiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiPlZJU1VBTCBHUkFNTUFSPC90ZXh0PgogICAgICA8ZyBmaWxsPSIjZGJlNGVlIiBzdHJva2U9IiM4MWE0Y2QiPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMzUiIHk9IjE0MSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSIxNDEiIHdpZHRoPSIxMjUiIGhlaWdodD0iNDgiIHJ4PSIxMiIvPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSIyMDciIHdpZHRoPSIyNzAiIGhlaWdodD0iMzQiIHJ4PSIxMiIvPgogICAgICA8L2c+CiAgICAgIDxnIGZpbGw9IiMwNTRhOTEiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI2NTAiPgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxMDYiPlByb3NlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjI0MyIgeT0iMTA2Ij5Db2RlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxNzIiPkNhbGxvdXQ8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iMjQzIiB5PSIxNzIiPlRhYmxlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iMjMwIj5IVE1MIHJlbmRlcmVyPC90ZXh0PgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K","alt":"Diagram showing source data passing through an artifact adapter into the visual grammar and HTML renderer.","caption":"Purpose-specific adapters compose generic visual primitives; the renderer remains independent of report semantics."}]},{"type":"section","id":"api-reference","title":"OpenAPI reference","description":"OpenAPI remains specialized because its structured reference behavior provides substantial leverage.","children":[{"type":"openapi","id":"artifact-service-api","title":"Artifact Service API","spec":{"openapi":"3.1.0","info":{"title":"Artifact Service","version":"1.0.0","description":"Renders structured manifests into portable visual artifacts."},"paths":{"/artifacts":{"post":{"summary":"Render an artifact","requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ArtifactManifest"}}}},"responses":{"201":{"description":"Self-contained artifact created","content":{"text/html":{"schema":{"type":"string"}}}},"422":{"description":"Manifest validation failed","content":{"application/problem+json":{"schema":{"type":"object"}}}}}}},"/artifacts/{artifactId}":{"get":{"summary":"Retrieve a rendered artifact","parameters":[{"name":"artifactId","in":"path","required":true,"description":"Stable artifact identifier.","schema":{"type":"string"}}],"responses":{"200":{"description":"Rendered HTML artifact","content":{"text/html":{"schema":{"type":"string"}}}},"404":{"description":"Artifact not found"}}}}},"components":{"schemas":{"ArtifactManifest":{"type":"object","required":["title","components"],"properties":{"title":{"type":"string"},"components":{"type":"array","items":{"type":"object"}}}}}}}}]}],"themes":{"light":{"accent":"#054a91","accent-soft":"#dbe4ee","on-accent-soft":"#054a91","background":"#f7fafc","surface":"#ffffff","text":"#17324d","muted":"#526b84","border":"#c4d3e1","success":"#054a91","warning":"#f17300","danger":"#f17300","code-bg":"#054a91","code-text":"#dbe4ee"},"dark":{"accent":"#f17300","accent-soft":"#3e7cb1","on-accent-soft":"#ffffff","background":"#102a43","surface":"#17324d","text":"#f7fafc","muted":"#dbe4ee","border":"#81a4cd","success":"#dbe4ee","warning":"#f17300","danger":"#f17300","code-bg":"#054a91","code-text":"#dbe4ee"}}}</script>
   <script>(() => {
   "use strict";
 
@@ -515,12 +505,26 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
 
   class VaDocument extends HTMLElement {
     connectedCallback() {
-      for (const [token, value] of Object.entries(manifest.theme || {})) {
-        if (allowedThemeTokens.has(token) && typeof value === "string" && !/[;{}]/.test(value)) {
-          document.documentElement.style.setProperty(`--va-${token}`, value);
+      const themes = manifest.themes || { light: manifest.theme || {} };
+      const themeNames = Object.keys(themes);
+      const defaultTheme = themeNames.includes("light") ? "light" : themeNames[0];
+      const storedTheme = window.localStorage.getItem("va-theme");
+      const initialTheme = storedTheme && themeNames.includes(storedTheme) ? storedTheme : defaultTheme;
+
+      const applyTheme = (themeName) => {
+        const theme = themes[themeName] || {};
+        for (const [token, value] of Object.entries(theme)) {
+          if (allowedThemeTokens.has(token) && typeof value === "string" && !/[;{}]/.test(value)) {
+            document.documentElement.style.setProperty(`--va-${token}`, value);
+          }
         }
-      }
-      if (manifest.theme?.["accent-soft"] && !manifest.theme?.["on-accent-soft"]) {
+        document.documentElement.dataset.vaTheme = themeName;
+        window.localStorage.setItem("va-theme", themeName);
+      };
+
+      applyTheme(initialTheme);
+
+      if (themes[initialTheme]?.["accent-soft"] && !themes[initialTheme]?.["on-accent-soft"]) {
         const probe = element("span");
         probe.style.cssText = "position:fixed;visibility:hidden;background:var(--va-accent-soft)";
         document.body.append(probe);
@@ -543,8 +547,27 @@ va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-o
           manifest.status ? element("span", { class: "va-badge" }, manifest.status) : "",
           element("span", { class: "va-badge" }, manifest.generatedAt || new Date().toISOString().slice(0, 10)),
           manifest.revision ? element("span", { class: "va-badge" }, manifest.revision) : "",
+          themeNames.length > 1 ? element("button", {
+            class: "va-theme-toggle",
+            type: "button",
+            "aria-live": "polite",
+          }, "") : "",
         ]),
       ]);
+      const themeToggle = hero.querySelector(".va-theme-toggle");
+      if (themeToggle) {
+        const updateThemeToggle = () => {
+          const isDark = document.documentElement.dataset.vaTheme === "dark";
+          themeToggle.textContent = isDark ? "Use light mode" : "Use dark mode";
+          themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+        };
+        themeToggle.addEventListener("click", () => {
+          const nextTheme = document.documentElement.dataset.vaTheme === "dark" ? "light" : "dark";
+          applyTheme(nextTheme);
+          updateThemeToggle();
+        });
+        updateThemeToggle();
+      }
       const toc = element("nav", { class: "va-toc", "aria-label": "Contents" }, element("strong", {}, "Contents"));
       const content = element("main", { class: "va-content" });
 

@@ -6,8 +6,50 @@
   "source": "repository/name",
   "revision": "working tree",
   "theme": {
-    "accent": "#635bff",
+    "accent": "#054a91",
+    "accent-soft": "#dbe4ee",
+    "on-accent-soft": "#054a91",
+    "background": "#f7fafc",
+    "surface": "#ffffff",
+    "text": "#17324d",
+    "muted": "#526b84",
+    "border": "#c4d3e1",
+    "success": "#054a91",
+    "warning": "#f17300",
+    "danger": "#f17300",
     "radius": "16px"
+  },
+  "themes": {
+    "light": {
+      "accent": "#054a91",
+      "accent-soft": "#dbe4ee",
+      "on-accent-soft": "#054a91",
+      "background": "#f7fafc",
+      "surface": "#ffffff",
+      "text": "#17324d",
+      "muted": "#526b84",
+      "border": "#c4d3e1",
+      "success": "#054a91",
+      "warning": "#f17300",
+      "danger": "#f17300",
+      "code-bg": "#054a91",
+      "code-text": "#dbe4ee"
+    },
+    "dark": {
+      "accent": "#f17300",
+      "accent-soft": "#3e7cb1",
+      "on-accent-soft": "#ffffff",
+      "background": "#102a43",
+      "surface": "#17324d",
+      "text": "#f7fafc",
+      "muted": "#dbe4ee",
+      "border": "#81a4cd",
+      "success": "#dbe4ee",
+      "warning": "#f17300",
+      "danger": "#f17300",
+      "code-bg": "#054a91",
+      "code-text": "#dbe4ee"
+    }
   },
   "components": [
     {

@@ -3,8 +3,8 @@ version: 1.0.0
 description: Yeseh's personal skill library
 author: Jesse Wellenberg
 targets:
-- claude
-- copilot
+  - claude
+  - copilot
 dependencies:
   apm:
     - mattpocock/skills/skills/engineering/grill-with-docs
