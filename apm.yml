@@ -1,0 +1,24 @@
+name: skills
+version: 1.0.0
+description: Yeseh's personal skill library
+author: Jesse Wellenberg
+# Which agent platforms to deploy to.
+# Resolution order: --target flag > this field > auto-detect from filesystem.
+# Accepted values: agent-skills, antigravity, claude, codex, copilot, cursor, gemini, grok-build, kiro, opencode, windsurf
+targets:
+- claude
+- copilot
+- opencode
+dependencies:
+  apm:
+    - mattpocock/skills/skills/engineering/grill-with-docs
+    - mattpocock/skills/skills/engineering/wizard
+    - mattpocock/skills/skills/engineering/improve-codebase-architecture
+    - mattpocock/skills/skills/productivity/wait-what
+
+  mcp: 
+    - name: mslearn
+      transport: http
+      url: https://learn.microsoft.com/api/mcp
+includes: auto
+scripts: {}

@@ -1,0 +1,36 @@
+{
+  "title": "Artifact title",
+  "kind": "Implementation plan",
+  "purpose": "A concise description of the artifact and its intended audience.",
+  "status": "Draft",
+  "source": "repository/name",
+  "revision": "working tree",
+  "theme": {
+    "accent": "#635bff",
+    "radius": "16px"
+  },
+  "components": [
+    {
+      "type": "section",
+      "id": "overview",
+      "title": "Overview",
+      "description": "A section groups related components into a navigable hierarchy.",
+      "children": [
+        {
+          "type": "prose",
+          "id": "overview-prose",
+          "markdown": "Describe the **goal**, constraints, and intended outcome.\n\n- Confirmed fact\n- _Open question_\n- `technical detail`"
+        },
+        {
+          "type": "code",
+          "id": "run-locally",
+          "title": "Run locally",
+          "description": "Starts the application in development mode.",
+          "language": "shell",
+          "copy": true,
+          "content": "npm run dev"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Visual Grammar</title>
+  <style>:root {
+  --va-accent: #635bff;
+  --va-accent-soft: #eeecff;
+  --va-on-accent-soft: #28224f;
+  --va-background: #f6f7fb;
+  --va-surface: #ffffff;
+  --va-text: #172033;
+  --va-muted: #62708a;
+  --va-border: #dfe3ec;
+  --va-success: #138a5b;
+  --va-warning: #a15c00;
+  --va-danger: #c23b4a;
+  --va-code-bg: #111827;
+  --va-code-text: #e5edf9;
+  --va-radius: 16px;
+  --va-shadow: 0 12px 36px rgb(23 32 51 / 10%);
+  --va-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --va-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--va-text);
+  background: var(--va-background);
+  font: 16px/1.65 var(--va-font-body);
+}
+button, input { font: inherit; }
+a { color: var(--va-accent); }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--va-accent) 45%, transparent); outline-offset: 3px; }
+
+va-document, va-section, va-prose, va-code, va-callout, va-table, va-steps, va-openapi, va-image { display: block; }
+.va-shell { width: min(1120px, calc(100% - 32px)); margin: 32px auto 64px; }
+.va-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 6vw, 64px);
+  color: white;
+  border-radius: calc(var(--va-radius) * 1.5);
+  background: linear-gradient(135deg, #161b33, color-mix(in srgb, var(--va-accent) 75%, #161b33));
+  box-shadow: var(--va-shadow);
+}
+.va-eyebrow { margin: 0 0 8px; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .78; }
+.va-title { max-width: 820px; margin: 0; font-size: clamp(2.15rem, 7vw, 4.8rem); line-height: .98; letter-spacing: -.045em; }
+.va-purpose { max-width: 740px; margin: 20px 0 0; font-size: clamp(1rem, 2vw, 1.2rem); opacity: .86; }
+.va-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.va-badge { padding: 5px 10px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 999px; background: rgb(255 255 255 / 10%); font-size: .78rem; font-weight: 700; }
+.va-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; margin-top: 28px; align-items: start; }
+.va-toc { position: sticky; top: 24px; padding: 18px; border: 1px solid var(--va-border); border-radius: var(--va-radius); background: var(--va-surface); }
+.va-toc strong { display: block; margin-bottom: 8px; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--va-muted); }
+.va-toc a { display: block; padding: 6px 0; color: var(--va-text); text-decoration: none; }
+.va-toc .va-toc-child { padding-left: 14px; color: var(--va-muted); font-size: .9rem; }
+.va-toc a:hover { color: var(--va-accent); }
+.va-content { min-width: 0; display: grid; gap: 20px; }
+.va-card { padding: clamp(20px, 4vw, 34px); border: 1px solid var(--va-border); border-radius: var(--va-radius); background: var(--va-surface); box-shadow: 0 2px 8px rgb(23 32 51 / 4%); }
+.va-card h1, .va-card h2, .va-card h3, .va-card h4 { line-height: 1.16; letter-spacing: -.025em; }
+.va-card h1:first-child, .va-card h2:first-child, .va-card h3:first-child { margin-top: 0; }
+.va-card p:last-child, .va-card ul:last-child, .va-card ol:last-child { margin-bottom: 0; }
+.va-card blockquote { margin: 20px 0; padding: 12px 18px; border-left: 4px solid var(--va-accent); color: var(--va-on-accent-soft); background: var(--va-accent-soft); border-radius: 0 10px 10px 0; }
+.va-inline-code { padding: .12em .35em; border-radius: 5px; color: var(--va-on-accent-soft); background: var(--va-accent-soft); font-family: var(--va-font-mono); font-size: .9em; }
+.va-section-description { max-width: 760px; margin: -4px 0 24px; color: var(--va-muted); }
+.va-section-children { display: grid; gap: 24px; }
+.va-section-children > * + * { padding-top: 24px; border-top: 1px solid var(--va-border); }
+.va-prose > :first-child, .va-code-card > :first-child, .va-callout > :first-child, .va-table-component > :first-child, .va-image-component > :first-child { margin-top: 0; }
+.va-prose > :last-child, .va-callout-body > :last-child, .va-image-component { margin-bottom: 0; }
+.va-command-header, .va-api-heading { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+.va-command-header h3, .va-api-heading h2 { margin: 0; font-size: 1.08rem; }
+.va-subtle { color: var(--va-muted); font-size: .9rem; }
+.va-code-wrap { position: relative; margin-top: 16px; }
+.va-code { overflow-x: auto; margin: 0; padding: 20px; border-radius: 12px; color: var(--va-code-text); background: var(--va-code-bg); font: .9rem/1.65 var(--va-font-mono); white-space: pre; }
+.va-code-filename { display: inline-block; margin: 14px 0 -16px; padding: 5px 10px; border-radius: 8px 8px 0 0; color: var(--va-muted); background: var(--va-border); font: .76rem var(--va-font-mono); }
+.va-code-line { display: block; min-width: max-content; padding: 0 8px; margin: 0 -8px; }
+.va-code-numbered { counter-reset: va-line; }
+.va-code-numbered .va-code-line { counter-increment: va-line; }
+.va-code-numbered .va-code-line::before { content: counter(va-line); display: inline-block; width: 2.5em; margin-right: 16px; color: #77829a; text-align: right; user-select: none; }
+.va-code-highlight { background: rgb(250 204 21 / 18%); box-shadow: inset 3px 0 #facc15; }
+.va-code-added { color: #9ce5bb; background: rgb(22 133 97 / 20%); }
+.va-code-removed { color: #ffb3bd; background: rgb(194 59 74 / 20%); }
+.va-code-terminal { border: 1px solid #303a4f; box-shadow: inset 0 1px rgb(255 255 255 / 8%); }
+.va-copy { border: 1px solid var(--va-border); border-radius: 8px; padding: 7px 11px; color: var(--va-text); background: var(--va-surface); cursor: pointer; font-size: .8rem; font-weight: 700; }
+.va-copy:hover { border-color: var(--va-accent); color: var(--va-accent); }
+.va-callout { padding: 18px 20px; border: 1px solid var(--va-border); border-left-width: 5px; border-radius: 12px; background: var(--va-background); }
+.va-callout h3 { margin-bottom: 5px; font-size: 1rem; }
+.va-callout-info { border-left-color: var(--va-accent); }
+.va-callout-success { border-left-color: var(--va-success); background: color-mix(in srgb, var(--va-success) 8%, var(--va-surface)); }
+.va-callout-warning { border-left-color: var(--va-warning); background: color-mix(in srgb, var(--va-warning) 8%, var(--va-surface)); }
+.va-callout-danger { border-left-color: var(--va-danger); background: color-mix(in srgb, var(--va-danger) 8%, var(--va-surface)); }
+.va-method { display: inline-block; min-width: 58px; margin-right: 10px; padding: 3px 8px; border-radius: 6px; color: white; text-align: center; font: 700 .72rem var(--va-font-mono); }
+.va-get { background: #1677c8; } .va-post { background: #168561; } .va-put, .va-patch { background: #ae6900; } .va-delete { background: #c23b4a; }
+.va-operation { margin-top: 16px; border: 1px solid var(--va-border); border-radius: 12px; overflow: hidden; }
+.va-operation summary { padding: 15px 18px; cursor: pointer; background: color-mix(in srgb, var(--va-surface) 92%, var(--va-accent-soft)); font-weight: 700; }
+.va-operation-body { padding: 18px; border-top: 1px solid var(--va-border); }
+.va-operation h4 { margin: 20px 0 8px; }
+.va-table-wrap { overflow-x: auto; }
+.va-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.va-table th, .va-table td { padding: 9px 10px; border-bottom: 1px solid var(--va-border); text-align: left; vertical-align: top; }
+.va-steps { display: grid; gap: 18px; margin: 16px 0 0; padding: 0; list-style: none; }
+.va-steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }
+.va-step-index { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: white; background: var(--va-accent); font-size: .8rem; font-weight: 800; }
+.va-step-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.va-step-content p { margin: 5px 0 0; color: var(--va-muted); }
+.va-step-status { padding: 2px 8px; border-radius: 999px; font-size: .7rem; font-weight: 800; text-transform: uppercase; }
+.va-step-complete { color: var(--va-success); background: color-mix(in srgb, var(--va-success) 12%, transparent); }
+.va-step-current { color: var(--va-accent); background: var(--va-accent-soft); }
+.va-step-pending { color: var(--va-muted); background: var(--va-background); }
+.va-image-component { margin-inline: 0; }
+.va-image { width: 100%; border-radius: 12px; border: 1px solid var(--va-border); background: var(--va-background); }
+.va-caption { margin: 10px 0 0; color: var(--va-muted); font-size: .88rem; }
+.va-footer { margin-top: 28px; padding: 16px 4px; color: var(--va-muted); font-size: .82rem; text-align: center; }
+.va-error { border-color: color-mix(in srgb, var(--va-danger) 55%, var(--va-border)); }
+
+@media (max-width: 760px) {
+  .va-shell { width: min(100% - 20px, 1120px); margin-top: 10px; }
+  .va-layout { grid-template-columns: 1fr; }
+  .va-toc { position: static; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --va-background: #0e1320;
+    --va-surface: #171e2e;
+    --va-text: #edf1fa;
+    --va-muted: #a7b1c5;
+    --va-border: #303a4f;
+    --va-accent-soft: #292653;
+    --va-on-accent-soft: #f1efff;
+    --va-shadow: 0 12px 36px rgb(0 0 0 / 32%);
+  }
+}
+@media print {
+  :root { --va-background: #fff; --va-surface: #fff; --va-text: #111; --va-border: #ccc; }
+  body { background: white; }
+  .va-shell { width: 100%; margin: 0; }
+  .va-hero { color: #111; background: white; box-shadow: none; border: 1px solid #bbb; }
+  .va-layout { display: block; }
+  .va-toc, .va-copy { display: none; }
+  .va-card, .va-operation { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+  <noscript>This artifact requires JavaScript to render its local components.</noscript>
+  <va-document></va-document>
+  <script id="artifact-data" type="application/json">{"title":"Visual Grammar","kind":"Complete component showcase","purpose":"A demonstration of the reusable visual primitives used to build reports, plans, documentation, and evidence without purpose-specific presentation code.","status":"Ready","source":"yeseh/skills","revision":"working tree","theme":{"accent":"#6d5dfc","accent-soft":"#efedff","radius":"18px"},"components":[{"type":"section","id":"content","title":"Content and emphasis","description":"Sections create hierarchy; prose and callouts communicate the substance.","children":[{"type":"prose","id":"rich-prose","title":"Rich prose","markdown":"# A small visual grammar\n\nArtifacts combine **reusable primitives** rather than report-specific widgets. Prose supports _emphasis_, [safe links](https://example.com), and `inline code`.\n\n## Why composition matters\n\n- Plans can combine narrative, decisions, and implementation steps.\n- Documentation can combine examples, reference tables, and API contracts.\n- Evidence reports can combine transcripts, screenshots, and outcomes.\n\n> The artifact adapter decides what the content means. The renderer decides how it looks."},{"type":"section","id":"callout-collection","title":"Callout tones","description":"Generic tones communicate emphasis without embedding domain-specific states.","children":[{"type":"callout","id":"neutral-callout","title":"Neutral context","tone":"neutral","markdown":"Use neutral callouts for supporting context that should remain visible."},{"type":"callout","id":"info-callout","title":"Information","tone":"info","markdown":"Use info for guidance, references, and details worth noticing."},{"type":"callout","id":"success-callout","title":"Successful outcome","tone":"success","markdown":"The renderer completed and produced a **self-contained artifact**."},{"type":"callout","id":"warning-callout","title":"Review required","tone":"warning","markdown":"This decision has an open question that should be resolved before implementation."},{"type":"callout","id":"danger-callout","title":"Action blocked","tone":"danger","markdown":"A required dependency is unavailable. Do not present the workflow as complete."}]}]},{"type":"section","id":"code-examples","title":"Code and transcripts","description":"One code primitive handles snippets, copyable commands, diffs, and terminal output.","children":[{"type":"code","id":"source-snippet","title":"Source with highlighted lines","description":"Line numbers and highlights focus attention without changing copied content.","filename":"artifact.config.js","language":"javascript","mode":"plain","copy":true,"lineNumbers":true,"highlights":["2-5"],"content":"export const artifact = {\n  title: \"Release readiness\",\n  status: \"ready\",\n  components: buildComponents(),\n  theme: { accent: \"#6d5dfc\" },\n};"},{"type":"code","id":"copyable-command","title":"Copyable command","description":"Commands are ordinary shell code with copying enabled.","language":"shell","mode":"plain","copy":true,"content":"node .agents/skills/visual-artifact/scripts/render.mjs artifact.json"},{"type":"code","id":"diff-example","title":"Unified diff","description":"Diff mode distinguishes additions and removals.","filename":"src/config.ts","language":"diff","mode":"diff","copy":false,"content":"@@ -1,3 +1,3 @@\n-export const timeout = 5_000;\n+export const timeout = 10_000;\n export const retries = 3;"},{"type":"code","id":"terminal-transcript","title":"Terminal transcript","description":"Terminal mode preserves commands and their observed output.","language":"shell","mode":"terminal","copy":true,"highlights":[4],"content":"$ npm test -- --runInBand\n\nPASS src/artifact.test.js\nTests: 8 passed, 8 total\nTime: 1.42 s"}]},{"type":"section","id":"structured-content","title":"Structured content","description":"Tables and steps present comparable facts and ordered progress.","children":[{"type":"table","id":"component-matrix","title":"Component matrix","description":"The visual grammar stays small while supporting multiple artifact types.","columns":[{"key":"primitive","label":"Primitive"},{"key":"purpose","label":"Purpose"},{"key":"examples","label":"Typical uses"}],"rows":[{"primitive":"Prose","purpose":"Narrative content","examples":"Plans, summaries, documentation"},{"primitive":"Code","purpose":"Exact technical content","examples":"Commands, source, diffs, transcripts"},{"primitive":"Callout","purpose":"Semantic emphasis","examples":"Notes, outcomes, risks, blockers"},{"primitive":"Image","purpose":"Visual evidence","examples":"Screenshots, diagrams, mockups"}]},{"type":"steps","id":"delivery-steps","title":"Delivery path","items":[{"title":"Compose the manifest","description":"Arrange generic components into the document hierarchy.","status":"complete"},{"title":"Render the artifact","description":"Bundle content, styles, scripts, and local assets into one HTML file.","status":"complete"},{"title":"Share with stakeholders","description":"Review the standalone artifact in a browser or attach it to the work item.","status":"current"},{"title":"Collect feedback","description":"Revise the source manifest without redesigning the presentation.","status":"pending"}]}]},{"type":"section","id":"visual-evidence","title":"Visual evidence","description":"Images embed into the final document, keeping the artifact portable.","children":[{"type":"image","id":"architecture-image","title":"Composition model","source":"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjQyMCIgdmlld0JveD0iMCAwIDEyMDAgNDIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+CiAgPHRpdGxlIGlkPSJ0aXRsZSI+VmlzdWFsIGFydGlmYWN0IGNvbXBvc2l0aW9uIG1vZGVsPC90aXRsZT4KICA8ZGVzYyBpZD0iZGVzYyI+U291cmNlIGRhdGEgZmxvd3MgdGhyb3VnaCBhbiBhcnRpZmFjdCBhZGFwdGVyIGludG8gZ2VuZXJpYyB2aXN1YWwgcHJpbWl0aXZlcyBhbmQgdGhlbiBpbnRvIHRoZSBIVE1MIHJlbmRlcmVyLjwvZGVzYz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmFja2dyb3VuZCIgeDE9IjAiIHgyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMTcxZTM2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzMxMmI2OSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9InNoYWRvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSIxMCIgc3RkRGV2aWF0aW9uPSIxMiIgZmxvb2Qtb3BhY2l0eT0iLjE4Ii8+CiAgICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNDIwIiByeD0iMjgiIGZpbGw9InVybCgjYmFja2dyb3VuZCkiLz4KICA8ZyBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWx0ZXI9InVybCgjc2hhZG93KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MCAxMjUpIj4KICAgICAgPHJlY3Qgd2lkdGg9IjIzMCIgaGVpZ2h0PSIxNzAiIHJ4PSIyMCIgZmlsbD0iI2ZmZmZmZiIvPgogICAgICA8dGV4dCB4PSIxMTUiIHk9IjU1IiBmaWxsPSIjNmQ1ZGZjIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNzAwIj5TT1VSQ0U8L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iOTMiIGZpbGw9IiMxNzIwMzMiIGZvbnQtc2l6ZT0iMjUiIGZvbnQtd2VpZ2h0PSI3NTAiPkV2aWRlbmNlIG9yIHBsYW48L3RleHQ+CiAgICAgIDx0ZXh0IHg9IjExNSIgeT0iMTI2IiBmaWxsPSIjNjI3MDhhIiBmb250LXNpemU9IjE2Ij5TdHJ1Y3R1cmVkIGRvbWFpbiBkYXRhPC90ZXh0PgogICAgPC9nPgogICAgPHBhdGggZD0iTTMyMCAyMTBoOTAiIHN0cm9rZT0iI2M5YzNmZiIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDxwYXRoIGQ9Im0zOTggMTk0IDE4IDE2LTE4IDE2IiBmaWxsPSJub25lIiBzdHJva2U9IiNjOWMzZmYiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzAgMTI1KSI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMzAiIGhlaWdodD0iMTcwIiByeD0iMjAiIGZpbGw9IiNlZmVkZmYiLz4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI1NSIgZmlsbD0iIzZkNWRmYyIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9IjcwMCI+QURBUFRFUjwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSI5MyIgZmlsbD0iIzE3MjAzMyIgZm9udC1zaXplPSIyNSIgZm9udC13ZWlnaHQ9Ijc1MCI+Q29tcG9zZTwvdGV4dD4KICAgICAgPHRleHQgeD0iMTE1IiB5PSIxMjYiIGZpbGw9IiM0ZjQ3N2YiIGZvbnQtc2l6ZT0iMTYiPk1hcCBtZWFuaW5nIHRvIHByaW1pdGl2ZXM8L3RleHQ+CiAgICA8L2c+CiAgICA8cGF0aCBkPSJNNjgwIDIxMGg5MCIgc3Ryb2tlPSIjYzljM2ZmIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPHBhdGggZD0ibTc1OCAxOTQgMTggMTYtMTggMTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M5YzNmZiIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc5MCA3NSkiPgogICAgICA8cmVjdCB3aWR0aD0iMzQwIiBoZWlnaHQ9IjI3MCIgcng9IjIwIiBmaWxsPSIjZmZmZmZmIi8+CiAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iNDgiIGZpbGw9IiM2ZDVkZmMiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiPlZJU1VBTCBHUkFNTUFSPC90ZXh0PgogICAgICA8ZyBmaWxsPSIjZjJmM2Y4IiBzdHJva2U9IiNkZmUzZWMiPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSI3NSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMzUiIHk9IjE0MSIgd2lkdGg9IjEyNSIgaGVpZ2h0PSI0OCIgcng9IjEyIi8+CiAgICAgICAgPHJlY3QgeD0iMTgwIiB5PSIxNDEiIHdpZHRoPSIxMjUiIGhlaWdodD0iNDgiIHJ4PSIxMiIvPgogICAgICAgIDxyZWN0IHg9IjM1IiB5PSIyMDciIHdpZHRoPSIyNzAiIGhlaWdodD0iMzQiIHJ4PSIxMiIvPgogICAgICA8L2c+CiAgICAgIDxnIGZpbGw9IiMxNzIwMzMiIGZvbnQtc2l6ZT0iMTUiIGZvbnQtd2VpZ2h0PSI2NTAiPgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxMDYiPlByb3NlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjI0MyIgeT0iMTA2Ij5Db2RlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9Ijk4IiB5PSIxNzIiPkNhbGxvdXQ8L3RleHQ+CiAgICAgICAgPHRleHQgeD0iMjQzIiB5PSIxNzIiPlRhYmxlPC90ZXh0PgogICAgICAgIDx0ZXh0IHg9IjE3MCIgeT0iMjMwIj5IVE1MIHJlbmRlcmVyPC90ZXh0PgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K","alt":"Diagram showing source data passing through an artifact adapter into the visual grammar and HTML renderer.","caption":"Purpose-specific adapters compose generic visual primitives; the renderer remains independent of report semantics."}]},{"type":"section","id":"api-reference","title":"OpenAPI reference","description":"OpenAPI remains specialized because its structured reference behavior provides substantial leverage.","children":[{"type":"openapi","id":"artifact-service-api","title":"Artifact Service API","spec":{"openapi":"3.1.0","info":{"title":"Artifact Service","version":"1.0.0","description":"Renders structured manifests into portable visual artifacts."},"paths":{"/artifacts":{"post":{"summary":"Render an artifact","requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ArtifactManifest"}}}},"responses":{"201":{"description":"Self-contained artifact created","content":{"text/html":{"schema":{"type":"string"}}}},"422":{"description":"Manifest validation failed","content":{"application/problem+json":{"schema":{"type":"object"}}}}}}},"/artifacts/{artifactId}":{"get":{"summary":"Retrieve a rendered artifact","parameters":[{"name":"artifactId","in":"path","required":true,"description":"Stable artifact identifier.","schema":{"type":"string"}}],"responses":{"200":{"description":"Rendered HTML artifact","content":{"text/html":{"schema":{"type":"string"}}}},"404":{"description":"Artifact not found"}}}}},"components":{"schemas":{"ArtifactManifest":{"type":"object","required":["title","components"],"properties":{"title":{"type":"string"},"components":{"type":"array","items":{"type":"object"}}}}}}}}]}]}</script>
+  <script>(() => {
+  "use strict";
+
+  const manifest = JSON.parse(document.querySelector("#artifact-data").textContent);
+  const allowedThemeTokens = new Set([
+    "accent", "accent-soft", "on-accent-soft", "background", "surface", "text", "muted", "border",
+    "success", "warning", "danger", "code-bg", "code-text", "radius", "shadow",
+    "font-body", "font-mono",
+  ]);
+
+  function element(name, attributes = {}, children = []) {
+    const node = document.createElement(name);
+    for (const [key, value] of Object.entries(attributes)) {
+      if (value === undefined || value === null) continue;
+      if (key === "class") node.className = value;
+      else node.setAttribute(key, String(value));
+    }
+    for (const child of Array.isArray(children) ? children : [children]) {
+      node.append(child instanceof Node ? child : document.createTextNode(String(child)));
+    }
+    return node;
+  }
+
+  function safeUrl(value) {
+    try {
+      const url = new URL(value, window.location.href);
+      return ["http:", "https:", "mailto:", "file:"].includes(url.protocol) ? value : "#";
+    } catch {
+      return "#";
+    }
+  }
+
+  function renderInline(value) {
+    const fragment = document.createDocumentFragment();
+    const pattern = /(\*\*[^*]+\*\*|_[^_]+_|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
+    let cursor = 0;
+    for (const match of value.matchAll(pattern)) {
+      fragment.append(value.slice(cursor, match.index));
+      const token = match[0];
+      if (token.startsWith("**")) fragment.append(element("strong", {}, token.slice(2, -2)));
+      else if (token.startsWith("_")) fragment.append(element("em", {}, token.slice(1, -1)));
+      else if (token.startsWith("`")) fragment.append(element("code", { class: "va-inline-code" }, token.slice(1, -1)));
+      else {
+        const parts = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        fragment.append(element("a", { href: safeUrl(parts[2]) }, parts[1]));
+      }
+      cursor = match.index + token.length;
+    }
+    fragment.append(value.slice(cursor));
+    return fragment;
+  }
+
+  function renderText(markdown) {
+    const container = document.createDocumentFragment();
+    const lines = String(markdown || "").replace(/\r/g, "").split("\n");
+    let index = 0;
+
+    while (index < lines.length) {
+      const line = lines[index];
+      if (!line.trim()) { index += 1; continue; }
+
+      const heading = line.match(/^(#{1,4})\s+(.+)$/);
+      if (heading) {
+        const level = Math.min(heading[1].length + 1, 6);
+        container.append(element(`h${level}`, {}, renderInline(heading[2])));
+        index += 1;
+        continue;
+      }
+
+      if (/^>\s?/.test(line)) {
+        const quote = [];
+        while (index < lines.length && /^>\s?/.test(lines[index])) {
+          quote.push(lines[index].replace(/^>\s?/, ""));
+          index += 1;
+        }
+        container.append(element("blockquote", {}, renderInline(quote.join(" "))));
+        continue;
+      }
+
+      if (/^[-*]\s+/.test(line) || /^\d+\.\s+/.test(line)) {
+        const ordered = /^\d+\.\s+/.test(line);
+        const list = element(ordered ? "ol" : "ul");
+        const expression = ordered ? /^\d+\.\s+/ : /^[-*]\s+/;
+        while (index < lines.length && expression.test(lines[index])) {
+          list.append(element("li", {}, renderInline(lines[index].replace(expression, ""))));
+          index += 1;
+        }
+        container.append(list);
+        continue;
+      }
+
+      const paragraph = [];
+      while (index < lines.length && lines[index].trim() && !/^(#{1,4})\s+|^>\s?|^[-*]\s+|^\d+\.\s+/.test(lines[index])) {
+        paragraph.push(lines[index].trim());
+        index += 1;
+      }
+      container.append(element("p", {}, renderInline(paragraph.join(" "))));
+    }
+    return container;
+  }
+
+  class VaProse extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const container = element("div", { class: "va-prose" });
+      container.append(renderText(value.markdown));
+      this.replaceChildren(container);
+    }
+  }
+
+  function highlightedLines(ranges = []) {
+    const lines = new Set();
+    for (const range of ranges) {
+      const [start, end = start] = String(range).split("-").map(Number);
+      if (!Number.isInteger(start) || !Number.isInteger(end)) continue;
+      for (let line = start; line <= end; line += 1) lines.add(line);
+    }
+    return lines;
+  }
+
+  class VaCode extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const copy = element("button", { class: "va-copy", type: "button" }, "Copy");
+      copy.addEventListener("click", async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(value.content);
+          } else {
+            const textarea = element("textarea", { "aria-hidden": "true" }, value.content);
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.append(textarea);
+            textarea.select();
+            if (!document.execCommand("copy")) throw new Error("Copy command was rejected");
+            textarea.remove();
+          }
+          copy.textContent = "Copied";
+          setTimeout(() => { copy.textContent = "Copy"; }, 1600);
+        } catch {
+          copy.textContent = "Copy failed";
+        }
+      });
+      const header = element("div", { class: "va-command-header" }, [
+        element("div", {}, [
+          value.title ? element("h3", {}, value.title) : "",
+          value.description ? element("div", { class: "va-subtle" }, value.description) : "",
+        ]),
+        value.copy === false ? "" : copy,
+      ]);
+      const highlights = highlightedLines(value.highlights);
+      const lines = String(value.content || "").split("\n");
+      const code = element("code", { class: `language-${value.language || "text"}` });
+      lines.forEach((line, index) => {
+        const lineNumber = index + 1;
+        const classes = ["va-code-line"];
+        if (highlights.has(lineNumber)) classes.push("va-code-highlight");
+        if (value.mode === "diff" && line.startsWith("+")) classes.push("va-code-added");
+        if (value.mode === "diff" && line.startsWith("-")) classes.push("va-code-removed");
+        code.append(element("span", { class: classes.join(" "), "data-line": lineNumber }, line || " "));
+      });
+      const pre = element("pre", {
+        class: `va-code va-code-${value.mode || "plain"}${value.lineNumbers ? " va-code-numbered" : ""}`,
+      }, code);
+      const card = element("div", { class: "va-code-card" }, [
+        value.title || value.description ? header : "",
+        value.filename ? element("div", { class: "va-code-filename" }, value.filename) : "",
+        element("div", { class: "va-code-wrap" }, pre),
+      ]);
+      this.replaceChildren(card);
+    }
+  }
+
+  class VaCallout extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const tone = ["neutral", "info", "success", "warning", "danger"].includes(value.tone) ? value.tone : "neutral";
+      const body = element("div", { class: "va-callout-body" });
+      body.append(renderText(value.markdown || ""));
+      this.replaceChildren(element("aside", { class: `va-callout va-callout-${tone}` }, [
+        value.title ? element("h3", {}, value.title) : "",
+        body,
+      ]));
+    }
+  }
+
+  class VaTable extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const columns = Array.isArray(value.columns) ? value.columns : [];
+      const rows = (value.rows || []).map((row) => columns.map((column, index) => {
+        const cell = Array.isArray(row) ? row[index] : row[column.key];
+        return cell === undefined || cell === null ? "—" : String(cell);
+      }));
+      this.replaceChildren(element("div", { class: "va-table-component" }, [
+        value.title ? element("h3", {}, value.title) : "",
+        value.description ? element("p", { class: "va-subtle" }, value.description) : "",
+        table(columns.map((column) => column.label || column.key), rows),
+      ]));
+    }
+  }
+
+  class VaSteps extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const list = element("ol", { class: "va-steps" });
+      for (const [index, item] of (value.items || []).entries()) {
+        const status = ["complete", "current", "pending"].includes(item.status) ? item.status : "pending";
+        const content = element("div", { class: "va-step-content" }, [
+          element("div", { class: "va-step-heading" }, [
+            element("strong", {}, item.title || `Step ${index + 1}`),
+            element("span", { class: `va-step-status va-step-${status}` }, status),
+          ]),
+          item.description ? element("p", {}, item.description) : "",
+        ]);
+        list.append(element("li", {}, [element("span", { class: "va-step-index" }, index + 1), content]));
+      }
+      this.replaceChildren(element("div", {}, [
+        value.title ? element("h3", {}, value.title) : "",
+        list,
+      ]));
+    }
+  }
+
+  class VaSection extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const card = element("section", { class: "va-card va-section" }, [
+        value.title ? element("h2", {}, value.title) : "",
+        value.description ? element("p", { class: "va-section-description" }, value.description) : "",
+      ]);
+      const children = element("div", { class: "va-section-children" });
+      for (const child of value.children || []) children.append(renderComponent(child));
+      card.append(children);
+      this.replaceChildren(card);
+    }
+  }
+
+  function schemaSummary(schema) {
+    if (!schema) return "—";
+    if (schema.$ref) return schema.$ref.split("/").at(-1);
+    if (schema.type === "array") return `array<${schemaSummary(schema.items)}>`;
+    return schema.type || "object";
+  }
+
+  function table(headers, rows) {
+    const head = element("thead", {}, element("tr", {}, headers.map((header) => element("th", {}, header))));
+    const body = element("tbody", {}, rows.map((row) => element("tr", {}, row.map((cell) => element("td", {}, cell)))));
+    return element("div", { class: "va-table-wrap" }, element("table", { class: "va-table" }, [head, body]));
+  }
+
+  class VaOpenapi extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const spec = value.spec;
+      const card = element("section", { class: "va-card" });
+      if (!spec || typeof spec !== "object" || !spec.paths) {
+        card.classList.add("va-error");
+        card.append(element("h2", {}, value.title || "OpenAPI"), element("p", {}, "Invalid OpenAPI document: paths are missing."));
+        this.replaceChildren(card);
+        return;
+      }
+
+      card.append(element("div", { class: "va-api-heading" }, [
+        element("div", {}, [
+          element("div", { class: "va-eyebrow va-subtle" }, `OpenAPI ${spec.openapi || "unknown"}`),
+          element("h2", {}, value.title || spec.info?.title || "API reference"),
+          element("div", { class: "va-subtle" }, spec.info?.description || `Version ${spec.info?.version || "unknown"}`),
+        ]),
+      ]));
+
+      const selectedPaths = value.paths ? new Set(value.paths) : null;
+      const methods = new Set(["get", "post", "put", "patch", "delete", "options", "head", "trace"]);
+      for (const [path, pathItem] of Object.entries(spec.paths)) {
+        if (selectedPaths && !selectedPaths.has(path)) continue;
+        for (const [method, operation] of Object.entries(pathItem)) {
+          if (!methods.has(method)) continue;
+          const summary = element("summary", {}, [
+            element("span", { class: `va-method va-${method}` }, method.toUpperCase()),
+            element("code", {}, path),
+            operation.deprecated ? " · Deprecated" : "",
+          ]);
+          const body = element("div", { class: "va-operation-body" });
+          if (operation.summary || operation.description) {
+            body.append(element("p", {}, operation.summary || operation.description));
+          }
+          const parameters = [...(pathItem.parameters || []), ...(operation.parameters || [])];
+          if (parameters.length) {
+            body.append(element("h4", {}, "Parameters"));
+            body.append(table(
+              ["Name", "In", "Required", "Type", "Description"],
+              parameters.map((parameter) => [
+                parameter.name || "—", parameter.in || "—", parameter.required ? "Yes" : "No",
+                schemaSummary(parameter.schema), parameter.description || "—",
+              ]),
+            ));
+          }
+          if (operation.requestBody) {
+            body.append(element("h4", {}, "Request body"));
+            body.append(table(
+              ["Content type", "Schema"],
+              Object.entries(operation.requestBody.content || {}).map(([contentType, media]) => [contentType, schemaSummary(media.schema)]),
+            ));
+          }
+          if (operation.responses) {
+            body.append(element("h4", {}, "Responses"));
+            body.append(table(
+              ["Status", "Description", "Content"],
+              Object.entries(operation.responses).map(([status, response]) => [
+                status, response.description || "—", Object.keys(response.content || {}).join(", ") || "—",
+              ]),
+            ));
+          }
+          const details = element("details", { class: "va-operation" }, [summary, body]);
+          card.append(details);
+        }
+      }
+      this.replaceChildren(card);
+    }
+  }
+
+  class VaImage extends HTMLElement {
+    set data(value) {
+      this.id = value.id;
+      const image = element("img", { class: "va-image", src: value.source, alt: value.alt || "" });
+      const figure = element("figure", { class: "va-image-component" }, [
+        value.title ? element("h3", {}, value.title) : "",
+        image,
+        value.caption ? element("figcaption", { class: "va-caption" }, value.caption) : "",
+      ]);
+      this.replaceChildren(figure);
+    }
+  }
+
+  const componentNames = {
+    section: "va-section",
+    prose: "va-prose",
+    code: "va-code",
+    callout: "va-callout",
+    table: "va-table",
+    steps: "va-steps",
+    image: "va-image",
+    openapi: "va-openapi",
+  };
+
+  function renderComponent(component) {
+    const node = document.createElement(componentNames[component.type]);
+    node.data = component;
+    return node;
+  }
+
+  function appendToc(toc, components, depth = 0) {
+    for (const component of components) {
+      if (component.title) {
+        toc.append(element("a", {
+          href: `#${component.id}`,
+          class: depth ? "va-toc-child" : "",
+        }, component.title));
+      }
+      if (component.type === "section") appendToc(toc, component.children || [], depth + 1);
+    }
+  }
+
+  class VaDocument extends HTMLElement {
+    connectedCallback() {
+      for (const [token, value] of Object.entries(manifest.theme || {})) {
+        if (allowedThemeTokens.has(token) && typeof value === "string" && !/[;{}]/.test(value)) {
+          document.documentElement.style.setProperty(`--va-${token}`, value);
+        }
+      }
+      if (manifest.theme?.["accent-soft"] && !manifest.theme?.["on-accent-soft"]) {
+        const probe = element("span");
+        probe.style.cssText = "position:fixed;visibility:hidden;background:var(--va-accent-soft)";
+        document.body.append(probe);
+        const channels = getComputedStyle(probe).backgroundColor.match(/\d+(?:\.\d+)?/g)?.slice(0, 3).map(Number);
+        probe.remove();
+        if (channels?.length === 3) {
+          const luminance = channels
+            .map((channel) => channel / 255)
+            .map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+            .reduce((sum, channel, index) => sum + channel * [0.2126, 0.7152, 0.0722][index], 0);
+          document.documentElement.style.setProperty("--va-on-accent-soft", luminance > 0.42 ? "#172033" : "#ffffff");
+        }
+      }
+
+      const hero = element("header", { class: "va-hero" }, [
+        element("p", { class: "va-eyebrow" }, manifest.kind || "Visual artifact"),
+        element("h1", { class: "va-title" }, manifest.title),
+        manifest.purpose ? element("p", { class: "va-purpose" }, manifest.purpose) : "",
+        element("div", { class: "va-meta" }, [
+          manifest.status ? element("span", { class: "va-badge" }, manifest.status) : "",
+          element("span", { class: "va-badge" }, manifest.generatedAt || new Date().toISOString().slice(0, 10)),
+          manifest.revision ? element("span", { class: "va-badge" }, manifest.revision) : "",
+        ]),
+      ]);
+      const toc = element("nav", { class: "va-toc", "aria-label": "Contents" }, element("strong", {}, "Contents"));
+      const content = element("main", { class: "va-content" });
+
+      for (const component of manifest.components) {
+        content.append(renderComponent(component));
+      }
+      appendToc(toc, manifest.components);
+
+      const footer = element("footer", { class: "va-footer" }, manifest.source
+        ? `Source: ${manifest.source}${manifest.revision ? ` · ${manifest.revision}` : ""}`
+        : "Generated as a self-contained visual artifact");
+      const shell = element("div", { class: "va-shell" }, [
+        hero,
+        element("div", { class: "va-layout" }, [toc, content]),
+        footer,
+      ]);
+      this.replaceChildren(shell);
+    }
+  }
+
+  customElements.define("va-section", VaSection);
+  customElements.define("va-prose", VaProse);
+  customElements.define("va-code", VaCode);
+  customElements.define("va-callout", VaCallout);
+  customElements.define("va-table", VaTable);
+  customElements.define("va-steps", VaSteps);
+  customElements.define("va-openapi", VaOpenapi);
+  customElements.define("va-image", VaImage);
+  customElements.define("va-document", VaDocument);
+})();
+</script>
+</body>
+</html>
