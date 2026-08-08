@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-08-08T14:34:05.914353+00:00'
+generated_at: '2026-08-08T15:47:05.299295+00:00'
 apm_version: 0.28.0
 dependencies:
 - repo_url: mattpocock/skills
@@ -112,7 +112,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:190838edb8f7cd11d699919c4ce1f6ed7e7b2fc440d20d40c6fd330511ac583b
+  content_hash: sha256:b81d662379dfaa43e188bc3c662da5f7086037c32823141ded708ea477e97e6a
 - kind: project-relative
   target: agents
   value: .agents/skills/prove-it
@@ -130,7 +130,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:080b7c8d786962498e666bb319187cde11a737e7d0cb1fa013c1713844e2b190
+  content_hash: sha256:8ebde7248ccd2c844ad4d940d5d587a4b8c4d0f866d6be4dfc44cb1226475131
 - kind: project-relative
   target: agents
   value: .agents/skills/visual-artifact
@@ -187,6 +187,42 @@ deployments:
   content_hash: sha256:c983cbbce2849a372f68790b70c606ddfefa105d47ee888d31cb46f7598440eb
 - kind: project-relative
   target: claude
+  value: .claude/rules/code.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:e79620e3ee7b6f6fde268ee67c76030a81d6130aa975003074bc671c502db522
+- kind: project-relative
+  target: claude
+  value: .claude/rules/csharp.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:664f3937adde55df340885d412d8ac84c2baa82781e2e9367639212ed2b43788
+- kind: project-relative
+  target: claude
+  value: .claude/rules/documentation.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:42dcf536794c9bebab03f937fa92a675d6dfbace94e771119d76a825c225ccf2
+- kind: project-relative
+  target: claude
+  value: .claude/rules/typescript.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:b470c1819eadec04bb8c207813ccfe0f3871f75ac7c10e496301b1e4a75aa2c3
+- kind: project-relative
+  target: claude
   value: .claude/skills/clean-remove
   runtime: null
   scope: project
@@ -202,7 +238,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:190838edb8f7cd11d699919c4ce1f6ed7e7b2fc440d20d40c6fd330511ac583b
+  content_hash: sha256:b81d662379dfaa43e188bc3c662da5f7086037c32823141ded708ea477e97e6a
 - kind: project-relative
   target: claude
   value: .claude/skills/grill-with-docs
@@ -283,7 +319,7 @@ deployments:
   owners:
   - .
   active_owner: .
-  content_hash: sha256:080b7c8d786962498e666bb319187cde11a737e7d0cb1fa013c1713844e2b190
+  content_hash: sha256:8ebde7248ccd2c844ad4d940d5d587a4b8c4d0f866d6be4dfc44cb1226475131
 - kind: project-relative
   target: claude
   value: .claude/skills/visual-artifact
@@ -527,6 +563,84 @@ deployments:
   - mattpocock/skills/skills/engineering/wizard
   active_owner: mattpocock/skills/skills/engineering/wizard
   content_hash: sha256:d43dc3f7b6008779ef55e3935bf1df246b5bc194b7f9e1dee3d9340a00922ce6
+- kind: project-relative
+  target: copilot
+  value: .github/instructions/code.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:13ef035abbb5bfdd64788032426cb5bc152b01f09bc5ca176d15819c803b558c
+- kind: project-relative
+  target: copilot
+  value: .github/instructions/csharp.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:e7cc18a8dcc46598c70f8d20c996702b656743b203145ff6eb58a0953d7b7813
+- kind: project-relative
+  target: copilot
+  value: .github/instructions/documentation.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:7596c4c6d1728fa1c47b57d93eaf803afdedf61499cee8f07035bfa0f58ae3a7
+- kind: project-relative
+  target: copilot
+  value: .github/instructions/typescript.instructions.md
+  runtime: null
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: sha256:465a6d10be00e4a90ce8d6fe652eec7a4a6b7bf705670785bc02e07714c46a8d
+- kind: uri
+  target: mcp
+  value: mslearn
+  runtime: claude
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: uri
+  target: mcp
+  value: mslearn
+  runtime: opencode
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+- kind: uri
+  target: mcp
+  value: mslearn
+  runtime: vscode
+  scope: project
+  owners:
+  - .
+  active_owner: .
+  content_hash: null
+mcp_servers:
+- mslearn
+mcp_configs:
+  mslearn:
+    name: mslearn
+    transport: http
+    registry: false
+    url: https://learn.microsoft.com/api/mcp
+mcp_target_servers:
+  claude:
+  - mslearn
+  opencode:
+  - mslearn
+  vscode:
+  - mslearn
 local_deployed_files:
 - .agents/skills/clean-remove
 - .agents/skills/clean-remove/SKILL.md
@@ -538,6 +652,10 @@ local_deployed_files:
 - .agents/skills/visual-artifact/assets/styles.css
 - .agents/skills/visual-artifact/examples/artifact.json
 - .agents/skills/visual-artifact/scripts/render.mjs
+- .claude/rules/code.md
+- .claude/rules/csharp.md
+- .claude/rules/documentation.md
+- .claude/rules/typescript.md
 - .claude/skills/clean-remove
 - .claude/skills/clean-remove/SKILL.md
 - .claude/skills/prove-it
@@ -548,18 +666,30 @@ local_deployed_files:
 - .claude/skills/visual-artifact/assets/styles.css
 - .claude/skills/visual-artifact/examples/artifact.json
 - .claude/skills/visual-artifact/scripts/render.mjs
+- .github/instructions/code.instructions.md
+- .github/instructions/csharp.instructions.md
+- .github/instructions/documentation.instructions.md
+- .github/instructions/typescript.instructions.md
 local_deployed_file_hashes:
-  .agents/skills/clean-remove/SKILL.md: sha256:190838edb8f7cd11d699919c4ce1f6ed7e7b2fc440d20d40c6fd330511ac583b
-  .agents/skills/prove-it/SKILL.md: sha256:080b7c8d786962498e666bb319187cde11a737e7d0cb1fa013c1713844e2b190
+  .agents/skills/clean-remove/SKILL.md: sha256:b81d662379dfaa43e188bc3c662da5f7086037c32823141ded708ea477e97e6a
+  .agents/skills/prove-it/SKILL.md: sha256:8ebde7248ccd2c844ad4d940d5d587a4b8c4d0f866d6be4dfc44cb1226475131
   .agents/skills/visual-artifact/SKILL.md: sha256:194227df39ad76cca6570a7de8c66302872e79738d4b0a3b2547829ae74bfe68
   .agents/skills/visual-artifact/assets/components.js: sha256:2e5970576c7128c51e7ddf577915e73f0cccb9d3e4964c34588377532abadfb3
   .agents/skills/visual-artifact/assets/styles.css: sha256:6cc06c72a6aa309a7595a866e84c0a283266629242328fdf8e2970354b2ec655
   .agents/skills/visual-artifact/examples/artifact.json: sha256:afacd128c0514f1142518e7f6f07b960af38f10231538e8686d66c2fd535e321
   .agents/skills/visual-artifact/scripts/render.mjs: sha256:c983cbbce2849a372f68790b70c606ddfefa105d47ee888d31cb46f7598440eb
-  .claude/skills/clean-remove/SKILL.md: sha256:190838edb8f7cd11d699919c4ce1f6ed7e7b2fc440d20d40c6fd330511ac583b
-  .claude/skills/prove-it/SKILL.md: sha256:080b7c8d786962498e666bb319187cde11a737e7d0cb1fa013c1713844e2b190
+  .claude/rules/code.md: sha256:e79620e3ee7b6f6fde268ee67c76030a81d6130aa975003074bc671c502db522
+  .claude/rules/csharp.md: sha256:664f3937adde55df340885d412d8ac84c2baa82781e2e9367639212ed2b43788
+  .claude/rules/documentation.md: sha256:42dcf536794c9bebab03f937fa92a675d6dfbace94e771119d76a825c225ccf2
+  .claude/rules/typescript.md: sha256:b470c1819eadec04bb8c207813ccfe0f3871f75ac7c10e496301b1e4a75aa2c3
+  .claude/skills/clean-remove/SKILL.md: sha256:b81d662379dfaa43e188bc3c662da5f7086037c32823141ded708ea477e97e6a
+  .claude/skills/prove-it/SKILL.md: sha256:8ebde7248ccd2c844ad4d940d5d587a4b8c4d0f866d6be4dfc44cb1226475131
   .claude/skills/visual-artifact/SKILL.md: sha256:194227df39ad76cca6570a7de8c66302872e79738d4b0a3b2547829ae74bfe68
   .claude/skills/visual-artifact/assets/components.js: sha256:2e5970576c7128c51e7ddf577915e73f0cccb9d3e4964c34588377532abadfb3
   .claude/skills/visual-artifact/assets/styles.css: sha256:6cc06c72a6aa309a7595a866e84c0a283266629242328fdf8e2970354b2ec655
   .claude/skills/visual-artifact/examples/artifact.json: sha256:afacd128c0514f1142518e7f6f07b960af38f10231538e8686d66c2fd535e321
   .claude/skills/visual-artifact/scripts/render.mjs: sha256:c983cbbce2849a372f68790b70c606ddfefa105d47ee888d31cb46f7598440eb
+  .github/instructions/code.instructions.md: sha256:13ef035abbb5bfdd64788032426cb5bc152b01f09bc5ca176d15819c803b558c
+  .github/instructions/csharp.instructions.md: sha256:e7cc18a8dcc46598c70f8d20c996702b656743b203145ff6eb58a0953d7b7813
+  .github/instructions/documentation.instructions.md: sha256:7596c4c6d1728fa1c47b57d93eaf803afdedf61499cee8f07035bfa0f58ae3a7
+  .github/instructions/typescript.instructions.md: sha256:465a6d10be00e4a90ce8d6fe652eec7a4a6b7bf705670785bc02e07714c46a8d

@@ -34,7 +34,7 @@ Use existing Playwright or browser automation first, then supported browser tool
 
 ## Evidence report
 
-Use the `visual-artifact` skill’s bundled manifest and renderer to create the report; do not hand-author report HTML. Override its normal destination with a fresh path under the ignored `.prove-it/` directory, for example `.prove-it/<timestamp>/report.html`. Include:
+Use the `visual-artifact` skill’s bundled manifest and renderer to create the report; do not hand-author report HTML. Include:
 
 - change summary and detected surfaces;
 - environment and setup commands, with secrets removed;

@@ -1,0 +1,9 @@
+{
+  "mcp": {
+    "mslearn": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}
