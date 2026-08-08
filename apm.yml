@@ -5,7 +5,6 @@ author: Jesse Wellenberg
 targets:
 - claude
 - copilot
-- opencode
 dependencies:
   apm:
     - mattpocock/skills/skills/engineering/grill-with-docs

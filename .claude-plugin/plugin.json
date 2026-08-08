@@ -1,0 +1,14 @@
+{
+  "name": "skills",
+  "version": "1.0.0",
+  "description": "Yeseh's personal skill library",
+  "author": {
+    "name": "Jesse Wellenberg"
+  },
+  "mcpServers": {
+    "mslearn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}
