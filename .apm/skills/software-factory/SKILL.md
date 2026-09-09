@@ -114,7 +114,7 @@ Read the relevant existing code before writing this doc — never design against
 
 Run the approval protocol.
 
-## Gate 3 — Program Design (the step everyone skips)
+## Gate 3 — Program Design 
 
 The decisions the agent would otherwise make silently mid-implementation. Template, saved as `03-program-design.md`:
 
