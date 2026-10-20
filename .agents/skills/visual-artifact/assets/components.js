@@ -363,26 +363,12 @@
 
   class VaDocument extends HTMLElement {
     connectedCallback() {
-      const themes = manifest.themes || { light: manifest.theme || {} };
-      const themeNames = Object.keys(themes);
-      const defaultTheme = themeNames.includes("light") ? "light" : themeNames[0];
-      const storedTheme = window.localStorage.getItem("va-theme");
-      const initialTheme = storedTheme && themeNames.includes(storedTheme) ? storedTheme : defaultTheme;
-
-      const applyTheme = (themeName) => {
-        const theme = themes[themeName] || {};
-        for (const [token, value] of Object.entries(theme)) {
-          if (allowedThemeTokens.has(token) && typeof value === "string" && !/[;{}]/.test(value)) {
-            document.documentElement.style.setProperty(`--va-${token}`, value);
-          }
+      for (const [token, value] of Object.entries(manifest.theme || {})) {
+        if (allowedThemeTokens.has(token) && typeof value === "string" && !/[;{}]/.test(value)) {
+          document.documentElement.style.setProperty(`--va-${token}`, value);
         }
-        document.documentElement.dataset.vaTheme = themeName;
-        window.localStorage.setItem("va-theme", themeName);
-      };
-
-      applyTheme(initialTheme);
-
-      if (themes[initialTheme]?.["accent-soft"] && !themes[initialTheme]?.["on-accent-soft"]) {
+      }
+      if (manifest.theme?.["accent-soft"] && !manifest.theme?.["on-accent-soft"]) {
         const probe = element("span");
         probe.style.cssText = "position:fixed;visibility:hidden;background:var(--va-accent-soft)";
         document.body.append(probe);
@@ -405,27 +391,8 @@
           manifest.status ? element("span", { class: "va-badge" }, manifest.status) : "",
           element("span", { class: "va-badge" }, manifest.generatedAt || new Date().toISOString().slice(0, 10)),
           manifest.revision ? element("span", { class: "va-badge" }, manifest.revision) : "",
-          themeNames.length > 1 ? element("button", {
-            class: "va-theme-toggle",
-            type: "button",
-            "aria-live": "polite",
-          }, "") : "",
         ]),
       ]);
-      const themeToggle = hero.querySelector(".va-theme-toggle");
-      if (themeToggle) {
-        const updateThemeToggle = () => {
-          const isDark = document.documentElement.dataset.vaTheme === "dark";
-          themeToggle.textContent = isDark ? "Use light mode" : "Use dark mode";
-          themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-        };
-        themeToggle.addEventListener("click", () => {
-          const nextTheme = document.documentElement.dataset.vaTheme === "dark" ? "light" : "dark";
-          applyTheme(nextTheme);
-          updateThemeToggle();
-        });
-        updateThemeToggle();
-      }
       const toc = element("nav", { class: "va-toc", "aria-label": "Contents" }, element("strong", {}, "Contents"));
       const content = element("main", { class: "va-content" });
 

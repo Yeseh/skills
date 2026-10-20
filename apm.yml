@@ -11,8 +11,9 @@ dependencies:
     - mattpocock/skills/skills/engineering/wizard
     - mattpocock/skills/skills/engineering/improve-codebase-architecture
     - mattpocock/skills/skills/productivity/wait-what
-
-  mcp: 
+    - yeseh/please-work
+    - ayghri/i-have-adhd
+  mcp:
     - name: mslearn
       registry: false
       transport: http

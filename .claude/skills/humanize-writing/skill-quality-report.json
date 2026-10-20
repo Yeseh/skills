@@ -1,0 +1,68 @@
+{
+  "description": "Reviews professional documents for AI-isms, non-human sounding text and padding, and\nreports findings with a suggested shorter replacement for each. Advisory only \u2014 it\nnever edits the document or writes a revised file. Flags LLM tells: puffery,\nrule-of-three, \"not X but Y\", meta commentary about the document itself, trailing\n\"-ing\" analysis, spaced dashes, curly quotes, title-case headings.\nUse when user asks to \"humanize this writing\", \"make this sound less like AI\",\n\"review this for AI-isms\", \"does this read as AI-written\", \"what should I cut\",\n\"where is this too wordy\", or hands over a draft, proposal, SoW or report for a\nwriting-quality review.\nDo NOT use to check a SoW's clauses or completeness \u2014 use statement-of-work. Do NOT\nuse to apply the changes or produce an edited document \u2014 use docx.\n",
+  "description_length": {
+    "detail": "808/1024 UTF-16 units",
+    "headroom_units": 216,
+    "max_units": 1024,
+    "status": "PASS",
+    "units": 808
+  },
+  "dimension_notes": {
+    "instruction_specificity": [
+      "49 workflow line(s)",
+      "has Quick Start / example block",
+      "names tools / data sources",
+      "specifies output format"
+    ],
+    "robustness": [
+      "has Guardrails section",
+      "10 guardrail-style rule(s)",
+      "handles missing-data / failure"
+    ],
+    "scope_boundaries": [
+      "has 'When NOT to Use' section",
+      "description states exclusions",
+      "focused single-domain scope"
+    ],
+    "trigger_clarity": [
+      "8 explicit trigger phrase(s)",
+      "has exclusion clause"
+    ]
+  },
+  "dimension_semantics": "advisory-only",
+  "dimensions": {
+    "instruction_specificity": 25,
+    "robustness": 23,
+    "scope_boundaries": 23,
+    "trigger_clarity": 25
+  },
+  "faithfulness": {
+    "detail": "instructs grounding / no-fabrication",
+    "status": "PASS"
+  },
+  "grade": "Excellent",
+  "improvements": [],
+  "mvb_pass": true,
+  "mvb_threshold": 70,
+  "path": "working/humanize-writing/SKILL.md",
+  "risk": {
+    "factors": [
+      "takes actions (autonomy / blast radius)"
+    ],
+    "launch_floor": 70,
+    "requires_behavioral": true,
+    "requires_human_review": false,
+    "tier": "medium"
+  },
+  "rubric_version": "2",
+  "safety": [
+    {
+      "area": "translation/copyright",
+      "detail": "Touches 'translation/copyright' scope",
+      "status": "WARN"
+    }
+  ],
+  "skill_name": "humanize-writing",
+  "timestamp": "2026-09-02 13:02 UTC",
+  "total": 96
+}
