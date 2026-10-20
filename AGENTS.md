@@ -12,3 +12,19 @@ apm outdated                   # 4. check dep freshness
 apm audit                      # 5. scan + drift
 apm pack                       # 6. ship it
 ```
+
+ALL changes to skills must be made in `.apm/skills` DO NOT touch compiled skills or agents in `.agents`, `.claude`, or `.github`
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues in `Yeseh/skills`, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Triage labels
+
+Default triage label names: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.

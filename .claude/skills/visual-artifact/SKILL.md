@@ -13,7 +13,7 @@ Use this skill explicitly when the user needs a polished HTML report, implementa
 1. Determine the artifact’s audience, purpose, title, status, and required sections from the request and repository context.
 2. Gather only the source material needed for the artifact. Preserve factual distinctions between confirmed facts, recommendations, assumptions, and open questions.
 3. Copy `examples/artifact.json` to a temporary manifest and compose its ordered `components` list. Keep components independently renderable and give each a stable `id`.
-4. Run `node <skill-directory>/scripts/render.mjs <manifest.json> [output.html]`. The renderer inlines the predefined component runtime, styles, OpenAPI JSON, and local images into one self-contained HTML file.
+4. Run `node <skill-directory>/scripts/render.mjs <manifest.json> [output.html]`. It applies the project brand automatically (see Project branding). The renderer inlines the predefined component runtime, styles, OpenAPI JSON, and local images into one self-contained HTML file.
 5. Save reports and plans under `docs/artifacts/` unless the user names another destination.
 6. Open the artifact when a local desktop is available and provide its absolute path. If it cannot be opened automatically, still provide the path.
 
@@ -36,7 +36,29 @@ Use `examples/artifact.json` as the manifest reference. Compose purpose-specific
 
 The predefined implementation lives in `assets/components.js` and `assets/styles.css`. Reuse it unchanged for normal artifacts. It defines standard custom elements for every visual grammar type.
 
-Customize an artifact through its `theme` object, not by rewriting component CSS. Supported tokens are `accent`, `accent-soft`, `on-accent-soft`, `background`, `surface`, `text`, `muted`, `border`, `success`, `warning`, `danger`, `code-bg`, `code-text`, `radius`, `shadow`, `font-body`, and `font-mono`. The renderer derives `on-accent-soft` for readable contrast when only `accent-soft` is customized; set both to take explicit control. Omit tokens to retain the consistent defaults.
+Supported theme tokens are `accent`, `accent-soft`, `on-accent-soft`, `background`, `surface`, `text`, `muted`, `border`, `success`, `warning`, `danger`, `code-bg`, `code-text`, `radius`, `shadow`, `font-body`, `font-mono`, `hero-background`, `hero-text`, and `logo-height`. When only `accent-soft` is set, `on-accent-soft` is derived for readable contrast; set both to take explicit control. Omit tokens to retain the defaults.
+
+## Project branding
+
+A project can white-label every artifact with a brand file. The renderer uses the first one it finds:
+
+1. `--brand <path>` on the command line
+2. The `VISUAL_ARTIFACT_BRAND` environment variable
+3. The nearest `.visual-artifact/brand.json` above the manifest, then above the working directory
+
+Pass `--no-brand` to ignore it. The renderer prints the brand path it used to stderr.
+
+Before composing an artifact, check for a brand file. If one exists, leave the manifest's `theme` out so the brand applies unchanged; a manifest `theme` overrides brand tokens and should only be used for a deliberate one-off. Never edit `assets/` to apply project branding.
+
+The brand file supports these fields; all are optional, and paths resolve relative to the brand file. See `examples/brand/` for a complete example.
+
+- `name`: Organisation or product name, used as the logo's alt text.
+- `logo`: Local image (SVG, PNG, JPEG, GIF, or WebP), embedded in the header.
+- `kind`: Default header eyebrow when the manifest has no `kind`.
+- `footer`: Text appended to the footer, such as a copyright or classification notice.
+- `theme`: Theme tokens for light mode (and dark mode unless overridden).
+- `darkTheme`: Theme tokens applied when the reader prefers a dark colour scheme.
+- `css`: Local stylesheet appended after the base styles, for anything tokens cannot express. Prefer tokens.
 
 ## OpenAPI rendering
 

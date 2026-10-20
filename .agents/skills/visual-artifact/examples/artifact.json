@@ -5,10 +5,6 @@
   "status": "Draft",
   "source": "repository/name",
   "revision": "working tree",
-  "theme": {
-    "accent": "#635bff",
-    "radius": "16px"
-  },
   "components": [
     {
       "type": "section",

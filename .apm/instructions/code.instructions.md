@@ -1,6 +1,6 @@
 ---
 description: General coding and architecture preferences
-applyTo: "**/*"
+applyTo: "{src}/*"
 ---
 
 ## Code Style 
@@ -52,3 +52,9 @@ applyTo: "**/*"
 - Document public domain types, dependency contracts, and behavior whose invariants or persistence implications are not obvious.
 - Comments should explain intent, constraints, authorization, or non-obvious trade-offs—not restate the code.
 - Preserve established domain terminology in names and documentation.
+
+## Memory Management
+
+- Library code and function signatures/docs should make explicit how memory is allocated and released, avoiding hidden allocations and ensuring predictable resource management.
+- Prefer static memory allocation at the start of the program with configurable limits
+- Short CLI apps should prefer to use arena/scratch allocators for all allocated memory to keep memory management simple

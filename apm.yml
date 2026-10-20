@@ -8,10 +8,22 @@ targets:
 dependencies:
   apm:
     - mattpocock/skills/skills/engineering/grill-with-docs
-    - mattpocock/skills/skills/engineering/wizard
     - mattpocock/skills/skills/engineering/improve-codebase-architecture
+    - mattpocock/skills/skills/engineering/code-review
+    - mattpocock/skills/skills/engineering/diagnosing-bugs
+    - mattpocock/skills/skills/engineering/domain-modeling
+    - mattpocock/skills/skills/engineering/retro
+    - mattpocock/skills/skills/engineering/tdd
+    - mattpocock/skills/skills/engineering/prototype
+    - mattpocock/skills/skills/engineering/to-spec
+    - mattpocock/skills/skills/engineering/to-tickets
+    - mattpocock/skills/skills/engineering/setup-matt-pocock-skills
+    - mattpocock/skills/skills/engineering/triage
     - mattpocock/skills/skills/productivity/wait-what
-    - yeseh/please-work
+    - mattpocock/skills/skills/productivity/handoff
+    - mattpocock/skills/skills/productivity/writing-for-agents
+    - mattpocock/skills/skills/productivity/grilling
+
     - ayghri/i-have-adhd
   mcp:
     - name: mslearn

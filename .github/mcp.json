@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mslearn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp",
+      "tools": [
+        "*"
+      ],
+      "id": ""
+    }
+  }
+}

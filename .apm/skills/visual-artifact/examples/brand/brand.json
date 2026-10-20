@@ -1,0 +1,18 @@
+{
+  "name": "Acme Corp",
+  "logo": "logo.svg",
+  "kind": "Acme engineering",
+  "footer": "© Acme Corp · Internal",
+  "theme": {
+    "accent": "#0f766e",
+    "accent-soft": "#ccfbf1",
+    "hero-background": "linear-gradient(135deg, #042f2e, #0f766e)",
+    "font-body": "\"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif"
+  },
+  "darkTheme": {
+    "accent": "#2dd4bf",
+    "accent-soft": "#134e4a",
+    "on-accent-soft": "#f0fdfa"
+  },
+  "css": "brand.css"
+}

@@ -5,8 +5,9 @@
   const allowedThemeTokens = new Set([
     "accent", "accent-soft", "on-accent-soft", "background", "surface", "text", "muted", "border",
     "success", "warning", "danger", "code-bg", "code-text", "radius", "shadow",
-    "font-body", "font-mono",
+    "font-body", "font-mono", "hero-background", "hero-text", "logo-height",
   ]);
+  const brand = manifest.brand || {};
 
   function element(name, attributes = {}, children = []) {
     const node = document.createElement(name);
@@ -384,7 +385,8 @@
       }
 
       const hero = element("header", { class: "va-hero" }, [
-        element("p", { class: "va-eyebrow" }, manifest.kind || "Visual artifact"),
+        brand.logo ? element("img", { class: "va-logo", src: brand.logo, alt: brand.name || "Logo" }) : "",
+        element("p", { class: "va-eyebrow" }, manifest.kind || brand.kind || "Visual artifact"),
         element("h1", { class: "va-title" }, manifest.title),
         manifest.purpose ? element("p", { class: "va-purpose" }, manifest.purpose) : "",
         element("div", { class: "va-meta" }, [
@@ -401,9 +403,13 @@
       }
       appendToc(toc, manifest.components);
 
-      const footer = element("footer", { class: "va-footer" }, manifest.source
-        ? `Source: ${manifest.source}${manifest.revision ? ` · ${manifest.revision}` : ""}`
-        : "Generated as a self-contained visual artifact");
+      const footerText = [
+        manifest.source
+          ? `Source: ${manifest.source}${manifest.revision ? ` · ${manifest.revision}` : ""}`
+          : "Generated as a self-contained visual artifact",
+        brand.footer,
+      ].filter(Boolean).join(" · ");
+      const footer = element("footer", { class: "va-footer" }, footerText);
       const shell = element("div", { class: "va-shell" }, [
         hero,
         element("div", { class: "va-layout" }, [toc, content]),
