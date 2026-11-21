@@ -10,18 +10,18 @@ devDpendencies:
     - ./instructions/skillet.instructions.md
 dependencies:
   apm:
-    - mattpocock/skills/skills/engineering/grill-with-docs
-    - mattpocock/skills/skills/engineering/improve-codebase-architecture
-    - mattpocock/skills/skills/engineering/code-review
-    - mattpocock/skills/skills/engineering/domain-modeling
-    - mattpocock/skills/skills/engineering/retro
-    - mattpocock/skills/skills/engineering/prototype
-    - mattpocock/skills/skills/productivity/wait-what
-    - mattpocock/skills/skills/productivity/handoff
-    - mattpocock/skills/skills/productivity/writing-for-agents
-    - mattpocock/skills/skills/productivity/grilling
+    - mattpocock/skills/skills/engineering/grill-with-docs#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/engineering/improve-codebase-architecture#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/engineering/code-review#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/engineering/domain-modeling#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/engineering/retro#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/engineering/prototype#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/productivity/wait-what#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/productivity/handoff#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/productivity/writing-for-agents#5beb35b040e3de97e54fa9e386d7e42d15c295c2
+    - mattpocock/skills/skills/productivity/grilling#5beb35b040e3de97e54fa9e386d7e42d15c295c2
 
-    - ayghri/i-have-adhd
+    - ayghri/i-have-adhd#1ecea1993b7fce257ffbd686c070948b5e07eda6
 
     # Local primitives. APM only auto-discovers .apm/, so these are
     # declared as local path dependencies to install from the repo root.
