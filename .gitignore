@@ -2,3 +2,9 @@
 # APM dependencies
 apm_modules/
 .prove-it/
+
+.claude/
+.github/instructions
+.github/agents
+.github/skills
+.agents/skills/
