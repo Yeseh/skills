@@ -68,6 +68,20 @@ unverified, put a **spike first** item at the top, saying what it must show and 
 Two to four bullets: what this unlocks for the walking skeleton or the product, which invariant or
 threat it enforces, and why the boundary is drawn where it is. No marketing.
 
+### Expected result
+
+Concrete artefacts showing what the finished change looks like to a user or caller:
+
+- **Config or manifest:** a proposed config file, schema snippet or before/after diff;
+- **CLI:** an example invocation with its stdout, stderr and exit code;
+- **API or event:** a sample request/response payload or emitted event;
+- **UI:** an ASCII wireframe or layout sketch showing key states and copy;
+- **Internal or infrastructure work:** a short call-site usage snippet or resulting artefact (rendered
+  manifest, structured log line, metric).
+
+Keep examples short and representative so a reviewer can picture the surface before code exists. Omit
+this section only when the change produces no observable artefact (such as a pure internal refactor).
+
 ### Program design
 
 - **Module layout:** a code block of the files and modules this ticket adds or changes, plus any migration,
