@@ -1,0 +1,19 @@
+[workspace]
+
+[vars]
+project_name = "skills"
+
+[lint]
+max_activation_tokens = 4000
+max_discovery_tokens = 100
+max_fragment_tokens = 500
+
+[build]
+tokenizer = "cl100k_base"
+verify_urls = false
+
+[module.skills]
+src_dir = "src/skills"
+out_dir = "skills"
+version = "0.1.0"
+fragments_dir = "src/skills/_fragments"

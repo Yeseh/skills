@@ -1,0 +1,117 @@
+{
+  "title": "Implementation plan: example feature",
+  "kind": "Implementation plan",
+  "purpose": "Recipe for a delivery plan: scope, progress, decisions, and rollout for a feature that touches several files.",
+  "status": "Draft",
+  "source": "repository/name",
+  "revision": "working tree",
+  "components": [
+    {
+      "type": "section",
+      "id": "summary",
+      "title": "Summary",
+      "children": [
+        {
+          "type": "metric",
+          "id": "plan-metrics",
+          "items": [
+            { "label": "Slices", "value": 4, "tone": "info" },
+            { "label": "Done", "value": 1, "delta": "25% complete", "tone": "success" },
+            { "label": "Blocked", "value": 1, "tone": "danger" },
+            { "label": "Open questions", "value": 2, "tone": "warning" }
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "plan-goal",
+          "markdown": "Describe the **outcome** in one or two sentences, then list constraints.\n\n- Confirmed: the change is behind a feature flag\n- _Assumption: existing API stays backward compatible_"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "decisions",
+      "title": "Decisions",
+      "children": [
+        {
+          "type": "comparison",
+          "id": "storage-options",
+          "title": "Where should the new state live?",
+          "options": [
+            {
+              "name": "Server-side table",
+              "summary": "Single source of truth; needs a migration.",
+              "pros": ["Survives client changes", "Queryable"],
+              "cons": ["Migration and rollback cost"],
+              "recommended": true
+            },
+            {
+              "name": "Client-side storage",
+              "summary": "No backend change.",
+              "pros": ["Fast to ship"],
+              "cons": ["Lost on device change", "Hard to audit"]
+            }
+          ]
+        },
+        {
+          "type": "accordion",
+          "id": "decision-notes",
+          "title": "Decision notes",
+          "items": [
+            {
+              "title": "Why not client-side storage?",
+              "markdown": "Audit requirements need server-side history. See the open question below.",
+              "open": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "delivery",
+      "title": "Delivery",
+      "children": [
+        {
+          "type": "timeline",
+          "id": "rollout-timeline",
+          "title": "Rollout",
+          "items": [
+            { "date": "Week 1", "title": "Schema and API", "description": "Migration plus read endpoints.", "status": "complete" },
+            { "date": "Week 2", "title": "Write path behind flag", "status": "current" },
+            { "date": "Week 3", "title": "Internal pilot", "status": "pending" },
+            { "date": "Week 4", "title": "General availability", "status": "pending" }
+          ]
+        },
+        {
+          "type": "checklist",
+          "id": "readiness",
+          "title": "Readiness",
+          "items": [
+            { "label": "Migration reviewed", "state": "done" },
+            { "label": "Feature flag wired", "state": "open" },
+            { "label": "Security review", "state": "blocked", "note": "Waiting on the security team." }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "scope",
+      "title": "Scope",
+      "children": [
+        {
+          "type": "file-tree",
+          "id": "change-tree",
+          "title": "Files in this change",
+          "entries": [
+            { "path": "src/orders/schema.sql", "change": "added" },
+            { "path": "src/orders/service.ts", "change": "modified" },
+            { "path": "src/orders/legacy-export.ts", "change": "removed" },
+            { "path": "docs/orders/README.md", "change": "unchanged" }
+          ]
+        }
+      ]
+    }
+  ]
+}

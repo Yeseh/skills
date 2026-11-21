@@ -1,0 +1,93 @@
+{
+  "title": "API change review: example endpoint",
+  "kind": "API change review",
+  "purpose": "Recipe for reviewing a REST API change with its impact, compatibility options, and file scope. Pair with an openapi component for the full contract.",
+  "status": "For review",
+  "source": "repository/name",
+  "revision": "working tree",
+  "components": [
+    {
+      "type": "section",
+      "id": "impact",
+      "title": "Impact",
+      "children": [
+        {
+          "type": "metric",
+          "id": "impact-metrics",
+          "items": [
+            { "label": "Endpoints changed", "value": 2, "tone": "info" },
+            { "label": "Breaking changes", "value": 0, "tone": "success" },
+            { "label": "Consumers to notify", "value": 3, "tone": "warning" }
+          ]
+        },
+        {
+          "type": "callout",
+          "id": "compat-note",
+          "tone": "info",
+          "title": "Compatibility",
+          "markdown": "The new `status` field is additive. Existing clients ignore unknown fields."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "versioning",
+      "title": "Versioning options",
+      "children": [
+        {
+          "type": "comparison",
+          "id": "version-options",
+          "options": [
+            {
+              "name": "Additive change in v1",
+              "summary": "Ship without a version bump.",
+              "pros": ["No client changes required"],
+              "cons": ["Clients must tolerate new fields"],
+              "recommended": true
+            },
+            {
+              "name": "New v2 endpoint",
+              "summary": "Run both versions in parallel.",
+              "pros": ["Strict isolation"],
+              "cons": ["Two code paths to maintain", "Longer deprecation window"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "rollout",
+      "title": "Rollout",
+      "children": [
+        {
+          "type": "timeline",
+          "id": "consumer-timeline",
+          "items": [
+            { "date": "Day 0", "title": "Announce change", "status": "complete" },
+            { "date": "Day 7", "title": "Consumers verify in staging", "status": "current" },
+            { "date": "Day 14", "title": "Production release", "status": "pending" }
+          ]
+        },
+        {
+          "type": "checklist",
+          "id": "review-checklist",
+          "items": [
+            { "label": "OpenAPI document updated", "state": "done" },
+            { "label": "Contract tests pass", "state": "open" },
+            { "label": "Consumers notified", "state": "open" }
+          ]
+        },
+        {
+          "type": "accordion",
+          "id": "faq",
+          "title": "Reviewer questions",
+          "items": [
+            { "title": "Is the change breaking?", "markdown": "No. See the compatibility note above." },
+            { "title": "What if a consumer rejects unknown fields?", "markdown": "They must be updated before the release date.", "open": true }
+          ]
+        }
+      ]
+    }
+  ]
+}

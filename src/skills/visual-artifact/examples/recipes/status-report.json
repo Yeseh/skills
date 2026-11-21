@@ -1,0 +1,77 @@
+{
+  "title": "Status report: example programme",
+  "kind": "Status report",
+  "purpose": "Recipe for a periodic stakeholder update: headline metrics, milestones, blockers, and risks.",
+  "status": "Final",
+  "source": "repository/name",
+  "revision": "week 12",
+  "components": [
+    {
+      "type": "section",
+      "id": "headline",
+      "title": "Headline",
+      "children": [
+        {
+          "type": "metric",
+          "id": "headline-metrics",
+          "items": [
+            { "label": "Milestones on track", "value": "5 of 6", "tone": "success" },
+            { "label": "Budget used", "value": "62%", "delta": "+4 pts vs plan", "tone": "warning" },
+            { "label": "Open risks", "value": 3, "tone": "danger" }
+          ]
+        },
+        {
+          "type": "prose",
+          "id": "summary-prose",
+          "markdown": "Delivery is on track for the pilot. The main exposure is the vendor integration, covered under risks."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "milestones",
+      "title": "Milestones",
+      "children": [
+        {
+          "type": "timeline",
+          "id": "milestone-timeline",
+          "items": [
+            { "date": "Wk 4", "title": "Discovery sign-off", "status": "complete" },
+            { "date": "Wk 8", "title": "Pilot build", "status": "complete" },
+            { "date": "Wk 12", "title": "Vendor integration", "description": "Slipped one week.", "status": "current" },
+            { "date": "Wk 16", "title": "Pilot launch", "status": "pending" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "actions",
+      "title": "Actions",
+      "children": [
+        {
+          "type": "checklist",
+          "id": "action-items",
+          "items": [
+            { "label": "Confirm vendor sandbox access", "state": "blocked", "note": "Owner: partner team." },
+            { "label": "Publish pilot user guide", "state": "open" },
+            { "label": "Freeze pilot scope", "state": "done" }
+          ]
+        },
+        {
+          "type": "accordion",
+          "id": "risk-register",
+          "title": "Risk notes",
+          "items": [
+            {
+              "title": "Vendor API instability",
+              "markdown": "Mitigation: contract tests against the sandbox, plus a fallback manual process.",
+              "open": true
+            },
+            { "title": "Staffing gap in QA", "markdown": "Mitigation: contractor onboarding starts next week." }
+          ]
+        }
+      ]
+    }
+  ]
+}
