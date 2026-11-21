@@ -5,8 +5,8 @@ description: Use only when the user explicitly asks to launch or hand off work i
 
 # Herdr dispatch
 
-Use the Herdr session you are already in. This skill does not schedule work, start another Herdr server,
-change settings or permissions, or authorize actions beyond the user's brief.
+Use the Herdr session you are already in (requires `cmd::herdr` and `cmd::git`). This skill does not schedule
+work, start another Herdr server, change settings or permissions, or authorize actions beyond the user's brief.
 
 ## 1. Verify context and choose the mode
 
@@ -15,7 +15,7 @@ change settings or permissions, or authorize actions beyond the user's brief.
   is absent, stale, or cannot be verified against the live session, stop. Do not select the focused pane,
   switch sessions or machines, or silently fall back to a different dispatcher.
 - Use installed `herdr --help` and subcommand `--help` for syntax. Read IDs from live JSON; names are labels
-  and reconciliation keys, not mutation targets. Don't use bare `herdr` for discovery.
+  and reconciliation keys, not mutation targets. Don't use bare `cmd::herdr` for discovery.
 - **Interactive handoff:** the deliverable is a ready, named pane the user can interact with. Send a brief
   only if requested. Record the handoff and return its location; do not allocate a result file or wait.
 - **Finite background job:** the deliverable is the verified outcome of one bounded brief. Start the same

@@ -24,7 +24,7 @@ Choose the smallest **user journey** that demonstrates the diff, including a mea
 
 Drive the journey through [`tui-test`](https://github.com/microsoft/tui-test) (`tui-test open`/`run`, `submit`/`type`/`press`, `wait`, `expect`) instead of an ad-hoc subprocess call, so the run is scriptable, assertable, and recorded automatically. If `tui-test` is unavailable and cannot be installed, fall back to a raw command capture and note the gap in the report.
 
-1. Open a session scoped to the journey: `tui-test open --cwd <dir>` for a shell-driven command, or `tui-test run <program> [args...]` to launch a TUI program directly.
+1. Open a session scoped to the journey: `tui-test open --cwd <dir>` for a shell-driven command, or `tui-test run <program> <args...>` to launch a TUI program directly.
 2. Drive it like a user: `submit "<command>"` for one-shot commands, or `type`/`press`/`keys` for interactive prompts and TUI navigation.
 3. Wait on the right condition before asserting: `wait command` for shell-tracked completion, `wait idle` for TUI screens that settle without a tracked exit, `wait exit` for a program that terminates.
 4. Assert with `expect`, not by eyeballing output: `expect text "<T>"` for visible output, `expect exit-code <N>` for exit status, `expect output "<T>"` for captured stdout, `expect snapshot <NAME>` for full-screen TUI states.
@@ -43,7 +43,7 @@ Use existing Playwright or browser automation first, then supported browser tool
 
 ## Evidence report
 
-Use the `visual-artifact` skill’s bundled manifest and renderer to create the report; do not hand-author report HTML. Include:
+Use the `skill::visual-artifact` skill's bundled manifest and renderer to create the report; do not hand-author report HTML. Include:
 
 - change summary and detected surfaces;
 - environment and setup commands, with secrets removed;

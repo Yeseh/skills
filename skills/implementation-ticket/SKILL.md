@@ -27,15 +27,15 @@ in-flight PR without approval.
 
 ## 1. Ground every ticket in decided design
 
+Follow the repo's `AGENTS.md` (or `CLAUDE.md`, `CONTRIBUTING.md`), glossary, design docs (design notes, ADRs under `docs/adr/`, RFCs, specs), and coding standards. The **gates** are the lint, type-check, build, and test commands the repo documents or CI runs; find them there and never guess. Use conventional commits with a scope when the repo states no convention. `main` means the repo's default branch.
+
 Read what the repo has of the following before you write anything. Never invent a design the documents don't
 support.
 
-- `AGENTS.md` / `CLAUDE.md` / `CONTRIBUTING.md`: conventions, the gates (lint, build and test commands) and
-  where the other documents live.
 - The glossary (`GLOSSARY.md`, `CONTEXT.md` or similar): use the canonical terms and avoid listed aliases. Name
   packages, modules and binaries the way the glossary does.
-- The design docs: design notes, ADRs (`docs/adr/`), RFCs or specs, especially the one that sets module or
-  package boundaries and dependency rules. Also read open docs PRs and branches that record recent decisions.
+- The design docs, especially the one that sets module or package boundaries and dependency rules. Also read
+  open docs PRs and branches that record recent decisions.
 - The coding standards: cite rule IDs where a design choice follows one.
 - The parent issue and the decision tickets it depends on. Read the **last resolution comment** of each
   closed decision ticket: resolutions supersede the question text and sometimes each other ("Superseded
@@ -54,7 +54,7 @@ Title: `Build: <what> (<packages or components>)`. For docs-only work, describe 
 
 Start the body with one line that places the ticket in context: the parent issue and phase, the design
 docs as links, and the decision tickets as `#n`. Then use these sections, in this order. Keep the headings
-exactly as written: `## What is built` and `## Test plan` are how the `next-ticket` skill recognises a
+exactly as written: `## What is built` and `## Test plan` are how `next-ticket` recognises a
 build-ready ticket.
 
 ### What is built

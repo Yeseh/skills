@@ -2,6 +2,7 @@
 
 [vars]
 project_name = "skills"
+note_vault_path = "/home/jesse/repo/note-vault"
 
 [lint]
 max_activation_tokens = 4000

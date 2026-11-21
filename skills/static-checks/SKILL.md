@@ -9,11 +9,11 @@ Find the repo's stacks from its manifests, then read the matching reference for 
 
 | Manifest | Reference |
 |---|---|
-| `Cargo.toml` | [references/rust.md](references/rust.md) |
-| `package.json`, `tsconfig.json` | [references/typescript.md](references/typescript.md) |
-| `pyproject.toml`, `setup.cfg`, `requirements*.txt` | [references/python.md](references/python.md) |
-| `go.mod` | [references/go.md](references/go.md) |
-| `*.csproj`, `*.sln`, `*.slnx` | [references/dotnet.md](references/dotnet.md) |
+| `Cargo.toml` | `references/rust.md` |
+| `package.json`, `tsconfig.json` | `references/typescript.md` |
+| `pyproject.toml`, `setup.cfg`, `requirements*.txt` | `references/python.md` |
+| `go.mod` | `references/go.md` |
+| `*.csproj`, `*.sln`, `*.slnx` | `references/dotnet.md` |
 
 Each reference lists, in order: the gates and toolchain pin, layer 1 (design it out), layer 2 (static
 analysis), suppressions, layer 3 (verification), and config gotchas.

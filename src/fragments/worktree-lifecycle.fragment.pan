@@ -1,0 +1,1 @@
+Always run `git fetch origin` first and create a fresh temporary worktree under `$(mktemp -d)` rather than modifying the shared checkout. Clean up each worktree you created, even on failure, only after verifying it contains no unlanded work (including untracked or ignored files); otherwise preserve it and report its path. Never force-remove a worktree with unlanded work.

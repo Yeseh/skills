@@ -1,6 +1,6 @@
 ---
 name: build-guide
-description: Write a layered, part-by-part implementation guide for a build-it-yourself project (for example "an agent sandbox in Zig", "a Git clone in Rust", "a ray tracer in Odin") as Obsidian notes in Jesse's note-vault. The guide states WHAT to build and WHY, with diagrams, milestones, traps, and inline links to documentation, but does not give the solution code. Asks for the detail level (light / medium / heavy) first and writes in ASD-STE100 Simplified Technical English (about 80% strict). Use this skill whenever the user asks for an implementation guide, build guide, learning path, "guide me through building X", "help me follow along building X", a project roadmap for learning, or a stepwise plan to build something themselves without being handed the answers, even if they don't say "guide".
+description: "Layered build-it-yourself implementation guide in note-vault Obsidian notes: what/why, diagrams, milestones, traps, links—no solution code. Asks detail level first; ASD-STE100 (~80%). Use for build guides, learning paths, 'guide me through building X', or project roadmaps for learning."
 ---
 
 # Build guide
@@ -13,7 +13,7 @@ The model example of this kind of guide is the Zandbox guide in `note-vault/Me/S
 
 Before you do any research or writing, ask the user which detail level they want. Use the AskUserQuestion tool. Put the detail level question first. In the same call, ask only for the information that is missing from the request (for example: the language, the target platform, the project name, or the scope).
 
-The three levels (full definitions with examples are in `references/detail-levels.md`):
+The three levels (full definitions with examples are in `ref::detail-levels`):
 
 | Level | For | Contains |
 | --- | --- | --- |
@@ -43,18 +43,18 @@ Before you write, show the part list to the user in a short table (part, what it
 
 ## Step 4: Write the notes
 
-Write the guide as Obsidian notes in the vault. Read `references/note-templates.md` for the exact templates and the vault conventions.
+Write the guide as Obsidian notes in the vault. Read `ref::note-templates` for the exact templates and the vault conventions.
 
-- Vault: `/home/jesse/repo/note-vault`. Obey its `AGENTS.md`.
+- Vault: `var::note_vault_path`. Obey its `AGENTS.md`.
 - Folder: `Me/Side Projects/<Project>/`.
 - Files: `<Project>.md` (the index note) and one note per part: `<Project> 00 - <Title>.md`, `<Project> 01 - <Title>.md`, and so on.
 - Diagrams: Mermaid code blocks. Obsidian shows them. Give each part at least one diagram when a diagram explains the mechanism better than text (flows, sequences, layers, trees, data layouts).
-- Milestones: plain `- [ ]` checkboxes. Do not add tags such as `#inbox` or `#weekly` to them, because the vault Tasks queries collect tasks by tag.
+- Milestones: plain Markdown checkboxes (do not add tags such as `#inbox` or `#weekly` to them, because the vault Tasks queries collect tasks by tag).
 - Resources: put links **inline**, at the step where the user needs them. Also keep a short "Read up on" list at the end of each part. A link in the step is more useful than a link list at the bottom of the note.
 
 ## Step 5: Write in ASD-STE100 (about 80%)
 
-Read `references/ste100.md` before you write. Apply the strict rules to all instructions, milestones, and traps. Apply the relaxed rules to explanations of concepts. Technical names (API names, syscalls, file names, flags) are always permitted.
+Read `ref::ste100` before you write. Apply the strict rules to all instructions, milestones, and traps. Apply the relaxed rules to explanations of concepts. Technical names (API names, syscalls, file names, flags) are always permitted.
 
 When the notes are complete, run the checker on the project folder. The script is in the `scripts/` folder of this skill (the folder that contains this SKILL.md):
 
@@ -64,7 +64,7 @@ python3 <skill-folder>/scripts/ste_check.py "/home/jesse/repo/note-vault/Me/Side
 
 The target is a score of 80% or more. If the score is lower, rewrite the sentences that the checker shows and run it again. The checker uses simple rules, so it cannot find all problems and it shows some false positives. Use your judgment: if a flagged sentence is clear and a rewrite makes it worse, keep it.
 
-The checker examines only mechanical rules (length, listed words, phrasal verbs, passive voice, contractions). It does not examine word choice, consistent terms, or tone. Thus a pass is necessary but not sufficient. After it passes, read one part note again against the strict rules in `references/ste100.md`. Look for casual phrases, changes in the name of a component, and instructions that are not in the imperative. Correct the same problems in all notes.
+The checker examines only mechanical rules (length, listed words, phrasal verbs, passive voice, contractions). It does not examine word choice, consistent terms, or tone. Thus a pass is necessary but not sufficient. After it passes, read one part note again against the strict rules in `ref::ste100`. Look for casual phrases, changes in the name of a component, and instructions that are not in the imperative. Correct the same problems in all notes.
 
 ## Step 6: Report
 

@@ -5,8 +5,8 @@ description: Use only when the user explicitly asks to launch or hand off work i
 
 # Herdr dispatch
 
-Use the Herdr session you are already in. This skill does not schedule work, start another Herdr server,
-change settings or permissions, or authorize actions beyond the user's brief.
+Use the Herdr session you are already in (requires `herdr` and `git`). This skill does not schedule
+work, start another Herdr server, change settings or permissions, or authorize actions beyond the user's brief.
 
 ## 1. Verify context and choose the mode
 

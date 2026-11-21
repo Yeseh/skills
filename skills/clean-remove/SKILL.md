@@ -1,6 +1,6 @@
 ---
 name: clean-remove
-description: Cleanly remove code or configuration from a codebase without backwards compatibility or  
+description: Cleanly remove code or configuration from a codebase with a clean break and no backwards compatibility.
 disable-model-invocation: true 
 ---
 

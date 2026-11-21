@@ -1,6 +1,6 @@
 ---
 name: build-guide
-description: Write a layered, part-by-part implementation guide for a build-it-yourself project (for example "an agent sandbox in Zig", "a Git clone in Rust", "a ray tracer in Odin") as Obsidian notes in Jesse's note-vault. The guide states WHAT to build and WHY, with diagrams, milestones, traps, and inline links to documentation, but does not give the solution code. Asks for the detail level (light / medium / heavy) first and writes in ASD-STE100 Simplified Technical English (about 80% strict). Use this skill whenever the user asks for an implementation guide, build guide, learning path, "guide me through building X", "help me follow along building X", a project roadmap for learning, or a stepwise plan to build something themselves without being handed the answers, even if they don't say "guide".
+description: "Layered build-it-yourself implementation guide in note-vault Obsidian notes: what/why, diagrams, milestones, traps, links—no solution code. Asks detail level first; ASD-STE100 (~80%). Use for build guides, learning paths, 'guide me through building X', or project roadmaps for learning."
 ---
 
 # Build guide
@@ -45,11 +45,11 @@ Before you write, show the part list to the user in a short table (part, what it
 
 Write the guide as Obsidian notes in the vault. Read `references/note-templates.md` for the exact templates and the vault conventions.
 
-- Vault: `/home/jesse/repo/note-vault`. Obey its `AGENTS.md`.
+- Vault: /home/jesse/repo/note-vault. Obey its `AGENTS.md`.
 - Folder: `Me/Side Projects/<Project>/`.
 - Files: `<Project>.md` (the index note) and one note per part: `<Project> 00 - <Title>.md`, `<Project> 01 - <Title>.md`, and so on.
 - Diagrams: Mermaid code blocks. Obsidian shows them. Give each part at least one diagram when a diagram explains the mechanism better than text (flows, sequences, layers, trees, data layouts).
-- Milestones: plain `- [ ]` checkboxes. Do not add tags such as `#inbox` or `#weekly` to them, because the vault Tasks queries collect tasks by tag.
+- Milestones: plain Markdown checkboxes (do not add tags such as `#inbox` or `#weekly` to them, because the vault Tasks queries collect tasks by tag).
 - Resources: put links **inline**, at the step where the user needs them. Also keep a short "Read up on" list at the end of each part. A link in the step is more useful than a link list at the bottom of the note.
 
 ## Step 5: Write in ASD-STE100 (about 80%)
