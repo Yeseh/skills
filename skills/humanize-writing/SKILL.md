@@ -146,7 +146,7 @@ Every finding needs four things, or it is not a finding:
 - **One suggested replacement** — concrete text, not "consider tightening". Give the words.
 
 Where a sentence is vague because the underlying fact is missing, the suggestion is
-`[specific needed — what number/name/date goes here?]`. Never supply a plausible fact.
+[specific needed — what number/name/date goes here?]`. Never supply a plausible fact.
 
 End with the counts and an offer to hand the findings to `docx` for applying, if they want
 that as a next step.

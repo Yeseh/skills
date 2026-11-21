@@ -2,7 +2,7 @@
 
 [meta]
 skillet_version = "0.1.0"
-built_at = "2026-11-21T10:45:26.467414778Z"
+built_at = "2026-11-21T12:31:41.381318078Z"
 tokenizer = "cl100k_base"
 
 [skills.build-guide]
@@ -10,7 +10,7 @@ source_hash = "sha256:80b8ffc1f09c1656cd4cee3175ba4a7933582a717cfa804f4b8da0f088
 compiled_hash = "sha256:80b8ffc1f09c1656cd4cee3175ba4a7933582a717cfa804f4b8da0f08830e7ac"
 discovery_tokens = 178
 activation_tokens = 1540
-transitive_tokens = 0
+transitive_tokens = 4550
 fragments_used = []
 minhash = [
     273655189930109442,
@@ -148,7 +148,7 @@ source_hash = "sha256:2c49199c872d59b83fc1f2bd16db5243aa4dd45c85b3f2b0af290e04d4
 compiled_hash = "sha256:2c49199c872d59b83fc1f2bd16db5243aa4dd45c85b3f2b0af290e04d4eeb9a2"
 discovery_tokens = 16
 activation_tokens = 155
-transitive_tokens = 0
+transitive_tokens = 155
 fragments_used = []
 minhash = [
     2993663607483547837,
@@ -283,10 +283,10 @@ minhash = [
 
 [skills.herdr-dispatch]
 source_hash = "sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e"
-compiled_hash = "sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e"
+compiled_hash = "sha256:41bf410e85751fc96bd7ec85138aebc7ab5dc5613fda15da39dec2d8a3ccec91"
 discovery_tokens = 49
 activation_tokens = 1961
-transitive_tokens = 0
+transitive_tokens = 1961
 fragments_used = []
 minhash = [
     216301900879437585,
@@ -421,10 +421,10 @@ minhash = [
 
 [skills.humanize-writing]
 source_hash = "sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c"
-compiled_hash = "sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c"
+compiled_hash = "sha256:cdd6109925c5d23b46a3a5134c6008ce6de93bf0eb951266b1678a59aa87c421"
 discovery_tokens = 191
-activation_tokens = 2696
-transitive_tokens = 0
+activation_tokens = 2695
+transitive_tokens = 6395
 fragments_used = []
 minhash = [
     20613919205646028,
@@ -565,10 +565,10 @@ paths = [
 
 [skills.implementation-ticket]
 source_hash = "sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc"
-compiled_hash = "sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc"
+compiled_hash = "sha256:35c4bd381bd0f082e1f6d71f0700823de707408403267e640dfc69c20aacd105"
 discovery_tokens = 92
 activation_tokens = 1902
-transitive_tokens = 0
+transitive_tokens = 1902
 fragments_used = []
 minhash = [
     478829942158561151,
@@ -706,7 +706,7 @@ source_hash = "sha256:33b0fcf9fec1eda4a25eb4a8fdc64424159a6568f51ab2667b98c38cfc
 compiled_hash = "sha256:33b0fcf9fec1eda4a25eb4a8fdc64424159a6568f51ab2667b98c38cfc4c9acd"
 discovery_tokens = 98
 activation_tokens = 2953
-transitive_tokens = 0
+transitive_tokens = 2953
 fragments_used = []
 minhash = [
     10457906639466037,
@@ -841,10 +841,10 @@ minhash = [
 
 [skills.pr-shepherd]
 source_hash = "sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4"
-compiled_hash = "sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4"
+compiled_hash = "sha256:e8ff90277ea91897a79ee976b5c531e686dd978a1759a69594b06fc3e327c10b"
 discovery_tokens = 115
-activation_tokens = 5618
-transitive_tokens = 0
+activation_tokens = 5614
+transitive_tokens = 5614
 fragments_used = []
 minhash = [
     50057062655158762,
@@ -982,7 +982,7 @@ source_hash = "sha256:6488cced600480f982fbf530bb680ed237d2bbb1e61e1d9088fc7af623
 compiled_hash = "sha256:6488cced600480f982fbf530bb680ed237d2bbb1e61e1d9088fc7af6231e9cb2"
 discovery_tokens = 18
 activation_tokens = 1053
-transitive_tokens = 0
+transitive_tokens = 1053
 fragments_used = []
 minhash = [
     126585821776211285,
@@ -1120,10 +1120,10 @@ urls = ["https://github.com/microsoft/tui-test"]
 
 [skills.review-to-lint]
 source_hash = "sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971"
-compiled_hash = "sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971"
+compiled_hash = "sha256:c464666d161692e324acce780a56780a3c2cad6f1e083e658a8b0a826fdf280f"
 discovery_tokens = 119
 activation_tokens = 4054
-transitive_tokens = 0
+transitive_tokens = 4054
 fragments_used = []
 minhash = [
     42888877820068006,
@@ -1261,7 +1261,7 @@ source_hash = "sha256:ae2eb82c0d5db7a6930158354093a6f619459879ad00eca9626742c8aa
 compiled_hash = "sha256:ae2eb82c0d5db7a6930158354093a6f619459879ad00eca9626742c8aa38cdd2"
 discovery_tokens = 79
 activation_tokens = 393
-transitive_tokens = 0
+transitive_tokens = 3649
 fragments_used = []
 minhash = [
     100256748343183125,
@@ -1405,10 +1405,10 @@ paths = [
 
 [skills.visual-artifact]
 source_hash = "sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc"
-compiled_hash = "sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc"
+compiled_hash = "sha256:35033d59932a311f81d80f4f6fc7e45621717f03bc9453732a75ea628da0c399"
 discovery_tokens = 20
 activation_tokens = 1678
-transitive_tokens = 0
+transitive_tokens = 1678
 fragments_used = []
 minhash = [
     136321389833214190,
@@ -1541,4 +1541,30 @@ minhash = [
     429148658939562450,
 ]
 
-[agents]
+[agents.chief-of-staff]
+source_hash = "sha256:d5a02235d1304d32e4c596d81c543c0acde1febe4fb3185ca4daa35ee21f8b69"
+compiled_hash = "sha256:96e6f5185c588d61d5a36cb8d53b8c5bf937aeb7eab6795496d80c8ee582e3e8"
+discovery_tokens = 107
+activation_tokens = 3585
+transitive_tokens = 3585
+fragments_used = []
+
+[agents.chief-of-staff.refs]
+skills = [
+    "herdr-dispatch",
+    "implementation-ticket",
+    "next-ticket",
+    "pr-shepherd",
+    "review-to-lint",
+]
+
+[agents.enforcer]
+source_hash = "sha256:ea919fa8f05aae1e0da69fe8b2d8e801a4aef5aae4e843efb84f44fd8052fdc6"
+compiled_hash = "sha256:379b6cfbd0488c7d6921610e3b4fcd32c1a3c9de5b4bc9ffefae7790f4c1c5cf"
+discovery_tokens = 84
+activation_tokens = 375
+transitive_tokens = 375
+fragments_used = []
+
+[agents.enforcer.refs]
+skills = ["review-to-lint"]

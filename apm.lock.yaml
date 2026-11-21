@@ -1,5 +1,5 @@
 lockfile_version: '4'
-generated_at: '2026-11-21T11:36:31.962860+00:00'
+generated_at: '2026-11-21T12:40:40.714062+00:00'
 apm_version: 0.37.0
 manifest_targets:
 - claude
@@ -126,11 +126,11 @@ dependencies:
   - .claude/skills/herdr-dispatch
   - .claude/skills/herdr-dispatch/SKILL.md
   deployed_file_hashes:
-    .agents/skills/herdr-dispatch/SKILL.md: sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e
-    .claude/skills/herdr-dispatch/SKILL.md: sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e
+    .agents/skills/herdr-dispatch/SKILL.md: sha256:41bf410e85751fc96bd7ec85138aebc7ab5dc5613fda15da39dec2d8a3ccec91
+    .claude/skills/herdr-dispatch/SKILL.md: sha256:41bf410e85751fc96bd7ec85138aebc7ab5dc5613fda15da39dec2d8a3ccec91
   source: local
   local_path: ./skills/herdr-dispatch
-  content_hash: sha256:e4f695c148a21404669df81842c11ec920a632a78fb1a1844bdc7754393b1868
+  content_hash: sha256:011fc20de6902b88cc6f332f87a5d3d3b9a36fc098b856806324ec580ee72bcb
 - repo_url: _local/humanize-writing
   name: humanize-writing
   version: unknown
@@ -149,19 +149,19 @@ dependencies:
   - .claude/skills/humanize-writing/scripts/aiism_scan.py
   - .claude/skills/humanize-writing/skill-quality-report.json
   deployed_file_hashes:
-    .agents/skills/humanize-writing/SKILL.md: sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c
+    .agents/skills/humanize-writing/SKILL.md: sha256:cdd6109925c5d23b46a3a5134c6008ce6de93bf0eb951266b1678a59aa87c421
     .agents/skills/humanize-writing/references/rewrite-playbook.md: sha256:90bb470e724538a7e69837686473762d6505ed7c30b79eb5d3172f1ce27d3ff3
     .agents/skills/humanize-writing/references/tells.md: sha256:6266432d9278c2f1ef1e2b20f541bdd48b9464983b8d0351461bef10f2b3aa8b
     .agents/skills/humanize-writing/scripts/aiism_scan.py: sha256:8971ac6097c8d3197e8e5cd4f25bf3944c3ad0bf3c7fbae2c33bae6f62e7de06
     .agents/skills/humanize-writing/skill-quality-report.json: sha256:b4f78da5228cde16482a8a2d6103f8c8811445d775be22a8ce8e7c37293a0e4b
-    .claude/skills/humanize-writing/SKILL.md: sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c
+    .claude/skills/humanize-writing/SKILL.md: sha256:cdd6109925c5d23b46a3a5134c6008ce6de93bf0eb951266b1678a59aa87c421
     .claude/skills/humanize-writing/references/rewrite-playbook.md: sha256:90bb470e724538a7e69837686473762d6505ed7c30b79eb5d3172f1ce27d3ff3
     .claude/skills/humanize-writing/references/tells.md: sha256:6266432d9278c2f1ef1e2b20f541bdd48b9464983b8d0351461bef10f2b3aa8b
     .claude/skills/humanize-writing/scripts/aiism_scan.py: sha256:8971ac6097c8d3197e8e5cd4f25bf3944c3ad0bf3c7fbae2c33bae6f62e7de06
     .claude/skills/humanize-writing/skill-quality-report.json: sha256:b4f78da5228cde16482a8a2d6103f8c8811445d775be22a8ce8e7c37293a0e4b
   source: local
   local_path: ./skills/humanize-writing
-  content_hash: sha256:0050ae9f9a5d4618eab736e0fec11fb433588c1725464073f846adeca3de6b44
+  content_hash: sha256:9a7765d99efe86d2b21559eb0898b55e03412cf7ccc095141fa9a6f6e6220872
 - repo_url: _local/implementation-ticket
   name: implementation-ticket
   version: unknown
@@ -172,11 +172,11 @@ dependencies:
   - .claude/skills/implementation-ticket
   - .claude/skills/implementation-ticket/SKILL.md
   deployed_file_hashes:
-    .agents/skills/implementation-ticket/SKILL.md: sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc
-    .claude/skills/implementation-ticket/SKILL.md: sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc
+    .agents/skills/implementation-ticket/SKILL.md: sha256:35c4bd381bd0f082e1f6d71f0700823de707408403267e640dfc69c20aacd105
+    .claude/skills/implementation-ticket/SKILL.md: sha256:35c4bd381bd0f082e1f6d71f0700823de707408403267e640dfc69c20aacd105
   source: local
   local_path: ./skills/implementation-ticket
-  content_hash: sha256:6524e1ff793da1abba89fbaf1147679565cb3f9356cc6227f963575e0570f395
+  content_hash: sha256:363e1b8b29d1d68c025ad7570911e489f2c171df423d95919a81316029b5d812
 - repo_url: _local/next-ticket
   name: next-ticket
   version: unknown
@@ -214,19 +214,19 @@ dependencies:
   - .claude/skills/pr-shepherd/scripts/run-every.sh
   - .claude/skills/pr-shepherd/scripts/test_inventory.py
   deployed_file_hashes:
-    .agents/skills/pr-shepherd/SKILL.md: sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4
+    .agents/skills/pr-shepherd/SKILL.md: sha256:e8ff90277ea91897a79ee976b5c531e686dd978a1759a69594b06fc3e327c10b
     .agents/skills/pr-shepherd/scripts/discover-review-requests.sh: sha256:a9a3e62bb705e17a5a2d3b4bffaef27337b1962c7c5f54e96e73fd4a1a959757
     .agents/skills/pr-shepherd/scripts/inventory.py: sha256:2a104d9a4e0edda704ec0b8b95014ce31259f0f893c48d230e48d86df1688a40
     .agents/skills/pr-shepherd/scripts/run-every.sh: sha256:1b150d577f40a77660ea276e4cb14f0cc10a26821fcacba6c7007db4878b070a
     .agents/skills/pr-shepherd/scripts/test_inventory.py: sha256:385e17ebe7ad47257c39be26b663789c8433523a55bd47ef298689859d4dd522
-    .claude/skills/pr-shepherd/SKILL.md: sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4
+    .claude/skills/pr-shepherd/SKILL.md: sha256:e8ff90277ea91897a79ee976b5c531e686dd978a1759a69594b06fc3e327c10b
     .claude/skills/pr-shepherd/scripts/discover-review-requests.sh: sha256:a9a3e62bb705e17a5a2d3b4bffaef27337b1962c7c5f54e96e73fd4a1a959757
     .claude/skills/pr-shepherd/scripts/inventory.py: sha256:2a104d9a4e0edda704ec0b8b95014ce31259f0f893c48d230e48d86df1688a40
     .claude/skills/pr-shepherd/scripts/run-every.sh: sha256:1b150d577f40a77660ea276e4cb14f0cc10a26821fcacba6c7007db4878b070a
     .claude/skills/pr-shepherd/scripts/test_inventory.py: sha256:385e17ebe7ad47257c39be26b663789c8433523a55bd47ef298689859d4dd522
   source: local
   local_path: ./skills/pr-shepherd
-  content_hash: sha256:4b70a8950c7c3609c9648676ddf4d76e66af7e8a7cb1eb9998bb4e9d1b47bbc1
+  content_hash: sha256:a3a037d8ea22621e533478397857ab031c2f928d54bdb79d0156de5369d2f116
 - repo_url: _local/prove-it
   name: prove-it
   version: unknown
@@ -252,11 +252,11 @@ dependencies:
   - .claude/skills/review-to-lint
   - .claude/skills/review-to-lint/SKILL.md
   deployed_file_hashes:
-    .agents/skills/review-to-lint/SKILL.md: sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971
-    .claude/skills/review-to-lint/SKILL.md: sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971
+    .agents/skills/review-to-lint/SKILL.md: sha256:c464666d161692e324acce780a56780a3c2cad6f1e083e658a8b0a826fdf280f
+    .claude/skills/review-to-lint/SKILL.md: sha256:c464666d161692e324acce780a56780a3c2cad6f1e083e658a8b0a826fdf280f
   source: local
   local_path: ./skills/review-to-lint
-  content_hash: sha256:1c4ae23eb4e45584430f2a1b0dc2523b6e749684043c278387f8ea2e645e3428
+  content_hash: sha256:7c679e7895a3461b3292f0142e20f2e0f9c20c98e2fa7e520ae9a61bc86acdb0
 - repo_url: _local/static-checks
   name: static-checks
   version: unknown
@@ -335,7 +335,7 @@ dependencies:
   - .claude/skills/visual-artifact/examples/recipes/status-report.json
   - .claude/skills/visual-artifact/scripts/render.mjs
   deployed_file_hashes:
-    .agents/skills/visual-artifact/SKILL.md: sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc
+    .agents/skills/visual-artifact/SKILL.md: sha256:35033d59932a311f81d80f4f6fc7e45621717f03bc9453732a75ea628da0c399
     .agents/skills/visual-artifact/assets/components.js: sha256:2c6153d66fff4f95e9cfe1f3c4242cc83331906289af56de6f7c80059b69bd0d
     .agents/skills/visual-artifact/assets/styles.css: sha256:248444a0b8fdcb6af59d51a973d4bb2107bce8b783e8a716a585517ff00f8546
     .agents/skills/visual-artifact/examples/artifact.json: sha256:448b7235293eef9399dd22b3f3ec7af67bd2fd824a9a8a85c136238b2b252c58
@@ -346,7 +346,7 @@ dependencies:
     .agents/skills/visual-artifact/examples/recipes/implementation-plan.json: sha256:5a53aa58a7395b74165caed5fbc21341595f563ed4b879c93c932d9d4283ba2c
     .agents/skills/visual-artifact/examples/recipes/status-report.json: sha256:03630cd4911e4540b24af79cb8dbbb5219e9f2d637fe907e960a380372f9febc
     .agents/skills/visual-artifact/scripts/render.mjs: sha256:42b75851174091e7ae49d954b3e3225573c3844b2460b2c7f519721bb2af1b59
-    .claude/skills/visual-artifact/SKILL.md: sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc
+    .claude/skills/visual-artifact/SKILL.md: sha256:35033d59932a311f81d80f4f6fc7e45621717f03bc9453732a75ea628da0c399
     .claude/skills/visual-artifact/assets/components.js: sha256:2c6153d66fff4f95e9cfe1f3c4242cc83331906289af56de6f7c80059b69bd0d
     .claude/skills/visual-artifact/assets/styles.css: sha256:248444a0b8fdcb6af59d51a973d4bb2107bce8b783e8a716a585517ff00f8546
     .claude/skills/visual-artifact/examples/artifact.json: sha256:448b7235293eef9399dd22b3f3ec7af67bd2fd824a9a8a85c136238b2b252c58
@@ -359,7 +359,7 @@ dependencies:
     .claude/skills/visual-artifact/scripts/render.mjs: sha256:42b75851174091e7ae49d954b3e3225573c3844b2460b2c7f519721bb2af1b59
   source: local
   local_path: ./skills/visual-artifact
-  content_hash: sha256:39cd4a6e5a74b042822322b7c9807865f828e9eec667593437fb490bc6829506
+  content_hash: sha256:1a0212a4c50c430a40ab36ea786f66602dd6dfbb9a742299bedf07826e97f9e3
 - repo_url: ayghri/i-have-adhd
   name: i-have-adhd
   host: github.com
@@ -1182,7 +1182,7 @@ deployments:
   owners:
   - ./skills/herdr-dispatch
   active_owner: ./skills/herdr-dispatch
-  content_hash: sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e
+  content_hash: sha256:41bf410e85751fc96bd7ec85138aebc7ab5dc5613fda15da39dec2d8a3ccec91
 - kind: project-relative
   target: claude
   value: .claude/skills/humanize-writing
@@ -1200,7 +1200,7 @@ deployments:
   owners:
   - ./skills/humanize-writing
   active_owner: ./skills/humanize-writing
-  content_hash: sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c
+  content_hash: sha256:cdd6109925c5d23b46a3a5134c6008ce6de93bf0eb951266b1678a59aa87c421
 - kind: project-relative
   target: claude
   value: .claude/skills/humanize-writing/references/rewrite-playbook.md
@@ -1299,7 +1299,7 @@ deployments:
   owners:
   - ./skills/implementation-ticket
   active_owner: ./skills/implementation-ticket
-  content_hash: sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc
+  content_hash: sha256:35c4bd381bd0f082e1f6d71f0700823de707408403267e640dfc69c20aacd105
 - kind: project-relative
   target: claude
   value: .claude/skills/improve-codebase-architecture
@@ -1389,7 +1389,7 @@ deployments:
   owners:
   - ./skills/pr-shepherd
   active_owner: ./skills/pr-shepherd
-  content_hash: sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4
+  content_hash: sha256:e8ff90277ea91897a79ee976b5c531e686dd978a1759a69594b06fc3e327c10b
 - kind: project-relative
   target: claude
   value: .claude/skills/pr-shepherd/scripts/discover-review-requests.sh
@@ -1533,7 +1533,7 @@ deployments:
   owners:
   - ./skills/review-to-lint
   active_owner: ./skills/review-to-lint
-  content_hash: sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971
+  content_hash: sha256:c464666d161692e324acce780a56780a3c2cad6f1e083e658a8b0a826fdf280f
 - kind: project-relative
   target: claude
   value: .claude/skills/setup-matt-pocock-skills
@@ -1839,7 +1839,7 @@ deployments:
   owners:
   - ./skills/visual-artifact
   active_owner: ./skills/visual-artifact
-  content_hash: sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc
+  content_hash: sha256:35033d59932a311f81d80f4f6fc7e45621717f03bc9453732a75ea628da0c399
 - kind: project-relative
   target: claude
   value: .claude/skills/visual-artifact/assets/components.js
@@ -2289,7 +2289,7 @@ deployments:
   owners:
   - ./skills/herdr-dispatch
   active_owner: ./skills/herdr-dispatch
-  content_hash: sha256:0da0d5a4735f42646cb037bb37ba42a703b7012984b8bc3f93b1a6cc6dfe016e
+  content_hash: sha256:41bf410e85751fc96bd7ec85138aebc7ab5dc5613fda15da39dec2d8a3ccec91
 - kind: project-relative
   target: copilot
   value: .agents/skills/humanize-writing
@@ -2307,7 +2307,7 @@ deployments:
   owners:
   - ./skills/humanize-writing
   active_owner: ./skills/humanize-writing
-  content_hash: sha256:f4496d49dc7591e54fe477bf85d5325c2b49ef8186ab90fbb04d5dab7a1dc53c
+  content_hash: sha256:cdd6109925c5d23b46a3a5134c6008ce6de93bf0eb951266b1678a59aa87c421
 - kind: project-relative
   target: copilot
   value: .agents/skills/humanize-writing/references/rewrite-playbook.md
@@ -2406,7 +2406,7 @@ deployments:
   owners:
   - ./skills/implementation-ticket
   active_owner: ./skills/implementation-ticket
-  content_hash: sha256:532a4d0a75f0a5217c7c3b6cc5d5668aa25d1b6ea2a481436de709bd8a7635dc
+  content_hash: sha256:35c4bd381bd0f082e1f6d71f0700823de707408403267e640dfc69c20aacd105
 - kind: project-relative
   target: copilot
   value: .agents/skills/improve-codebase-architecture
@@ -2496,7 +2496,7 @@ deployments:
   owners:
   - ./skills/pr-shepherd
   active_owner: ./skills/pr-shepherd
-  content_hash: sha256:55dd4a93984afcfe90d9c1f508153db49c5f8f94e98ca9e7396215e4256d2ee4
+  content_hash: sha256:e8ff90277ea91897a79ee976b5c531e686dd978a1759a69594b06fc3e327c10b
 - kind: project-relative
   target: copilot
   value: .agents/skills/pr-shepherd/scripts/discover-review-requests.sh
@@ -2640,7 +2640,7 @@ deployments:
   owners:
   - ./skills/review-to-lint
   active_owner: ./skills/review-to-lint
-  content_hash: sha256:883cedc9e45a2aea44942c532ebbe76f6cea72c1222cc5697eee86babf9b7971
+  content_hash: sha256:c464666d161692e324acce780a56780a3c2cad6f1e083e658a8b0a826fdf280f
 - kind: project-relative
   target: copilot
   value: .agents/skills/setup-matt-pocock-skills
@@ -2946,7 +2946,7 @@ deployments:
   owners:
   - ./skills/visual-artifact
   active_owner: ./skills/visual-artifact
-  content_hash: sha256:00abf88f2f6517e73397f41a5088994d39fca6fba962a4e2f17bce8f13c487cc
+  content_hash: sha256:35033d59932a311f81d80f4f6fc7e45621717f03bc9453732a75ea628da0c399
 - kind: project-relative
   target: copilot
   value: .agents/skills/visual-artifact/assets/components.js

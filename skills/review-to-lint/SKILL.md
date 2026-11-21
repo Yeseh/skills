@@ -107,7 +107,7 @@ Update `docs/review-findings.md` for every finding whose class can recur. Leave 
 to this code; they stay in the review output only. The ledger is a table with the columns
 **RF | Class | Status | Check / reason | Seen | Last seen**.
 
-- **Known class:** add the new reference (`PR #n`, `branch-name` or `correction`) to **Seen** and update
+- **Known class:** add the new reference (`PR #n`, `branch-name` or `correction) to **Seen** and update
   **Last seen**.
 - **New class:** add a row with the next free `RF-nnn` ID (IDs are never renumbered or reused) and status `open`.
 - Keep a row to one line. The class goes in the row; snippets and explanation belong in the PR or the check's

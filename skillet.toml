@@ -12,8 +12,9 @@ max_fragment_tokens = 500
 tokenizer = "cl100k_base"
 verify_urls = false
 
-[module.skills]
+[plugin.skills]
 src_dir = "src/skills"
+agents_dir = "src/agents"
 out_dir = "skills"
 version = "0.1.0"
-fragments_dir = "src/skills/_fragments"
+fragments_dir = "src/fragments"

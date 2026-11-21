@@ -39,7 +39,7 @@ change settings or permissions, or authorize actions beyond the user's brief.
    `<caller-session-files>/herdr-results/<dispatch-id>/result.md`. Use a new directory per dispatch and
    verify the final file does not exist. Record the exact path, deadline, and eventually the attached wait
    handle. Keep this storage outside the checkout so it survives pane exit and worktree cleanup.
-3. Use a short task-based name with a unique suffix, matching `[a-z][a-z0-9_-]{0,31}`. Verify it is
+3. Use a short task-based name with a unique suffix, matching [a-z][a-z0-9_-]{0,31}`. Verify it is
    unused among live agents and in the caller's registry. Record the target tab's pane IDs before splitting.
    Default to a sibling pane with `--no-focus`; choose `right` or `down` for the available space. Use
    another tab only if requested, with an explicit workspace ID, label, directory and `--no-focus`.
@@ -51,7 +51,7 @@ change settings or permissions, or authorize actions beyond the user's brief.
    herdr agent start "$worker_name" --kind "$agent_kind" --pane "$worker_pane_id"
    ```
 
-   Set `worker_pane_id` from `.result.pane.pane_id` (or `.result.root_pane.pane_id` for `tab create`) and
+   Set `worker_pane_id` from `.result.pane.pane_id` (or `.result.root_pane.pane_id` for `tab create) and
    persist it before running subsequent commands. Verify the pane and directory and that the foreground
    process is an available interactive shell before starting. Use the requested agent kind and only
    authorized native arguments, after `--`. Never paste a shell command built from the brief.

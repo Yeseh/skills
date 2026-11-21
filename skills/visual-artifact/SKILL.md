@@ -23,7 +23,7 @@ Represent the document as an ordered tree in the JSON manifest. Every component 
 
 - `section`: A titled container with an ordered `children` list. Sections may nest; leaf components may not contain children.
 - `prose`: Markdown-like headings, paragraphs, bold, italic, links, lists, blockquotes, and inline code. Raw HTML is always escaped.
-- `code`: Source, commands, diffs, or terminal output. Set `content`, optional `language`, `filename`, `copy`, `lineNumbers`, `highlights`, and `mode` (`plain`, `diff`, or `terminal`). Syntax highlighting applies when `language` is `javascript` or `ts`/`typescript`/`tsx`/`jsx`, `json`, `shell` (`sh`, `bash`, `zsh`, `console`), `python`, `css`, or `sql`. Other languages and `diff` render plain. Highlighting is visual only: copied text is always the exact `content`.
+- `code`: Source, commands, diffs, or terminal output. Set `content`, optional `language`, `filename`, `copy`, `lineNumbers`, `highlights`, and `mode` (`plain`, `diff`, or `terminal). Syntax highlighting applies when `language` is `javascript` or `ts`/`typescript`/`tsx`/`jsx`, `json`, `shell` (`sh`, `bash`, `zsh`, `console`), `python`, `css`, or `sql`. Other languages and `diff` render plain. Highlighting is visual only: copied text is always the exact `content`.
 - `callout`: A title and Markdown-like body with a generic `tone`: `neutral`, `info`, `success`, `warning`, or `danger`.
 - `table`: Structured `columns` and object or array `rows`.
 - `steps`: An ordered `items` list with title, description, and `complete`, `current`, or `pending` status.

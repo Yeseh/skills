@@ -5,6 +5,9 @@ author: Jesse Wellenberg
 targets:
   - claude
   - copilot
+devDpendencies:
+  apm:
+    - ./instructions/skillet.instructions.md
 dependencies:
   apm:
     - mattpocock/skills/skills/engineering/grill-with-docs
@@ -50,5 +53,4 @@ dependencies:
       registry: false
       transport: http
       url: https://learn.microsoft.com/api/mcp
-includes: auto
 scripts: {}

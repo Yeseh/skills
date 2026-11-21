@@ -137,4 +137,4 @@ by the gates, named scenarios pass, and the gates pass.
 - Link design docs with full URLs to the default branch. Use `#n` for issues.
 - Don't restate a whole design doc: link it and state only what this ticket builds from it.
 - No credentials, tokens or secret values in tickets, not even in examples. Use placeholders such as
-  `<token>`.
+  `token>`.
