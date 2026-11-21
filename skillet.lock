@@ -2,7 +2,7 @@
 
 [meta]
 skillet_version = "0.1.0"
-built_at = "2026-11-21T12:58:57.408399965Z"
+built_at = "2026-11-21T13:41:24.953352166Z"
 tokenizer = "cl100k_base"
 
 [skills.build-guide]
