@@ -2,7 +2,7 @@
 
 [meta]
 skillet_version = "0.1.0"
-built_at = "2026-11-21T13:41:24.953352166Z"
+built_at = "2026-11-21T13:51:23.249770401Z"
 tokenizer = "cl100k_base"
 
 [skills.build-guide]
@@ -1595,11 +1595,11 @@ minhash = [
 ]
 
 [agents.chief-of-staff]
-source_hash = "sha256:8b6c7bf0f94f13b78a5ef009d25ce6db4d7ecc77d08e30df15f2f01dffe7bf3d"
-compiled_hash = "sha256:05c70c6160412879abc7b161bee232043ea9c1acad4270a5baf68ce4df978086"
+source_hash = "sha256:b471328949723017be87cf810e2f46adc45d1fc12cb5211564567efd7bb13545"
+compiled_hash = "sha256:6c37a540cd6fc28b592977b23162dfc13a1b51180ee1a37fef42bc0816e29e19"
 discovery_tokens = 78
-activation_tokens = 2922
-transitive_tokens = 2922
+activation_tokens = 2979
+transitive_tokens = 2979
 fragments_used = []
 
 [agents.chief-of-staff.refs]
