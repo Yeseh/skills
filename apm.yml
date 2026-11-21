@@ -3,48 +3,54 @@ version: 1.0.1
 description: Yeseh's personal skill library
 author: Jesse Wellenberg
 targets:
-  - claude
-  - copilot
+- claude
+- copilot
 devDpendencies:
   apm:
-    - ./instructions/skillet.instructions.md
+  - ./instructions/skillet.instructions.md
 dependencies:
   apm:
-    - mattpocock/skills/skills/engineering/grill-with-docs
-    - mattpocock/skills/skills/engineering/improve-codebase-architecture
-    - mattpocock/skills/skills/engineering/code-review
-    - mattpocock/skills/skills/engineering/domain-modeling
-    - mattpocock/skills/skills/engineering/retro
-    - mattpocock/skills/skills/engineering/prototype
-    - mattpocock/skills/skills/productivity/wait-what
-    - mattpocock/skills/skills/productivity/handoff
-    - mattpocock/skills/skills/productivity/writing-for-agents
-    - mattpocock/skills/skills/productivity/grilling
-
-    - ayghri/i-have-adhd
-
-    # Local primitives. APM only auto-discovers .apm/, so these are
-    # declared as local path dependencies to install from the repo root.
-    - ./skills/build-guide
-    - ./skills/clean-remove
-    - ./skills/herdr-dispatch
-    - ./skills/humanize-writing
-    - ./skills/implementation-ticket
-    - ./skills/next-ticket
-    - ./skills/prove-it
-    - ./skills/pr-shepherd
-    - ./skills/review-to-lint
-    - ./skills/static-checks
-    - ./skills/visual-artifact
-    - ./agents/chief-of-staff.agent.md
-    - ./agents/enforcer.agent.md
-    - ./instructions/code.instructions.md
-    - ./instructions/csharp.instructions.md
-    - ./instructions/documentation.instructions.md
-    - ./instructions/typescript.instructions.md
+  - mattpocock/skills/skills/engineering/grill-with-docs
+  - mattpocock/skills/skills/engineering/improve-codebase-architecture
+  - mattpocock/skills/skills/engineering/code-review
+  - mattpocock/skills/skills/engineering/domain-modeling
+  - mattpocock/skills/skills/engineering/retro
+  - mattpocock/skills/skills/engineering/prototype
+  - mattpocock/skills/skills/productivity/wait-what
+  - mattpocock/skills/skills/productivity/handoff
+  - mattpocock/skills/skills/productivity/writing-for-agents
+  - mattpocock/skills/skills/productivity/grilling
+  - ayghri/i-have-adhd
+  - ./skills/build-guide
+  - ./skills/clean-remove
+  - ./skills/herdr-dispatch
+  - ./skills/humanize-writing
+  - ./skills/implementation-ticket
+  - ./skills/next-ticket
+  - ./skills/prove-it
+  - ./skills/pr-shepherd
+  - ./skills/review-to-lint
+  - ./skills/static-checks
+  - ./skills/visual-artifact
+  - ./agents/chief-of-staff.agent.md
+  - ./agents/enforcer.agent.md
+  - ./instructions/code.instructions.md
+  - ./instructions/csharp.instructions.md
+  - ./instructions/documentation.instructions.md
+  - ./instructions/typescript.instructions.md
   mcp:
-    - name: mslearn
-      registry: false
-      transport: http
-      url: https://learn.microsoft.com/api/mcp
+  - name: mslearn
+    registry: false
+    transport: http
+    url: https://learn.microsoft.com/api/mcp
 scripts: {}
+marketplace:
+  owner:
+    name: yeseh
+  outputs:
+    claude: {}
+    copilot: {}
+  packages:
+  - name: skills
+    source: ./skills
+    version: 0.1.0

@@ -1,4 +1,7 @@
-[workspace]
+[workspace.publish]
+agents = ["claude", "github-copilot"]
+marketplace_name = "skills"
+owner_name = "yeseh"
 
 [vars]
 project_name = "skills"
@@ -14,6 +17,7 @@ tokenizer = "cl100k_base"
 verify_urls = false
 
 [plugin.skills]
+publish = true
 src_dir = "src/skills"
 agents_dir = "src/agents"
 out_dir = "skills"
