@@ -1,5 +1,5 @@
 lockfile_version: '4'
-generated_at: '2026-11-21T13:35:34.461106+00:00'
+generated_at: '2026-11-21T13:43:16.548491+00:00'
 apm_version: 0.37.0
 manifest_targets:
 - claude
@@ -172,11 +172,11 @@ dependencies:
   - .claude/skills/implementation-ticket
   - .claude/skills/implementation-ticket/SKILL.md
   deployed_file_hashes:
-    .agents/skills/implementation-ticket/SKILL.md: sha256:9e49f265a5802ad0488e6dfe83fe2371e47be50879868205d493eb39678e51b6
-    .claude/skills/implementation-ticket/SKILL.md: sha256:9e49f265a5802ad0488e6dfe83fe2371e47be50879868205d493eb39678e51b6
+    .agents/skills/implementation-ticket/SKILL.md: sha256:94e4ea072e4940d3af57f57c6ef1af7f4156198d27051f32525d172f736f445d
+    .claude/skills/implementation-ticket/SKILL.md: sha256:94e4ea072e4940d3af57f57c6ef1af7f4156198d27051f32525d172f736f445d
   source: local
   local_path: ./skills/implementation-ticket
-  content_hash: sha256:d54375c9d77a6c944a68e088a8e8169283b4b776942444ad8f1ee6467c103e3c
+  content_hash: sha256:5f4c56983147d2cdb158a5d54ccd218f4993992937dcb1eace95c63f823e2781
 - repo_url: _local/next-ticket
   name: next-ticket
   version: unknown
@@ -380,6 +380,7 @@ dependencies:
   name: i-have-adhd
   host: github.com
   resolved_commit: 1ecea1993b7fce257ffbd686c070948b5e07eda6
+  resolved_ref: 1ecea1993b7fce257ffbd686c070948b5e07eda6
   version: 1ecea19
   package_type: marketplace_plugin
   deployed_files:
@@ -419,6 +420,7 @@ dependencies:
   name: code-review
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/code-review
   is_virtual: true
@@ -448,6 +450,7 @@ dependencies:
   name: domain-modeling
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/domain-modeling
   is_virtual: true
@@ -473,10 +476,15 @@ dependencies:
     .claude/skills/domain-modeling/SKILL.md: sha256:7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3
     .claude/skills/domain-modeling/agents/openai.yaml: sha256:f6bf2aa996c6e6f53fdd0708e18a0d16a56aed8322cca59fedbe3c0d2c75f06b
   content_hash: sha256:ab7acbca5aaf6e976caef1ccd1c14bac9459702f5b8e9d6d96e5a8ca8e3c7ee9
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: grill-with-docs
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/grill-with-docs
   is_virtual: true
@@ -494,10 +502,15 @@ dependencies:
     .claude/skills/grill-with-docs/SKILL.md: sha256:7de372c13488f1ee96cc11cd8907b56b6809cc93eef776eeddd37de6b6cbe3fe
     .claude/skills/grill-with-docs/agents/openai.yaml: sha256:94cd0ab161fb468a836349f5ed482ba58ce8e709a05c57ce533d739dbd35cca9
   content_hash: sha256:8973c3d9463fc9dd708adc36a0f97b01aab4ae7d6a0217c2aa0f0a7ef206b83c
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: improve-codebase-architecture
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/improve-codebase-architecture
   is_virtual: true
@@ -531,6 +544,7 @@ dependencies:
   name: prototype
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/prototype
   is_virtual: true
@@ -556,10 +570,15 @@ dependencies:
     .claude/skills/prototype/UI.md: sha256:723211e878acbc7b6ff09755263f3295cde724ba902ff0064da41eed51d45ad3
     .claude/skills/prototype/agents/openai.yaml: sha256:5af65e43ab41a350436697b81e27b7f848d36782043b73c322bb2c9fa9cc55dc
   content_hash: sha256:6890ef757ada4b0b571e74c28b69fda697ba2e18f564860f4c9373cbbe50535c
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: retro
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/engineering/retro
   is_virtual: true
@@ -577,10 +596,15 @@ dependencies:
     .claude/skills/retro/SKILL.md: sha256:33fbc28568e3146f20fd908b12998bc0ab30aa4f4c87288199a40793efa94696
     .claude/skills/retro/agents/openai.yaml: sha256:cb6fb9d7e6b4be5975f41f6def1dd00a1255bad5d9b02696b124c924a8b8745c
   content_hash: sha256:4d42bb16dc68325fe941153ff3341f8be8f770121479bc41921d477d27a45ad5
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: grilling
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/productivity/grilling
   is_virtual: true
@@ -610,6 +634,7 @@ dependencies:
   name: handoff
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/productivity/handoff
   is_virtual: true
@@ -627,10 +652,15 @@ dependencies:
     .claude/skills/handoff/SKILL.md: sha256:4cbb043950dad2ffd3662ff1a5a0b51ae676004b5cae10e3787e8ee7a4ee69d3
     .claude/skills/handoff/agents/openai.yaml: sha256:5c479fd562c691851690e8b18c8501045bef0943c10743d636b2fae26add1d28
   content_hash: sha256:9f7eab21188d0c5d95a1a123d8b4dc8337774cf880166ade009622d766102f16
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: wait-what
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/productivity/wait-what
   is_virtual: true
@@ -648,10 +678,15 @@ dependencies:
     .claude/skills/wait-what/SKILL.md: sha256:d961bb37defd975c539427edb8f450cdbccdcdd552e213c1ece46676a7970905
     .claude/skills/wait-what/agents/openai.yaml: sha256:b41faadf741d51e4ea184148b2d1854d93f947aaf754c7844f70a00f04194999
   content_hash: sha256:4644efd6cbbd41d190d8a73a55c48d2367ae11a5cce1cf622db7b3437d7641a3
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 - repo_url: mattpocock/skills
   name: writing-for-agents
   host: github.com
   resolved_commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+  resolved_ref: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
   version: unknown
   virtual_path: skills/productivity/writing-for-agents
   is_virtual: true
@@ -673,6 +708,10 @@ dependencies:
     .claude/skills/writing-for-agents/SKILL.md: sha256:551adca942227b44192edba88acd4e8db911f0121ce58ad16944ccf6a896a74a
     .claude/skills/writing-for-agents/agents/openai.yaml: sha256:eacb24b2a618cfb81dacb0416f4fdd75ddf3a8060f8ddb99aae1b1e301907e4b
   content_hash: sha256:dfc57c19e0f7a7e9c371966d765700d74ecae7694377c095095ee94f6fd216b3
+  carried_licenses:
+  - path: LICENSE
+    source: LICENSE
+    hash: sha256:0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5
 deployments:
 - kind: project-relative
   target: claude
@@ -1105,7 +1144,7 @@ deployments:
   owners:
   - ./skills/implementation-ticket
   active_owner: ./skills/implementation-ticket
-  content_hash: sha256:9e49f265a5802ad0488e6dfe83fe2371e47be50879868205d493eb39678e51b6
+  content_hash: sha256:94e4ea072e4940d3af57f57c6ef1af7f4156198d27051f32525d172f736f445d
 - kind: project-relative
   target: claude
   value: .claude/skills/improve-codebase-architecture
@@ -1987,7 +2026,7 @@ deployments:
   owners:
   - ./skills/implementation-ticket
   active_owner: ./skills/implementation-ticket
-  content_hash: sha256:9e49f265a5802ad0488e6dfe83fe2371e47be50879868205d493eb39678e51b6
+  content_hash: sha256:94e4ea072e4940d3af57f57c6ef1af7f4156198d27051f32525d172f736f445d
 - kind: project-relative
   target: copilot
   value: .agents/skills/improve-codebase-architecture
