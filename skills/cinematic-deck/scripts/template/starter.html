@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TITLE</title>
+  <meta name="description" content="DESCRIPTION">
+  <link rel="stylesheet" href="deck/deck.css">
+  <link rel="stylesheet" href="deck/diagram.css">
+  <link rel="stylesheet" href="deck/base.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    /* Deck-specific components. Read theme tokens (var(--accent), var(--line), …) only. */
+  </style>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <main class="deck" data-id="SLUG" data-transition="cinematic">
+    <div class="stage">
+
+      <section class="slide center" id="title" data-hue="250" data-title="TITLE">
+        <p class="kicker" data-anim="fade">KICKER</p>
+        <h1 class="display" data-split data-delay="200">TITLE</h1>
+        <p class="lede" data-anim="rise" data-delay="900">SUBTITLE</p>
+        <aside class="notes"><p>Speaker notes.</p></aside>
+      </section>
+
+    </div>
+  </main>
+
+  <script type="application/json" id="deck-state">{}</script>
+  <script src="deck/deck.js"></script>
+  <script src="deck/diagram.js"></script>
+  <script>
+    // Computed values and custom actions, e.g.
+    // deck.computed('total', s => …).action('reset-demo', (arg, { state }) => { … });
+  </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 [meta]
 skillet_version = "0.1.0"
-built_at = "2026-11-21T13:51:23.249770401Z"
+built_at = "2026-11-28T15:54:42.041195600Z"
 tokenizer = "cl100k_base"
 
 [skills.build-guide]
@@ -148,6 +148,22 @@ paths = [
     "detail-levels",
     "note-templates",
     "ste100",
+]
+
+[skills.cinematic-deck]
+source_hash = "sha256:2104a31d4b1c366ec941bbf81bac25e2e194adf0caf1e72d0e1df8e1454a2044"
+compiled_hash = "sha256:ce1bd18d7b72dde76e8e557c4acfdffd958ebb9fb6d7325edf5d426f750886e0"
+discovery_tokens = 67
+activation_tokens = 1292
+transitive_tokens = 7330
+fragments_used = []
+
+[skills.cinematic-deck.refs]
+paths = [
+    "authoring",
+    "diagrams",
+    "storytelling",
+    "theming",
 ]
 
 [skills.clean-remove]

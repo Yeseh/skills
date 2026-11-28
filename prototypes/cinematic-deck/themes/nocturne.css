@@ -1,0 +1,78 @@
+/* Theme: Nocturne — dark and filmic. Drifting light, grain, vignette, serif display type,
+ * glass panels, full motion. Every colour follows --hue, so slides re-tint as you move. */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  color-scheme: dark;
+  --motion: 1;
+
+  --bg: oklch(.14 .025 var(--hue));
+  --bg-2: oklch(.09 .02 var(--hue));
+  --surface: linear-gradient(160deg, oklch(1 0 0 / .1), oklch(1 0 0 / .045) 60%);
+  --surface-solid: oklch(.18 .025 var(--hue));
+  --fg: oklch(.97 .012 var(--hue));
+  --muted: oklch(.74 .035 var(--hue));
+  --line: oklch(1 0 0 / .14);
+  --accent: oklch(.8 .15 var(--hue));
+  --accent-2: oklch(.76 .16 calc(var(--hue) + 70));
+  --on-accent: oklch(.16 .04 var(--hue));
+
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 400;
+  --display-tracking: -.025em;
+  --display-leading: .9;
+  --em-style: italic;
+  --size-display: 240px;
+  --size-title: 112px;
+  --size-statement: 150px;
+
+  --radius: 18px;
+  --radius-lg: 36px;
+  --shadow: 0 40px 120px -40px oklch(0 0 0 / .7), inset 0 1px 0 oklch(1 0 0 / .08);
+  --panel-blur: 22px;
+
+  --code-bg: oklch(.12 .02 var(--hue) / .7);
+  --code-tag: var(--accent-2);
+  --code-attr: var(--accent);
+  --code-str: oklch(.85 .09 calc(var(--hue) + 140));
+
+  --node-bg: oklch(.19 .03 var(--hue));
+  --node-shadow: 0 20px 50px -24px oklch(0 0 0 / .8);
+  --group-bg: oklch(1 0 0 / .025);
+  --progress: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.panel { background: var(--surface); }
+.btn { background: oklch(1 0 0 / .06); }
+.btn.primary { background: var(--accent); box-shadow: 0 24px 70px -24px var(--accent); }
+
+/* drifting light, vignette, film grain */
+.backdrop { background: radial-gradient(120% 90% at 50% 40%, var(--bg), var(--bg-2)); }
+.backdrop > i {
+  display: block; position: absolute; width: 62vmax; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--c), transparent 72%);
+  opacity: .6; mix-blend-mode: screen;
+  animation: orb-drift var(--t) ease-in-out infinite alternate;
+  translate: calc(var(--px, 0) * var(--d) * 1px) calc(var(--py, 0) * var(--d) * 1px);
+}
+.backdrop > i:nth-child(1) { --c: oklch(.55 .19 var(--hue)); --t: 26s; --d: -40; left: -18vmax; top: -24vmax; }
+.backdrop > i:nth-child(2) { --c: oklch(.5 .18 calc(var(--hue) + 60)); --t: 34s; --d: -24; right: -22vmax; top: 6vmax; animation-delay: -9s; }
+.backdrop > i:nth-child(3) { --c: oklch(.42 .16 calc(var(--hue) - 55)); --t: 41s; --d: -12; left: 18vmax; bottom: -34vmax; animation-delay: -17s; }
+@keyframes orb-drift {
+  50% { transform: translate(7vmax, 5vmax) scale(1.14); }
+  100% { transform: translate(-5vmax, 9vmax) scale(.92); }
+}
+.backdrop::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 45%, oklch(0 0 0 / .65) 100%); }
+.backdrop::after {
+  content: ''; position: absolute; inset: -50%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: .09; mix-blend-mode: overlay;
+  animation: grain 1.2s steps(5) infinite;
+}
+@keyframes grain {
+  20% { transform: translate(-3%, 2%); } 40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-1%, 3%); } 80% { transform: translate(3%, 1%); }
+}
+@media (prefers-reduced-motion: reduce) { .backdrop > i, .backdrop::after { animation: none; } }

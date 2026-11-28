@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinematic Decks</title>
+  <meta name="description" content="A showcase of cinematic, interactive, theme-agnostic slide decks in plain HTML and JavaScript.">
+  <link rel="stylesheet" href="../scripts/template/deck/deck.css">
+  <link rel="stylesheet" href="../scripts/template/deck/diagram.css">
+  <link rel="stylesheet" href="../scripts/template/deck/base.css">
+  <link rel="stylesheet" href="../scripts/template/themes/nocturne.css" id="theme" data-name="nocturne">
+  <style>
+    /* Showcase-only components. They read theme tokens only, so every theme restyles them. */
+
+    /* intro rings */
+    .rings { position: absolute; left: 50%; top: 50%; width: 1500px; transform: translate(-50%, -50%); color: var(--accent); }
+    .rings circle { fill: none; stroke: currentColor; stroke-width: 1; opacity: .28; }
+    .rings .dashed { stroke-dasharray: .004 .012; opacity: .5; }
+    .spin { transform-origin: center; transform-box: fill-box; animation: spin 60s linear infinite; }
+    .spin.fast { animation-duration: 14s; }
+    .spin.rev { animation-direction: reverse; }
+    @keyframes spin { to { rotate: 360deg; } }
+    .keys { margin: 24px 0 0; font-size: 22px; color: var(--muted); }
+
+    /* who's watching */
+    .greeting { padding: 64px 72px; display: flex; flex-direction: column; gap: 18px; }
+    .greeting small { font: 500 18px/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .hello { margin: 0; font: var(--display-weight) 120px/1 var(--font-display); letter-spacing: var(--display-tracking); overflow-wrap: anywhere; }
+    .hello span { font-style: var(--em-style); color: var(--accent); }
+    .hint { max-width: 760px; }
+
+    /* themes */
+    .themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 24px; width: 1500px; }
+    .theme-card {
+      appearance: none; cursor: pointer; font: inherit; color: var(--fg); text-align: left;
+      display: flex; flex-direction: column; gap: 10px; padding: 22px 22px 30px;
+      border: 2px solid var(--line); border-radius: var(--radius-lg); background: var(--surface);
+      transition: translate .6s var(--ease-spring), border-color .3s;
+    }
+    .theme-card:hover { translate: 0 calc(-10px * var(--motion)); }
+    .theme-card.on { border-color: var(--accent); }
+    .theme-card b { font-size: 34px; margin-top: 12px; }
+    .theme-card small { font-size: 22px; color: var(--muted); }
+    .preview {
+      height: 220px; border-radius: calc(var(--radius-lg) * .6); overflow: hidden; position: relative;
+      background: var(--p-bg); color: var(--p-fg); display: grid; place-items: center;
+      font-size: 110px; line-height: 1; box-shadow: inset 0 0 0 1px oklch(.5 0 0 / .15);
+    }
+    .preview::after { content: ''; position: absolute; left: 24px; right: 24px; bottom: 22px; height: 8px; border-radius: 4px; background: var(--p-ac); }
+    .preview.nocturne { --p-bg: radial-gradient(circle at 25% 20%, #4b3a9a, #120e24 70%); --p-fg: #f2efff; --p-ac: #b8a6ff; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; }
+    .preview.plain { --p-bg: #fafafa; --p-fg: #18181b; --p-ac: #4f46e5; font-family: Inter, system-ui, sans-serif; font-weight: 750; letter-spacing: -.05em; }
+    .preview.blueprint { --p-bg: linear-gradient(#ffffff22 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, #ffffff22 1px, transparent 1px) 0 0 / 24px 24px, #173068; --p-fg: #e6f4ff; --p-ac: #7fe3ff; font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+
+    /* cards + morph targets */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 24px; }
+    .card {
+      appearance: none; font: inherit; color: inherit; text-align: left; cursor: pointer;
+      display: flex; flex-direction: column; gap: 14px; padding: 44px;
+      transition: translate .7s var(--ease-spring), border-color .4s;
+    }
+    .card:hover { translate: 0 calc(-12px * var(--motion)); border-color: var(--muted); }
+    .card.picked { border-color: var(--accent); }
+    .card h3 { width: fit-content; margin: 8px 0 0; font: var(--display-weight) 68px/1 var(--font-display); letter-spacing: var(--display-tracking); }
+    .card p { margin: 0; font-size: 26px; color: var(--muted); }
+    .art { width: 300px; aspect-ratio: 1; align-self: center; color: var(--accent); filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 35%, transparent)); }
+    .art svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .art .soft { opacity: .35; }
+    .art .core { fill: currentColor; }
+    .art .stroke { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
+    .art .wave-run { animation: wave-run var(--t, 3s) linear infinite; }
+    @keyframes wave-run { to { transform: translateX(-100px); } }
+    .art .bob { animation: bob 5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+    @keyframes bob { to { transform: translateY(-8px) rotate(3deg); } }
+    .hero-art { display: grid; place-items: center; }
+    .hero-art .art { width: 720px; }
+    .detail-title { width: fit-content; margin: 0; font: var(--display-weight) 200px/.9 var(--font-display); letter-spacing: var(--display-tracking); font-style: var(--em-style); color: var(--accent); }
+
+    /* builds */
+    .beats { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; counter-reset: beat; }
+    .beats li { counter-increment: beat; display: flex; align-items: baseline; gap: 28px; font-size: 44px; line-height: 1.2; color: var(--muted); }
+    .beats li::before { content: '0' counter(beat); font: 500 22px/1 var(--font-mono); color: var(--accent); }
+    .beat-map { width: 100%; max-width: 760px; justify-self: center; overflow: visible; }
+    .beat-map path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+    .beat-map .dot { transform-box: fill-box; transform-origin: center; }
+    .beat-map .dot circle { fill: var(--surface-solid); stroke: var(--accent); stroke-width: 3; }
+    .beat-map .dot .halo { fill: var(--accent); stroke: none; opacity: .14; }
+    .beat-map .dot text { fill: var(--fg); font: 600 44px var(--font-display); text-anchor: middle; dominant-baseline: central; }
+    .beat-map .dot[data-step]:not(.on) { transform: scale(.3); }
+
+    /* technical slides */
+    .slide-head { display: flex; flex-direction: column; gap: 18px; }
+    .captions { min-height: 40px; font-size: 28px; }
+    .trace-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 470px; gap: 56px; }
+    .trace-layout .diagram { --node-font: 600 19px/1.15 var(--font-sans); }
+    .trace-panel { display: flex; flex-direction: column; gap: 18px; padding: 32px; min-height: 0; }
+    .trace-panel .btn { width: 100%; padding: 20px 12px; font-size: 22px; }
+    .trace-log { list-style: none; margin: 0; padding: 0; flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 4px; font: 400 20px/1.35 var(--font-mono); }
+    .trace-log li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; animation: a-rise .5s var(--ease-out) backwards; }
+    .trace-log .dir { color: var(--accent); }
+    .trace-log .ms { color: var(--muted); }
+    .trace-log[data-length="0"]::before { content: 'Send a request to watch each hop.'; color: var(--muted); font-family: var(--font-sans); }
+    .trace-total { margin: 0; display: flex; justify-content: space-between; align-items: baseline; padding-top: 14px; border-top: 1px solid var(--line); font-size: 24px; color: var(--muted); }
+    .trace-total b { font: var(--display-weight) 64px/1 var(--font-display); color: var(--fg); font-variant-numeric: tabular-nums; }
+    .pipeline-controls { gap: 48px; padding: 8px 4px 0; font-size: 26px; color: var(--muted); }
+    .pipeline-controls label { display: flex; align-items: center; gap: 28px; width: 760px; }
+    .pipeline-controls b { font: var(--display-weight) 56px/1 var(--font-display); color: var(--fg); font-variant-numeric: tabular-nums; }
+    .sequence { flex: 1; margin-top: 8px; }
+
+    /* numbers */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+    .stat { display: flex; flex-direction: column; gap: 10px; padding-top: 28px; border-top: 1px solid var(--line); }
+    .stat .big { font: var(--display-weight) 180px/.9 var(--font-display); font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
+    .stat > span:last-child { font-size: 26px; color: var(--muted); }
+    .chart { width: 100%; height: 300px; overflow: visible; }
+    .chart .line { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .chart .area { fill: url(#chart-fill); }
+
+    /* poll */
+    .vote-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 700px; }
+    .bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; height: 640px; }
+    .bar { display: grid; grid-template-rows: 1fr auto auto; gap: 14px; text-align: center; }
+    .track { position: relative; border-radius: var(--radius-lg); background: color-mix(in oklab, var(--fg) 5%, transparent); border: 1px solid var(--line); overflow: hidden; }
+    .fill { position: absolute; inset: auto 0 0 0; height: calc(max(var(--v, 0), 1.5) * 1%); background: linear-gradient(to top, var(--accent), var(--accent-2)); transition: height 1s var(--ease-spring); }
+    .bar b { font: var(--display-weight) 64px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+    .bar small { font: 500 18px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+    /* mood swatches */
+    .swatches { display: flex; gap: 56px; margin-top: 36px; }
+    .swatch { appearance: none; border: 0; background: none; color: var(--fg); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 22px; font: 500 26px var(--font-sans); }
+    .swatch i {
+      width: 200px; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, oklch(.92 .1 var(--sw)), oklch(.62 .2 var(--sw)) 45%, oklch(.3 .1 calc(var(--sw) + 40)));
+      box-shadow: 0 30px 80px -24px oklch(.6 .2 var(--sw) / .7);
+      outline: 3px solid transparent; outline-offset: 12px;
+      transition: scale .7s var(--ease-spring), outline-color .4s;
+    }
+    .swatch:hover i { scale: 1.06; }
+    .swatch.on i { outline-color: oklch(.7 .15 var(--sw)); scale: 1.1; }
+
+    /* depth */
+    .scene { position: absolute; inset: -80px; }
+    .scene > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .stars {
+      color: var(--fg); opacity: .6;
+      background-image:
+        radial-gradient(1.5px 1.5px at 12% 18%, currentColor, transparent), radial-gradient(1px 1px at 28% 42%, currentColor, transparent),
+        radial-gradient(2px 2px at 44% 12%, currentColor, transparent), radial-gradient(1px 1px at 62% 30%, currentColor, transparent),
+        radial-gradient(1.5px 1.5px at 78% 16%, currentColor, transparent), radial-gradient(1px 1px at 88% 38%, currentColor, transparent),
+        radial-gradient(1px 1px at 8% 48%, currentColor, transparent), radial-gradient(2px 2px at 70% 52%, currentColor, transparent),
+        radial-gradient(1px 1px at 36% 26%, currentColor, transparent), radial-gradient(1.5px 1.5px at 54% 44%, currentColor, transparent);
+    }
+    .scene > .moon { inset: 18% auto auto 64%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, color-mix(in oklab, var(--fg) 85%, var(--accent)), color-mix(in oklab, var(--accent) 70%, var(--bg))); box-shadow: 0 0 140px 30px color-mix(in oklab, var(--accent) 30%, transparent); }
+    .ridge.far { fill: color-mix(in oklab, var(--accent) 38%, var(--bg)); }
+    .ridge.mid { fill: color-mix(in oklab, var(--accent) 20%, var(--bg)); }
+    .ridge.near { fill: color-mix(in oklab, var(--fg) 10%, var(--bg-2)); }
+    .depth .display { margin-top: -220px; }
+
+    /* recap */
+    .recap { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-direction: column; gap: 16px; font-size: 40px; line-height: 1.3; }
+    .recap li::before { content: '✦'; margin-right: 22px; color: var(--accent); font-size: .7em; vertical-align: .15em; }
+  </style>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <main class="deck" data-id="cinematic-showcase" data-transition="cinematic">
+    <div class="stage">
+
+      <!-- 1 ─ Title -->
+      <section class="slide center" id="intro" data-hue="275" data-title="Cinematic Decks">
+        <div class="layer-back" aria-hidden="true">
+          <svg class="rings" viewBox="0 0 1500 1500" data-depth="-28">
+            <circle cx="750" cy="750" r="230" pathLength="1" data-anim="draw"/>
+            <circle cx="750" cy="750" r="360" pathLength="1" data-anim="draw" data-delay="150"/>
+            <circle cx="750" cy="750" r="510" pathLength="1" data-anim="draw" data-delay="300"/>
+            <circle cx="750" cy="750" r="690" pathLength="1" data-anim="draw" data-delay="450"/>
+            <g class="spin"><circle class="dashed" cx="750" cy="750" r="600" pathLength="1"/></g>
+          </svg>
+        </div>
+        <p class="kicker" data-anim="fade" data-delay="150">A showcase · plain HTML + JavaScript</p>
+        <h1 class="display" data-split data-delay="300">Cinematic <em>Decks</em></h1>
+        <p class="lede" data-anim="rise" data-delay="1100">Motion, diagrams and live state in plain files that open in any current browser.</p>
+        <p class="keys" data-anim="fade" data-delay="1600"><kbd>→</kbd> next <kbd>O</kbd> overview <kbd>T</kbd> theme <kbd>S</kbd> speaker view</p>
+        <aside class="notes">
+          <p>Welcome. Everything here is plain HTML plus about 85&nbsp;kB of unminified engine code (JS and CSS). No build step, no framework.</p>
+          <ul><li>Press <b>T</b> at any time to switch the theme.</li><li>Letters enter one by one with <code>data-split</code>.</li></ul>
+        </aside>
+      </section>
+
+      <!-- 2 ─ Input + gated advance -->
+      <section class="slide split" id="you" data-hue="205" data-transition="push" data-require="name" data-title="Who's watching?">
+        <div>
+          <p class="kicker" data-anim="fade">Inputs · state</p>
+          <h2 class="title" data-split="words" data-delay="100">First, who's watching?</h2>
+          <form class="row" data-action="next" data-anim="rise" data-delay="600">
+            <label class="field"><span>Your name</span><input data-model="name" autocomplete="off" spellcheck="false" maxlength="22" placeholder="Type it here"></label>
+            <button class="btn primary" type="submit">Continue →</button>
+          </form>
+          <p class="small hint" data-require-hint data-anim="fade" data-delay="900">This slide won't advance until it knows your name. Your answer stays with you for the rest of the deck, even after a reload.</p>
+        </div>
+        <div class="greeting panel" data-anim="blur" data-delay="350">
+          <small>Live preview</small>
+          <p class="hello">Hello, <span data-bind="name" data-fallback="stranger"></span>.</p>
+        </div>
+        <aside class="notes"><p>Ask someone for a name. Pressing → without one shakes the hint: that's <code>data-require="name"</code>.</p></aside>
+      </section>
+
+      <!-- 3 ─ Theme is a choice, not a given -->
+      <section class="slide center" id="style" data-hue="250" data-transition="fade" data-title="Same deck, any style">
+        <p class="kicker" data-anim="fade">Themes are tokens</p>
+        <h2 class="title" data-split="words" data-delay="100"><span data-tpl="{name|Friend},"></span> pick a style.</h2>
+        <p class="lede" data-anim="rise" data-delay="400">The engine owns motion, state and diagrams. A theme is a set of tokens, an optional backdrop and a motion intensity. Every slide in this deck works in all three.</p>
+        <div class="themes" data-stagger="120" data-delay="550">
+          <button class="theme-card" data-anim="rise" data-action="set:theme=nocturne" data-class="on: theme=nocturne"><span class="preview nocturne">Aa</span><b>Nocturne</b><small>Filmic · drifting light · full motion</small></button>
+          <button class="theme-card" data-anim="rise" data-action="set:theme=plain" data-class="on: theme=plain"><span class="preview plain">Aa</span><b>Plain</b><small>Light · quiet · low motion</small></button>
+          <button class="theme-card" data-anim="rise" data-action="set:theme=blueprint" data-class="on: theme=blueprint"><span class="preview blueprint">Aa</span><b>Blueprint</b><small>Technical · gridded · precise</small></button>
+        </div>
+        <aside class="notes"><p>Switching swaps one stylesheet link inside a view transition. Themes set <code>--motion</code>: Plain uses 0.3, so the same transitions become subtle.</p></aside>
+      </section>
+
+      <!-- 4 ─ Shared elements: source -->
+      <section class="slide" id="shared" data-hue="165" data-title="Shared elements">
+        <p class="kicker" data-anim="fade">View Transitions · shared elements</p>
+        <h2 class="title" data-split="words" data-delay="100">Pick a card. Watch it travel.</h2>
+        <div class="cards" data-stagger="130" data-delay="450">
+          <button class="card panel" data-anim="rise" data-action="set:pick=orbit; goto:detail" data-class="picked: pick=orbit">
+            <div class="art" data-morph="art-orbit"><svg viewBox="0 0 200 200"><circle class="core" cx="100" cy="100" r="28"/><circle class="stroke soft" cx="100" cy="100" r="62"/><circle class="stroke soft" cx="100" cy="100" r="90" stroke-dasharray="3 9"/><g class="spin fast"><circle cx="100" cy="100" r="62" fill="none"/><circle class="core" cx="162" cy="100" r="9"/></g><g class="spin rev"><circle cx="100" cy="100" r="90" fill="none"/><circle class="core" cx="10" cy="100" r="6"/></g></svg></div>
+            <h3 data-morph="title-orbit">Orbit</h3>
+            <p>Cycles, loops and rhythm.</p>
+          </button>
+          <button class="card panel" data-anim="rise" data-action="set:pick=prism; goto:detail" data-class="picked: pick=prism">
+            <div class="art" data-morph="art-prism"><svg viewBox="0 0 200 200"><g class="bob"><polygon class="stroke" points="100,26 176,160 24,160"/><polygon class="stroke soft" points="100,62 145,140 55,140"/></g><path class="stroke soft" d="M0 112 L72 104"/><path class="stroke" d="M128 104 L200 70"/><path class="stroke soft" d="M128 108 L200 108"/><path class="stroke" d="M128 112 L200 146" opacity=".6"/></svg></div>
+            <h3 data-morph="title-prism">Prism</h3>
+            <p>One idea, split into parts.</p>
+          </button>
+          <button class="card panel" data-anim="rise" data-action="set:pick=wave; goto:detail" data-class="picked: pick=wave">
+            <div class="art" data-morph="art-wave"><svg viewBox="0 0 200 200"><defs><clipPath id="wave-clip-a"><rect width="200" height="200"/></clipPath></defs><g clip-path="url(#wave-clip-a)"><path class="stroke wave-run" style="--t:2.6s" d="M0 100 Q25 50 50 100 T100 100 T150 100 T200 100 T250 100 T300 100"/><path class="stroke soft wave-run" style="--t:4s" d="M0 100 Q25 70 50 100 T100 100 T150 100 T200 100 T250 100 T300 100" transform="translate(0 30)"/><path class="stroke soft wave-run" style="--t:5.5s" d="M0 100 Q25 80 50 100 T100 100 T150 100 T200 100 T250 100 T300 100" transform="translate(0 -30)"/></g></svg></div>
+            <h3 data-morph="title-wave">Wave</h3>
+            <p>Change that flows over time.</p>
+          </button>
+        </div>
+        <aside class="notes"><p>Click a card. The art and title share a <code>data-morph</code> name with elements on the next slide, so the browser animates one into the other.</p></aside>
+      </section>
+
+      <!-- 5 ─ Shared elements: destination -->
+      <section class="slide split" id="detail" data-hue="@pickHue" data-transition="morph" data-title="Detail">
+        <div class="hero-art">
+          <div class="art" data-show="pick=orbit" data-morph="art-orbit"><svg viewBox="0 0 200 200"><circle class="core" cx="100" cy="100" r="28"/><circle class="stroke soft" cx="100" cy="100" r="62"/><circle class="stroke soft" cx="100" cy="100" r="90" stroke-dasharray="3 9"/><g class="spin fast"><circle cx="100" cy="100" r="62" fill="none"/><circle class="core" cx="162" cy="100" r="9"/></g><g class="spin rev"><circle cx="100" cy="100" r="90" fill="none"/><circle class="core" cx="10" cy="100" r="6"/></g></svg></div>
+          <div class="art" data-show="pick=prism" data-morph="art-prism"><svg viewBox="0 0 200 200"><g class="bob"><polygon class="stroke" points="100,26 176,160 24,160"/><polygon class="stroke soft" points="100,62 145,140 55,140"/></g><path class="stroke soft" d="M0 112 L72 104"/><path class="stroke" d="M128 104 L200 70"/><path class="stroke soft" d="M128 108 L200 108"/><path class="stroke" d="M128 112 L200 146" opacity=".6"/></svg></div>
+          <div class="art" data-show="pick=wave" data-morph="art-wave"><svg viewBox="0 0 200 200"><defs><clipPath id="wave-clip-b"><rect width="200" height="200"/></clipPath></defs><g clip-path="url(#wave-clip-b)"><path class="stroke wave-run" style="--t:2.6s" d="M0 100 Q25 50 50 100 T100 100 T150 100 T200 100 T250 100 T300 100"/><path class="stroke soft wave-run" style="--t:4s" d="M0 100 Q25 70 50 100 T100 100 T150 100 T200 100 T250 100 T300 100" transform="translate(0 30)"/><path class="stroke soft wave-run" style="--t:5.5s" d="M0 100 Q25 80 50 100 T100 100 T150 100 T200 100 T250 100 T300 100" transform="translate(0 -30)"/></g></svg></div>
+        </div>
+        <div>
+          <p class="kicker" data-anim="fade" data-delay="500">Shared element · morph</p>
+          <h2 class="detail-title" data-show="pick=orbit" data-morph="title-orbit">Orbit</h2>
+          <h2 class="detail-title" data-show="pick=prism" data-morph="title-prism">Prism</h2>
+          <h2 class="detail-title" data-show="pick=wave" data-morph="title-wave">Wave</h2>
+          <p class="lede" data-anim="rise" data-delay="550">The card you clicked and this hero are different elements. They share a <code>view-transition-name</code>, so the browser animates one into the other.</p>
+          <div class="row" data-anim="rise" data-delay="700"><button class="btn" data-action="prev">← Back to the cards</button></div>
+        </div>
+        <aside class="notes"><p>Go back with the button or ←. The morph runs in reverse.</p></aside>
+      </section>
+
+      <!-- 6 ─ Builds -->
+      <section class="slide split" id="builds" data-hue="45" data-title="Builds">
+        <div>
+          <p class="kicker" data-anim="fade">Builds · data-step</p>
+          <h2 class="title" data-split="words" data-delay="100">Reveal ideas one beat at a time.</h2>
+          <ol class="beats steps-dim">
+            <li data-step="1"><span><b>Set up</b> the context</span></li>
+            <li data-step="2"><span><b>Introduce</b> the tension</span></li>
+            <li data-step="3"><span><b>Resolve</b> it visually</span></li>
+            <li data-step="4"><span><b>Land</b> the takeaway</span></li>
+          </ol>
+        </div>
+        <svg class="beat-map" viewBox="0 0 800 800" aria-label="Four connected steps">
+          <path pathLength="1" data-step="2" data-draw d="M170 170 C 360 120, 470 160, 600 230"/>
+          <path pathLength="1" data-step="3" data-draw d="M600 230 C 640 420, 400 420, 240 560"/>
+          <path pathLength="1" data-step="4" data-draw d="M240 560 C 380 700, 520 690, 640 620"/>
+          <g class="dot" data-step="1"><circle class="halo" cx="170" cy="170" r="92"/><circle cx="170" cy="170" r="58"/><text x="170" y="170">1</text></g>
+          <g class="dot" data-step="2"><circle class="halo" cx="600" cy="230" r="92"/><circle cx="600" cy="230" r="58"/><text x="600" y="230">2</text></g>
+          <g class="dot" data-step="3"><circle class="halo" cx="240" cy="560" r="92"/><circle cx="240" cy="560" r="58"/><text x="240" y="560">3</text></g>
+          <g class="dot" data-step="4"><circle class="halo" cx="640" cy="620" r="92"/><circle cx="640" cy="620" r="58"/><text x="640" y="620">4</text></g>
+        </svg>
+        <aside class="notes"><p>Four presses. The list dims earlier beats with <code>.steps-dim</code>; connectors draw with <code>data-draw</code>.</p></aside>
+      </section>
+
+      <!-- 7 ─ Architecture build-up -->
+      <section class="slide full" id="arch" data-hue="220" data-title="Architecture, built up">
+        <header class="slide-head">
+          <p class="kicker" data-anim="fade">Diagrams · build-up</p>
+          <h2 class="heading" data-split="words" data-delay="100">A web platform, one layer at a time.</h2>
+        </header>
+        <div class="diagram" data-diagram="arch" style="--cols: 6; --rows: 4">
+          <div class="group" data-label="Region · eu-west" data-step="2" style="grid-area: 1 / 3 / 5 / 7"></div>
+          <div class="group solid" data-label="Data subnet" data-step="3" style="grid-area: 1 / 5 / 4 / 6"></div>
+          <div class="node" data-node="users" data-icon="users" data-step="1" style="grid-area: 2 / 1">Users<small>web · mobile</small></div>
+          <div class="node" data-node="cdn" data-icon="globe" data-step="1" style="grid-area: 2 / 2">CDN<small>edge cache</small></div>
+          <div class="node" data-node="lb" data-icon="lb" data-step="2" style="grid-area: 2 / 3">Load balancer<small>L7 · TLS</small></div>
+          <div class="node stack" data-node="api" data-icon="container" data-step="2" style="grid-area: 2 / 4">API<small>3 × containers</small></div>
+          <div class="node" data-node="cache" data-icon="cache" data-step="3" style="grid-area: 1 / 5">Cache<small>in-memory</small></div>
+          <div class="node" data-node="db" data-icon="database" data-step="3" style="grid-area: 3 / 5">Database<small>primary + replica</small></div>
+          <div class="node" data-node="queue" data-icon="queue" data-step="4" style="grid-area: 4 / 4">Queue</div>
+          <div class="node" data-node="worker" data-icon="function" data-step="4" style="grid-area: 4 / 5">Worker</div>
+          <div class="node" data-node="bucket" data-icon="storage" data-step="4" style="grid-area: 4 / 6">Object store</div>
+          <div class="node" data-node="obs" data-icon="monitor" data-step="5" style="grid-area: 2 / 6">Observability</div>
+          <deck-edge from="users" to="cdn" label="HTTPS" flow="dash"></deck-edge>
+          <deck-edge from="cdn" to="lb" flow="dash"></deck-edge>
+          <deck-edge from="lb" to="api" flow="dash"></deck-edge>
+          <deck-edge from="api" to="cache" route="elbow" flow="dash"></deck-edge>
+          <deck-edge from="api" to="db" route="elbow" flow="dash"></deck-edge>
+          <deck-edge from="api" to="queue" class="async" label="events"></deck-edge>
+          <deck-edge from="queue" to="worker" flow="dash"></deck-edge>
+          <deck-edge from="worker" to="bucket" flow="dash"></deck-edge>
+          <deck-edge from="api" to="obs" class="async" label="OTLP"></deck-edge>
+        </div>
+        <div class="captions swap">
+          <p data-step="0" data-step-until="0" class="muted">Press → to build the platform.</p>
+          <p data-step="1" data-step-until="1"><b>Edge.</b> Users reach a CDN that serves cached assets close to them.</p>
+          <p data-step="2" data-step-until="2"><b>Compute.</b> A load balancer terminates TLS and spreads traffic over stateless API containers.</p>
+          <p data-step="3" data-step-until="3"><b>Data.</b> Reads hit the cache first; the database lives in a private subnet.</p>
+          <p data-step="4" data-step-until="4"><b>Async.</b> Slow work leaves the request path through a queue.</p>
+          <p data-step="5" data-step-until="5"><b>Operate.</b> Everything reports telemetry. Edges inherit the step of their nodes.</p>
+        </div>
+        <aside class="notes"><p>Five presses. Nodes use <code>data-step</code>; edges inherit the later step of their two nodes, so the lines draw in as their endpoints arrive.</p></aside>
+      </section>
+
+      <!-- 8 ─ Request trace -->
+      <section class="slide full" id="trace" data-hue="220" data-title="Follow a request">
+        <header class="slide-head">
+          <p class="kicker" data-anim="fade">Traces · state · failure</p>
+          <h2 class="heading" data-split="words" data-delay="100">Follow a request through the stack.</h2>
+        </header>
+        <div class="trace-layout">
+          <div class="diagram" data-diagram="req" style="--cols: 5; --rows: 3" data-anim="fade" data-delay="300">
+            <div class="group" data-label="Region · eu-west" style="grid-area: 1 / 3 / 4 / 6"></div>
+            <div class="node" data-node="users" data-icon="browser" style="grid-area: 2 / 1">Client<small>WAN 20 ms</small></div>
+            <div class="node" data-node="cdn" data-icon="globe" data-latency="4" style="grid-area: 2 / 2">CDN<small>4 ms</small></div>
+            <div class="node" data-node="lb" data-icon="lb" data-latency="2" style="grid-area: 2 / 3">Load balancer<small>2 ms</small></div>
+            <div class="node stack" data-node="api" data-icon="container" data-latency="18" style="grid-area: 2 / 4">API<small>18 ms</small></div>
+            <div class="node" data-node="cache" data-icon="cache" data-latency="1" style="grid-area: 1 / 5" data-class="down: cacheDown">Cache<small>1 ms</small></div>
+            <div class="node" data-node="db" data-icon="database" data-latency="9" style="grid-area: 3 / 5">Database<small>9 ms</small></div>
+            <deck-edge from="users" to="cdn" latency="20" arrow="both"></deck-edge>
+            <deck-edge from="cdn" to="lb" arrow="both"></deck-edge>
+            <deck-edge from="lb" to="api" arrow="both"></deck-edge>
+            <deck-edge from="api" to="cache" route="elbow" arrow="both" data-class="down: cacheDown"></deck-edge>
+            <deck-edge from="api" to="db" route="elbow" arrow="both"></deck-edge>
+          </div>
+          <div class="trace-panel panel" data-anim="right" data-delay="400">
+            <div class="cols-2" style="gap: 14px">
+              <button class="btn" data-action="request:hit" data-log="req">Cache hit</button>
+              <button class="btn" data-action="request:miss" data-log="req" data-trace-kind="alt">Cache miss</button>
+            </div>
+            <label class="small"><input type="checkbox" class="toggle" data-model="cacheDown"> Cache outage</label>
+            <ol class="trace-log" data-list="req.hops"><template><li><span class="dir" data-tpl="{dir}"></span><span data-tpl="{node}"></span><span class="ms" data-tpl="{note}"></span></li></template></ol>
+            <p class="trace-total">Round trip <span><b data-bind="req.total" data-tween data-fallback="0"></b> ms</span></p>
+          </div>
+        </div>
+        <aside class="notes"><p>Click <b>Cache hit</b>, then <b>Cache miss</b>. Turn on <b>Cache outage</b>: the cache node and its edge go down and both requests fall through to the database. Latency comes from <code>data-latency</code> on nodes and <code>latency</code> on edges.</p></aside>
+      </section>
+
+      <!-- 9 ─ Data pipeline -->
+      <section class="slide full" id="pipeline" data-hue="160" data-transition="push" data-title="Data in motion">
+        <header class="slide-head">
+          <p class="kicker" data-anim="fade">Flows · inputs drive motion</p>
+          <h2 class="heading" data-split="words" data-delay="100">Data in motion.</h2>
+        </header>
+        <div class="diagram" data-diagram="pipeline" style="--cols: 5; --rows: 3" data-style="--flow-rate: rate" data-anim="fade" data-delay="300">
+          <div class="node" data-node="app" data-icon="mobile" style="grid-area: 1 / 1">App events</div>
+          <div class="node" data-node="svc" data-icon="server" style="grid-area: 2 / 1">Services</div>
+          <div class="node" data-node="iot" data-icon="cpu" style="grid-area: 3 / 1">Devices</div>
+          <div class="node" data-node="stream" data-icon="stream" style="grid-area: 2 / 2">Event stream<small>partitioned log</small></div>
+          <div class="node stack" data-node="proc" data-icon="function" style="grid-area: 2 / 3">Processor<small>windowed joins</small></div>
+          <div class="node" data-node="wh" data-icon="database" style="grid-area: 1 / 4">Warehouse</div>
+          <div class="node" data-node="lake" data-icon="storage" style="grid-area: 3 / 4">Data lake</div>
+          <div class="node" data-node="dash" data-icon="chart" style="grid-area: 2 / 5">Dashboards</div>
+          <deck-edge from="app" to="stream" flow="packets" packets="3" speed="150"></deck-edge>
+          <deck-edge from="svc" to="stream" flow="packets" packets="4" speed="190"></deck-edge>
+          <deck-edge from="iot" to="stream" flow="packets" packets="3" speed="130"></deck-edge>
+          <deck-edge from="stream" to="proc" flow="packets" packets="5" speed="210" label="10 partitions"></deck-edge>
+          <deck-edge from="proc" to="wh" flow="packets" packets="3" speed="160"></deck-edge>
+          <deck-edge from="proc" to="lake" flow="packets" packets="3" speed="140"></deck-edge>
+          <deck-edge from="wh" to="dash" flow="dash" label="SQL"></deck-edge>
+        </div>
+        <div class="row pipeline-controls" data-anim="rise" data-delay="500">
+          <label>Throughput <input type="range" class="range" min="0.25" max="4" step="0.25" data-model="rate"></label>
+          <p>≈ <b data-bind="eventsPerSec" data-tween></b> events / s</p>
+        </div>
+        <aside class="notes"><p>Drag the slider. It writes <code>rate</code> into state; the diagram binds <code>--flow-rate</code> to it with <code>data-style</code>, and every packet speeds up.</p></aside>
+      </section>
+
+      <!-- 10 ─ Sequence diagram -->
+      <section class="slide full" id="oauth" data-hue="290" data-title="Sign-in sequence">
+        <header class="slide-head">
+          <p class="kicker" data-anim="fade">Sequence diagrams</p>
+          <h2 class="heading" data-split="words" data-delay="100">Sign-in with OAuth 2.0 and PKCE.</h2>
+        </header>
+        <div class="sequence" data-sequence data-anim="fade" data-delay="300">
+          <div class="actor" data-actor="browser" data-icon="browser">Browser</div>
+          <div class="actor" data-actor="app" data-icon="server">Web app</div>
+          <div class="actor" data-actor="idp" data-icon="key">Identity provider</div>
+          <div class="actor" data-actor="api" data-icon="gateway">API</div>
+          <div class="msg" data-from="browser" data-to="app" data-step="1">GET /login</div>
+          <div class="msg reply" data-from="app" data-to="browser" data-step="2">302 → /authorize + code_challenge</div>
+          <div class="msg" data-from="browser" data-to="idp" data-step="3">GET /authorize · user signs in</div>
+          <div class="msg reply" data-from="idp" data-to="browser" data-step="4">302 → /callback?code=…</div>
+          <div class="msg" data-from="browser" data-to="app" data-step="5">GET /callback?code=…</div>
+          <div class="msg" data-from="app" data-to="idp" data-step="6">POST /token + code_verifier</div>
+          <div class="msg reply" data-from="idp" data-to="app" data-step="7">access_token · id_token</div>
+          <div class="msg" data-from="app" data-to="api" data-step="8">GET /me · Bearer token</div>
+          <div class="msg reply" data-from="api" data-to="app" data-step="9">200 profile</div>
+        </div>
+        <aside class="notes"><p>Nine presses, one message each. Replies are dashed. Actors and messages are plain HTML; the engine places them on the grid.</p></aside>
+      </section>
+
+      <!-- 11 ─ Numbers -->
+      <section class="slide" id="numbers" data-hue="150" data-transition="push" data-title="Numbers">
+        <p class="kicker" data-anim="fade">Counters · drawn charts</p>
+        <h2 class="title" data-split="words" data-delay="100">Numbers that count themselves.</h2>
+        <div class="stats" data-stagger="140" data-delay="400">
+          <div class="stat" data-anim="rise"><span class="big">0</span><span>dependencies</span></div>
+          <div class="stat" data-anim="rise"><span class="big"><span data-count="16" id="slide-count">16</span></span><span>slides in this deck</span></div>
+          <div class="stat" data-anim="rise"><span class="big"><span data-count="6">6</span></span><span>slide transitions</span></div>
+          <div class="stat" data-anim="rise"><span class="big"><span data-count="3" data-duration="1400">3</span></span><span>themes, one deck</span></div>
+        </div>
+        <svg class="chart" viewBox="0 0 1600 300" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".35"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" data-anim="fade" data-delay="1400" d="M0 260 C 160 250, 240 210, 400 200 S 640 120, 800 140 S 1060 60, 1200 70 S 1460 20, 1600 16 L1600 300 L0 300 Z"/>
+          <path class="line" pathLength="1" data-anim="draw" data-delay="700" d="M0 260 C 160 250, 240 210, 400 200 S 640 120, 800 140 S 1060 60, 1200 70 S 1460 20, 1600 16"/>
+        </svg>
+        <aside class="notes"><p>Counters use <code>data-count</code> and restart each time you enter.</p></aside>
+      </section>
+
+      <!-- 12 ─ Poll -->
+      <section class="slide split" id="poll" data-hue="18" data-title="Live poll">
+        <div>
+          <p class="kicker" data-anim="fade">Buttons · actions · state</p>
+          <h2 class="title" data-split="words" data-delay="100">Which transition felt best?</h2>
+          <p class="lede" data-anim="rise" data-delay="400">Vote as often as you like. The bars, the total and the leader all read from one state object.</p>
+          <div class="vote-buttons" data-anim="rise" data-delay="550">
+            <button class="btn" data-action="inc:votes.cinematic">Cinematic</button>
+            <button class="btn" data-action="inc:votes.push">Push</button>
+            <button class="btn" data-action="inc:votes.zoom">Zoom</button>
+            <button class="btn" data-action="inc:votes.morph">Morph</button>
+          </div>
+          <p class="small" data-anim="fade" data-delay="700"><b data-bind="totalVotes" data-tween></b> votes · leading: <b data-bind="leader" data-fallback="nobody yet"></b> · <button class="link" data-action="clearVotes">reset</button></p>
+        </div>
+        <div class="bars" data-stagger="90" data-delay="300">
+          <div class="bar" data-anim="rise" data-style="--v: pct.cinematic"><div class="track"><span class="fill"></span></div><b data-bind="votes.cinematic" data-tween></b><small>Cinematic</small></div>
+          <div class="bar" data-anim="rise" data-style="--v: pct.push"><div class="track"><span class="fill"></span></div><b data-bind="votes.push" data-tween></b><small>Push</small></div>
+          <div class="bar" data-anim="rise" data-style="--v: pct.zoom"><div class="track"><span class="fill"></span></div><b data-bind="votes.zoom" data-tween></b><small>Zoom</small></div>
+          <div class="bar" data-anim="rise" data-style="--v: pct.morph"><div class="track"><span class="fill"></span></div><b data-bind="votes.morph" data-tween></b><small>Morph</small></div>
+        </div>
+        <aside class="notes"><p>Votes persist and sync to the speaker view. <code>clearVotes</code> is a custom action at the bottom of the file.</p></aside>
+      </section>
+
+      <!-- 13 ─ Accent (state drives tokens) -->
+      <section class="slide center" id="mood" data-hue="@moodHue" data-transition="fade" data-title="Pick an accent">
+        <p class="kicker" data-anim="fade">State → CSS custom properties</p>
+        <h2 class="title" data-split="words" data-delay="100">Pick an accent.</h2>
+        <p class="lede" data-anim="rise" data-delay="400">Your choice re-tints every slide from here on, in whichever theme you chose.</p>
+        <div class="swatches" data-stagger="110" data-delay="550">
+          <button class="swatch" style="--sw:275" data-anim="pop" data-action="set:mood=aurora" data-class="on: mood=aurora"><i></i>Aurora</button>
+          <button class="swatch" style="--sw:30" data-anim="pop" data-action="set:mood=ember" data-class="on: mood=ember"><i></i>Ember</button>
+          <button class="swatch" style="--sw:195" data-anim="pop" data-action="set:mood=lagoon" data-class="on: mood=lagoon"><i></i>Lagoon</button>
+          <button class="swatch" style="--sw:135" data-anim="pop" data-action="set:mood=moss" data-class="on: mood=moss"><i></i>Moss</button>
+        </div>
+        <aside class="notes"><p>The slide's hue is <code>data-hue="@moodHue"</code>. Each theme decides what <code>--hue</code> means: Nocturne tints everything, Blueprint only the accent.</p></aside>
+      </section>
+
+      <!-- 14 ─ Markup walkthrough -->
+      <section class="slide split" id="markup" data-hue="@moodHue" data-title="It's just HTML">
+        <div>
+          <p class="kicker" data-anim="fade">Authoring</p>
+          <h2 class="title" data-split="words" data-delay="100">It's just HTML.</h2>
+          <div class="swap lede">
+            <p data-step="0" data-step-until="0">Press → to walk through the markup, one attribute at a time.</p>
+            <p data-step="1" data-step-until="1">A slide is a <code>&lt;section&gt;</code>. Its attributes choose the hue and how it enters.</p>
+            <p data-step="2" data-step-until="2"><code>data-split</code> breaks a heading into letters or words that enter in sequence.</p>
+            <p data-step="3" data-step-until="3"><code>data-model</code> writes an input into state. <code>data-tpl</code> reads it back anywhere.</p>
+            <p data-step="4" data-step-until="4"><code>&lt;deck-edge&gt;</code> connects two diagram nodes; <code>flow</code> animates traffic on it.</p>
+            <p data-step="5" data-step-until="5"><code>data-step</code> turns any element into a build, like this text.</p>
+          </div>
+        </div>
+        <div class="code" data-focus-scope data-anim="right" data-delay="300">
+          <span class="ln" data-focus="1"><span class="tg">&lt;section</span> <span class="at">class</span>=<span class="st">"slide"</span> <span class="at">data-hue</span>=<span class="st">"200"</span></span>
+          <span class="ln" data-focus="1">         <span class="at">data-transition</span>=<span class="st">"zoom"</span><span class="tg">&gt;</span></span>
+          <span class="ln" data-focus="2">  <span class="tg">&lt;h2</span> <span class="at">data-split</span><span class="tg">&gt;</span>Hello, world<span class="tg">&lt;/h2&gt;</span></span>
+          <span class="ln" data-focus="3">  <span class="tg">&lt;input</span> <span class="at">data-model</span>=<span class="st">"name"</span><span class="tg">&gt;</span></span>
+          <span class="ln" data-focus="3">  <span class="tg">&lt;p</span> <span class="at">data-tpl</span>=<span class="st">"Hi, {name|friend}"</span><span class="tg">&gt;&lt;/p&gt;</span></span>
+          <span class="ln" data-focus="4">  <span class="tg">&lt;deck-edge</span> <span class="at">from</span>=<span class="st">"lb"</span> <span class="at">to</span>=<span class="st">"api"</span></span>
+          <span class="ln" data-focus="4">             <span class="at">flow</span>=<span class="st">"dash"</span><span class="tg">&gt;&lt;/deck-edge&gt;</span></span>
+          <span class="ln" data-focus="5">  <span class="tg">&lt;p</span> <span class="at">data-step</span>=<span class="st">"1"</span><span class="tg">&gt;</span>Next press<span class="tg">&lt;/p&gt;</span></span>
+          <span class="ln" data-focus="1"><span class="tg">&lt;/section&gt;</span></span>
+        </div>
+        <aside class="notes"><p>Five presses. Lines highlight with <code>data-focus</code>; the annotation swaps with <code>data-step</code> plus <code>data-step-until</code>.</p></aside>
+      </section>
+
+      <!-- 15 ─ Depth -->
+      <section class="slide center depth" id="depth" data-hue="@moodHue" data-transition="zoom" data-title="Depth">
+        <div class="layer-back scene" aria-hidden="true">
+          <div class="stars" data-depth="6"></div>
+          <div class="moon" data-depth="12" data-anim="blur" data-delay="200"></div>
+          <svg data-depth="18" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMax slice"><path class="ridge far" d="M0 760 L180 640 L340 700 L520 560 L700 670 L880 580 L1060 690 L1240 540 L1420 650 L1600 570 L1780 660 L1920 610 V1080 H0 Z"/></svg>
+          <svg data-depth="38" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMax slice"><path class="ridge mid" d="M0 860 L220 720 L420 830 L640 700 L860 810 L1100 680 L1320 810 L1540 720 L1760 830 L1920 760 V1080 H0 Z"/></svg>
+          <svg data-depth="70" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMax slice"><path class="ridge near" d="M0 960 L300 840 L560 950 L860 860 L1180 970 L1460 870 L1700 960 L1920 900 V1080 H0 Z"/></svg>
+        </div>
+        <h2 class="display" data-split data-depth="-14">Depth</h2>
+        <p class="lede" data-anim="rise" data-delay="700">Move your pointer. Each layer drifts at its own speed, driven by two CSS custom properties. Themes with low motion drift less.</p>
+        <aside class="notes"><p>Parallax: <code>data-depth</code> sets how far each layer travels, scaled by the theme's <code>--motion</code>.</p></aside>
+      </section>
+
+      <!-- 16 ─ Recap reads all state -->
+      <section class="slide center" id="recap" data-hue="@moodHue" data-transition="wipe" data-title="Recap">
+        <p class="kicker" data-anim="fade">Everything you did, remembered</p>
+        <h2 class="display" data-anim="blur" data-delay="150" data-tpl="Thanks, {name|friend}."></h2>
+        <ul class="recap" data-stagger="150" data-delay="600">
+          <li data-anim="rise"><span data-tpl="You chose the {themeLabel} theme and the {moodLabel} accent."></span></li>
+          <li data-anim="rise"><span data-tpl="You opened the {pickLabel} card."></span></li>
+          <li data-anim="rise" data-show="req.total"><span data-tpl="Your last traced request took {req.total} ms."></span></li>
+          <li data-anim="rise"><span data-tpl="You cast {totalVotes} votes, and {leader|nothing} is leading."></span></li>
+        </ul>
+        <p class="small" data-anim="fade" data-delay="1200">Reload the page and it all comes back. Open the speaker view with <kbd>S</kbd>; both windows stay in sync.</p>
+        <div class="row" data-anim="rise" data-delay="1350">
+          <button class="btn primary" data-action="reset; goto:intro">Start over</button>
+          <button class="btn" data-action="overview">See all slides</button>
+        </div>
+        <aside class="notes"><p>Every line is a <code>data-tpl</code> over state and computed values. "Start over" runs <code>reset; goto:intro</code>.</p></aside>
+      </section>
+
+    </div>
+  </main>
+
+  <script type="application/json" id="deck-state">
+    {
+      "name": "", "theme": "nocturne", "pick": "orbit", "mood": "aurora",
+      "votes": { "cinematic": 0, "push": 0, "zoom": 0, "morph": 0 },
+      "rate": 1, "cacheDown": false, "req": { "hops": [], "total": 0, "running": false }
+    }
+  </script>
+  <script src="../scripts/template/deck/deck.js"></script>
+  <script src="../scripts/template/deck/diagram.js"></script>
+  <script>
+    const picks = { orbit: ['Orbit', 165], prism: ['Prism', 300], wave: ['Wave', 215] };
+    const moods = { aurora: ['Aurora', 275], ember: ['Ember', 30], lagoon: ['Lagoon', 195], moss: ['Moss', 135] };
+    const themes = { nocturne: 'Nocturne', plain: 'Plain', blueprint: 'Blueprint' };
+    const capitalize = s => s[0].toUpperCase() + s.slice(1);
+
+    deck
+      .computed('pickLabel', s => picks[s.pick]?.[0] ?? 'Orbit')
+      .computed('pickHue', s => picks[s.pick]?.[1] ?? 165)
+      .computed('moodLabel', s => moods[s.mood]?.[0] ?? 'Aurora')
+      .computed('moodHue', s => moods[s.mood]?.[1] ?? 275)
+      .computed('themeLabel', s => themes[s.theme] ?? 'Nocturne')
+      .computed('eventsPerSec', s => Math.round((s.rate ?? 1) * 12500))
+      .computed('totalVotes', s => Object.values(s.votes).reduce((a, b) => a + b, 0))
+      .computed('pct', s => {
+        const total = deck.get('totalVotes');
+        return Object.fromEntries(Object.entries(s.votes).map(([k, v]) => [k, total ? Math.round(v / total * 100) : 0]));
+      })
+      .computed('leader', s => {
+        const [name, count] = Object.entries(s.votes).sort((a, b) => b[1] - a[1])[0];
+        return count ? capitalize(name) : '';
+      })
+      .action('clearVotes', (_, { state }) => { for (const k in state.votes) state.votes[k] = 0; })
+      // A cache outage reroutes both request types straight to the database.
+      .action('request', (kind, ctx) => {
+        const viaCache = !ctx.state.cacheDown;
+        const middle = !viaCache ? ['db'] : kind === 'hit' ? ['cache'] : ['cache', 'api', 'db'];
+        const hops = ['users', 'cdn', 'lb', 'api', ...middle, 'api', 'lb', 'cdn', 'users'];
+        deck.run(`trace:req:${hops.join('>')}`, ctx);
+      });
+
+    document.getElementById('slide-count').dataset.count = deck.slides.length;
+
+    // Theme switching: load the new sheet off-screen (media=print), then swap inside a view transition.
+    function applyTheme(name, animate = true) {
+      const current = document.getElementById('theme');
+      if (!themes[name] || current.dataset.name === name || document.getElementById('theme-next')) return;
+      const next = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: `../scripts/template/themes/${name}.css`, media: 'print', id: 'theme-next' });
+      next.dataset.name = name;
+      next.onload = () => {
+        const swap = () => { next.media = 'all'; current.remove(); next.id = 'theme'; };
+        const root = document.documentElement;
+        if (!animate || !document.startViewTransition || deck.reduced.matches) return swap();
+        root.dataset.vt = 'page';
+        document.startViewTransition(swap).finished.finally(() => delete root.dataset.vt);
+      };
+      document.head.append(next);
+    }
+    applyTheme(deck.state.theme, false);
+    deck.on('change', s => applyTheme(s.theme));
+    addEventListener('keydown', e => {
+      if (e.key !== 't' || e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey) return;
+      const names = Object.keys(themes);
+      deck.set({ theme: names[(names.indexOf(deck.state.theme) + 1) % names.length] });
+    });
+  </script>
+</body>
+</html>

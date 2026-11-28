@@ -1,0 +1,169 @@
+/* Cinematic Deck diagrams — layout mechanics plus token-driven default styling.
+ * Themes restyle through tokens (below) or by overriding .node / .group / deck-edge directly.
+ *
+ *   --node-bg --node-border --node-radius --node-icon --node-font --node-shadow
+ *   --group-bg --group-border
+ *   --edge-color --edge-width --flow-color --trace-color
+ *   --flow-rate (number, scales flow speed; bind with data-style) */
+
+/* ── architecture / flow diagrams ──────────────────────────────────── */
+
+.diagram {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows, 4), minmax(0, 1fr));
+  gap: var(--diagram-gap, 26px);
+  flex: 1 1 auto; min-height: 0; width: 100%;
+}
+
+.diagram > .node {
+  place-self: center;
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  min-width: 132px; max-width: 100%; box-sizing: border-box;
+  padding: 16px 22px 14px;
+  text-align: center;
+  font: var(--node-font, 600 22px/1.15 var(--font-sans, system-ui, sans-serif));
+  color: var(--fg, CanvasText);
+  background: var(--node-bg, var(--surface-solid, Canvas));
+  border: 1.5px solid var(--node-border, var(--line, GrayText));
+  border-radius: var(--node-radius, var(--radius, 14px));
+  box-shadow: var(--node-shadow, 0 0 #0000);
+  transition: border-color .35s, box-shadow .45s, scale .55s var(--ease-spring), opacity .4s;
+}
+.node small { font: 400 15px/1.25 var(--font-mono, monospace); color: var(--muted, GrayText); }
+.node-icon {
+  width: 36px; height: 36px; flex: none;
+  fill: none; stroke: var(--node-icon, var(--accent, currentColor));
+  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.node.hit {
+  border-color: var(--trace-color, var(--accent, Highlight));
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--trace-color, var(--accent, Highlight)) 22%, transparent),
+              0 0 50px color-mix(in oklab, var(--trace-color, var(--accent, Highlight)) 35%, transparent);
+  scale: 1.06;
+}
+.node.down { opacity: .5; border-style: dashed; border-color: var(--danger, #d33); }
+.node.down .node-icon { stroke: var(--danger, #d33); }
+.node.external { border-style: dashed; }
+/* several instances behind one card (autoscaling groups, replicas) */
+.node.stack {
+  box-shadow: 9px 9px 0 -1.5px var(--node-bg, var(--surface-solid, Canvas)), 9px 9px 0 0 var(--node-border, var(--line, GrayText)),
+              18px 18px 0 -1.5px var(--node-bg, var(--surface-solid, Canvas)), 18px 18px 0 0 var(--node-border, var(--line, GrayText)),
+              var(--node-shadow, 0 0 #0000);
+}
+.node.stack.hit { box-shadow: 9px 9px 0 -1.5px var(--node-bg, var(--surface-solid, Canvas)), 9px 9px 0 0 var(--node-border, var(--line, GrayText)), 0 0 50px color-mix(in oklab, var(--trace-color, var(--accent, Highlight)) 35%, transparent); }
+
+.diagram > .group {
+  place-self: stretch;
+  position: relative; z-index: 0;
+  margin: calc(var(--diagram-gap, 26px) * -.45);
+  border: 1.5px dashed var(--group-border, var(--line, GrayText));
+  border-radius: calc(var(--radius, 14px) + 10px);
+  background: var(--group-bg, color-mix(in oklab, var(--fg, CanvasText) 3%, transparent));
+}
+.group.solid { border-style: solid; }
+/* the label sits on the top border, so it never collides with nodes in the first row */
+.group::before {
+  content: attr(data-label);
+  position: absolute; top: 0; left: 22px; translate: 0 -50%;
+  padding: 5px 12px; border-radius: 999px; white-space: nowrap;
+  font: 500 14px/1 var(--font-mono, monospace); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted, GrayText); background: var(--surface-solid, Canvas);
+  border: 1px solid var(--group-border, var(--line, GrayText));
+}
+
+/* ── edges ─────────────────────────────────────────────────────────── */
+
+deck-edge { display: block; position: absolute; inset: 0; z-index: 1; pointer-events: none; color: var(--edge-color, var(--muted, GrayText)); }
+.edge-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.edge-line { fill: none; stroke: currentColor; stroke-width: var(--edge-width, 2); stroke-linecap: round; stroke-linejoin: round; opacity: .75; transition: stroke .3s, opacity .3s; }
+.edge-arrow { fill: currentColor; transition: fill .3s; }
+.edge-flow {
+  display: none; fill: none;
+  stroke: var(--flow-color, var(--accent, currentColor)); stroke-width: calc(var(--edge-width, 2) * 1.8); stroke-linecap: round;
+  stroke-dasharray: .1 19.9;
+  animation: edge-flow calc(var(--flow-dur, 1.1s) / var(--flow-rate, 1)) linear infinite;
+}
+deck-edge[flow~="dash"] .edge-flow { display: inline; }
+deck-edge[flow~="reverse"] .edge-flow { animation-direction: reverse; }
+@keyframes edge-flow { to { stroke-dashoffset: -20; } }
+.edge-packet { fill: var(--flow-color, var(--accent, currentColor)); }
+.edge-label {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  font: 500 14px/1.2 var(--font-mono, monospace); color: var(--muted, GrayText);
+  background: var(--surface-solid, Canvas); border: 1px solid var(--line, GrayText);
+}
+deck-edge.async .edge-line { stroke-dasharray: 7 8; }
+deck-edge.active { color: var(--trace-color, var(--accent, Highlight)); }
+deck-edge.active .edge-line { opacity: 1; stroke-width: calc(var(--edge-width, 2) * 1.6); }
+deck-edge.down { color: var(--danger, #d33); }
+deck-edge.down .edge-line { stroke-dasharray: 2 8; opacity: .5; }
+deck-edge.down :is(.edge-flow, .edge-packets) { display: none; }
+
+/* build-up: the line draws in, then flow, arrow and label fade in */
+deck-edge[data-step]:not(.on) { opacity: 1; transform: none; filter: none; }
+deck-edge[data-step]:not(.async) .edge-line { stroke-dasharray: var(--len, 0) 99999; transition: stroke-dashoffset 1s var(--ease-in-out), stroke .3s, opacity .3s; }
+deck-edge[data-step]:not(.async):not(.on) .edge-line { stroke-dashoffset: var(--len, 0); }
+deck-edge.async[data-step]:not(.on) { opacity: 0; }
+deck-edge[data-step] :is(.edge-arrow, .edge-flow, .edge-packets, .edge-label) { transition: opacity .5s ease .75s; }
+deck-edge[data-step]:not(.on) :is(.edge-arrow, .edge-flow, .edge-packets, .edge-label) { opacity: 0; transition-delay: 0s; }
+html.overview deck-edge .edge-line { stroke-dashoffset: 0 !important; }
+html.overview deck-edge :is(.edge-arrow, .edge-label) { opacity: 1 !important; }
+
+/* request traces */
+.diagram-trace { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.trace-packet { fill: var(--trace-color, var(--accent, Highlight)); }
+.trace-glow { fill: var(--trace-color, var(--accent, Highlight)); opacity: .25; }
+.trace-packet.alt, .trace-glow.alt { fill: var(--accent-2, var(--accent, Highlight)); }
+.trace-packet.warn, .trace-glow.warn { fill: var(--warning, orange); }
+
+/* ── sequence diagrams ─────────────────────────────────────────────── */
+
+.sequence {
+  position: relative;
+  display: grid; grid-template-columns: repeat(var(--actors, 3), minmax(0, 1fr));
+  row-gap: 10px; column-gap: 0; align-items: end;
+}
+.sequence > .actor {
+  place-self: center; z-index: 1; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 24px;
+  font: var(--node-font, 600 22px/1.15 var(--font-sans, system-ui, sans-serif)); color: var(--fg, CanvasText);
+  background: var(--node-bg, var(--surface-solid, Canvas));
+  border: 1.5px solid var(--node-border, var(--line, GrayText)); border-radius: var(--node-radius, var(--radius, 14px));
+}
+.sequence > .actor .node-icon { width: 28px; height: 28px; }
+.sequence > .lifeline { justify-self: center; align-self: stretch; z-index: 0; width: 0; margin-top: 30px; border-left: 2px dashed var(--line, GrayText); }
+.sequence > .msg {
+  --half: calc(100% / var(--span, 2) / 2);
+  position: relative; z-index: 1;
+  padding: 0 var(--half) 12px;
+  text-align: center;
+  font: 500 19px/1.3 var(--font-mono, monospace); color: var(--fg, CanvasText);
+}
+.msg-label { display: inline-block; padding: 0 8px; transition: color .3s; }
+.sequence > .msg::before {
+  content: ''; position: absolute; bottom: 0; left: var(--half); right: var(--half);
+  border-top: 2px solid var(--edge-color-strong, var(--accent, currentColor));
+  transform-origin: left; transition: transform .8s var(--ease-in-out);
+}
+.sequence > .msg::after {
+  content: ''; position: absolute; bottom: -6px; right: var(--half);
+  border: 7px solid transparent; border-right: 0; border-left: 12px solid var(--edge-color-strong, var(--accent, currentColor));
+  transition: opacity .3s ease .6s;
+}
+.sequence > .msg.rtl::before { transform-origin: right; }
+.sequence > .msg.rtl::after { right: auto; left: var(--half); border-left: 0; border-right: 12px solid var(--edge-color-strong, var(--accent, currentColor)); }
+.sequence > .msg.reply::before { border-top-style: dashed; border-top-color: var(--muted, GrayText); }
+.sequence > .msg.reply::after { border-left-color: var(--muted, GrayText); }
+.sequence > .msg.reply.rtl::after { border-left-color: transparent; border-right-color: var(--muted, GrayText); }
+.sequence > .msg.self { padding: 0 0 12px 50%; text-align: left; }
+.sequence > .msg.self::before { left: 50%; right: auto; width: 64px; height: 26px; border: 2px solid var(--edge-color-strong, var(--accent, currentColor)); border-left: 0; border-radius: 0 12px 12px 0; bottom: -14px; }
+.sequence > .msg.self::after { display: none; }
+.sequence > .msg[data-step]:not(.on) { opacity: 0; transform: none; filter: none; }
+.sequence > .msg[data-step]:not(.on)::before { transform: scaleX(0); }
+.sequence > .msg[data-step]:not(.on)::after { opacity: 0; transition-delay: 0s; }
+.sequence > .msg.current .msg-label { color: var(--accent, Highlight); }

@@ -1,0 +1,44 @@
+/* Theme: Plain — light, quiet and corporate-safe. No backdrop, a single accent, sans-serif
+ * throughout, low motion. Mostly the base defaults; it shows how little a theme needs. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  color-scheme: light;
+  --motion: .3;
+  --vt-wait: 120ms;
+
+  --bg: oklch(.985 .002 var(--hue));
+  --bg-2: oklch(.955 .004 var(--hue));
+  --surface: oklch(1 0 0);
+  --surface-solid: oklch(1 0 0);
+  --fg: oklch(.22 .015 var(--hue));
+  --muted: oklch(.52 .015 var(--hue));
+  --line: oklch(.89 .006 var(--hue));
+  --accent: oklch(.54 .19 var(--hue));
+  --accent-2: oklch(.62 .15 calc(var(--hue) + 50));
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 750;
+  --display-tracking: -.045em;
+  --display-leading: .95;
+  --em-style: normal;
+  --kicker-case: none;
+  --size-display: 200px;
+  --size-title: 92px;
+  --size-heading: 64px;
+  --size-statement: 112px;
+
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 1px 2px oklch(0 0 0 / .05), 0 12px 32px -16px oklch(0 0 0 / .14);
+
+  --node-font: 600 21px/1.15 var(--font-sans);
+  --group-bg: oklch(.97 .004 var(--hue));
+  --edge-color: oklch(.62 .01 var(--hue));
+  --node-shadow: var(--shadow);
+}
+
+.kicker { font: 600 22px/1 var(--font-sans); letter-spacing: 0; }
+.btn { box-shadow: var(--shadow); }

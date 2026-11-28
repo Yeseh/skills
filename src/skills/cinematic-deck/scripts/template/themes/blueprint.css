@@ -1,0 +1,68 @@
+/* Theme: Blueprint — technical drawing. Navy paper, measured grid, monospace labels, square
+ * corners, crisp cyan lines, medium motion. The background stays blue; --hue moves the accent only. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: dark;
+  --motion: .6;
+
+  --paper: oklch(.25 .07 255);
+  --bg: var(--paper);
+  --bg-2: oklch(.2 .06 255);
+  --surface: oklch(.28 .07 255 / .9);
+  --surface-solid: oklch(.27 .07 255);
+  --fg: oklch(.96 .02 230);
+  --muted: oklch(.78 .05 235);
+  --line: oklch(.82 .08 225 / .4);
+  --accent: oklch(.86 .13 var(--hue));
+  --accent-2: oklch(.84 .12 calc(var(--hue) + 80));
+  --on-accent: var(--paper);
+
+  --font-display: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --display-weight: 600;
+  --display-tracking: -.03em;
+  --display-leading: .95;
+  --em-style: normal;
+  --size-display: 200px;
+  --size-title: 96px;
+  --size-heading: 64px;
+  --size-statement: 116px;
+
+  --radius: 3px;
+  --radius-lg: 4px;
+  --border-width: 1.5px;
+  --shadow: none;
+
+  --code-bg: oklch(.21 .06 255 / .85);
+  --node-font: 500 20px/1.15 var(--font-mono);
+  --node-border: oklch(.85 .1 225 / .7);
+  --group-border: oklch(.85 .1 225 / .45);
+  --group-bg: oklch(.85 .1 225 / .04);
+  --edge-color: oklch(.85 .08 225 / .85);
+  --edge-width: 1.6;
+}
+
+.btn { border-radius: var(--radius); font-family: var(--font-mono); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-size: 22px; }
+.diagram > .node { text-transform: uppercase; letter-spacing: .04em; }
+.node small { text-transform: none; letter-spacing: 0; }
+
+/* drafting grid with corner registration marks */
+.backdrop {
+  background:
+    linear-gradient(oklch(.85 .1 225 / .16) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, oklch(.85 .1 225 / .16) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(oklch(.85 .1 225 / .07) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, oklch(.85 .1 225 / .07) 1px, transparent 1px) 0 0 / 24px 24px,
+    radial-gradient(120% 100% at 50% 40%, var(--paper), var(--bg-2));
+}
+.backdrop::after {
+  content: ''; position: absolute; inset: 28px;
+  border: 1.5px solid oklch(.85 .1 225 / .35);
+  background:
+    linear-gradient(oklch(.85 .1 225 / .6), oklch(.85 .1 225 / .6)) top left / 60px 1.5px no-repeat,
+    linear-gradient(oklch(.85 .1 225 / .6), oklch(.85 .1 225 / .6)) top left / 1.5px 60px no-repeat,
+    linear-gradient(oklch(.85 .1 225 / .6), oklch(.85 .1 225 / .6)) bottom right / 60px 1.5px no-repeat,
+    linear-gradient(oklch(.85 .1 225 / .6), oklch(.85 .1 225 / .6)) bottom right / 1.5px 60px no-repeat;
+}

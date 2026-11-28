@@ -1,0 +1,233 @@
+/* Cinematic Deck engine styles — mechanics only: stage, slide transitions, entrances, builds,
+ * overview and speaker view. No colours or fonts are decided here; everything visual reads a
+ * theme token with a neutral fallback.
+ *
+ * Theme-facing knobs:
+ *   --motion   0 … 1.5   scales every distance, blur and zoom (0 = opacity only, 1 = cinematic)
+ *   --hue      number    set per slide by data-hue; themes decide whether and how to use it
+ *   --vt-wait  time      delay before entrances start, so they land as the slide resolves */
+
+@property --hue { syntax: '<number>'; inherits: true; initial-value: 265; }
+
+:root {
+  --scale: 1;
+  --motion: 1;
+  --sign: 1;                     /* -1 when navigating backwards; flips directional keyframes */
+  --vt-x: 50%;
+  --vt-y: 50%;
+  --vt-wait: 240ms;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in-out: cubic-bezier(.76, 0, .24, 1);
+  --ease-spring: linear(0, .009, .035 2.1%, .141, .281 6.7%, .723 12.9%, .938 16.7%, 1.017, 1.077,
+    1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%,
+    .991, .977 51%, .974 53.8%, .975 57.1%, .997 69.8%, 1.003 76.9%, 1.004 83.8%, 1);
+  transition: --hue 1.6s var(--ease-in-out);
+}
+html[data-dir="back"] { --sign: -1; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+[hidden] { display: none !important; }
+
+/* ── stage ─────────────────────────────────────────────────────────── */
+
+.deck { position: fixed; inset: 0; z-index: 1; touch-action: pan-y; }
+.stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1920px; height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--scale));
+  view-transition-name: stage;
+}
+.slide {
+  position: absolute; inset: 0; box-sizing: border-box;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: clip;
+}
+html:not(.overview) .slide:not(.active) { display: none !important; }
+.slide .notes { display: none !important; }
+
+/* ── slide transitions (View Transitions API) ──────────────────────
+ * Only the stage animates. The root (backdrop, HUD) stays live so a hue sweep shows through. */
+
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-old(hud) { display: none; }
+::view-transition-new(hud) { animation: none; }
+::view-transition-group(*) { animation-duration: 1s; animation-timing-function: var(--ease-out); }
+::view-transition-old(stage), ::view-transition-new(stage) {
+  mix-blend-mode: normal;
+  animation-fill-mode: both;
+  animation-duration: .9s;
+  animation-timing-function: var(--ease-out);
+}
+
+/* cinematic: the old slide recedes into blur, the new one settles out of it */
+html[data-vt="cinematic"]::view-transition-old(stage) { animation-name: vt-cine-out; animation-duration: .7s; animation-timing-function: var(--ease-in-out); }
+html[data-vt="cinematic"]::view-transition-new(stage) { animation-name: vt-cine-in; animation-duration: 1.15s; }
+@keyframes vt-cine-out { to { opacity: 0; transform: scale(calc(1 - .07 * var(--sign) * var(--motion))); filter: blur(calc(16px * var(--motion))); } }
+@keyframes vt-cine-in { from { opacity: 0; transform: scale(calc(1 + .07 * var(--sign) * var(--motion))); filter: blur(calc(20px * var(--motion))); } }
+
+/* push: lateral camera move */
+html[data-vt="push"]::view-transition-old(stage) { animation-name: vt-push-out; animation-duration: .8s; animation-timing-function: var(--ease-in-out); }
+html[data-vt="push"]::view-transition-new(stage) { animation-name: vt-push-in; animation-duration: 1s; }
+@keyframes vt-push-out { to { opacity: 0; transform: translateX(calc(-28% * var(--sign) * var(--motion))); filter: blur(calc(8px * var(--motion))); } }
+@keyframes vt-push-in { from { opacity: 0; transform: translateX(calc(28% * var(--sign) * var(--motion))); filter: blur(calc(8px * var(--motion))); } }
+
+/* zoom: fly through the old slide into the new one */
+html[data-vt="zoom"]::view-transition-old(stage) { animation-name: vt-zoom-out; animation-duration: .75s; animation-timing-function: cubic-bezier(.55, 0, 1, .45); }
+html[data-vt="zoom"]::view-transition-new(stage) { animation-name: vt-zoom-in; animation-duration: 1.1s; }
+@keyframes vt-zoom-out { to { opacity: 0; transform: scale(calc(1 + .7 * var(--sign) * var(--motion))); filter: blur(calc(24px * var(--motion))); } }
+@keyframes vt-zoom-in { from { opacity: 0; transform: scale(calc(1 - .35 * var(--sign) * var(--motion))); filter: blur(calc(12px * var(--motion))); } }
+
+/* wipe: the new slide grows out of the clicked point (centre for keyboard) */
+html[data-vt="wipe"]::view-transition-old(stage) { animation-name: vt-fade-out; animation-duration: .6s; }
+html[data-vt="wipe"]::view-transition-new(stage) { animation-name: vt-wipe-in; animation-duration: 1.2s; animation-timing-function: var(--ease-in-out); }
+@keyframes vt-wipe-in {
+  from { clip-path: circle(0% at var(--vt-x) var(--vt-y)); }
+  to { clip-path: circle(130% at var(--vt-x) var(--vt-y)); }
+}
+
+/* fade and morph: the stage crossfades; [data-morph] pairs carry the motion */
+html:is([data-vt="fade"], [data-vt="morph"])::view-transition-old(stage) { animation-name: vt-fade-out; animation-duration: .45s; }
+html:is([data-vt="fade"], [data-vt="morph"])::view-transition-new(stage) { animation-name: vt-fade-in; animation-duration: .7s; animation-delay: .1s; }
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; } }
+
+/* page: the whole page crossfades (theme switches, overview) */
+html[data-vt="page"]::view-transition-old(root), html[data-vt="page"]::view-transition-old(stage) { animation: vt-fade-out .5s ease both; }
+html[data-vt="page"]::view-transition-new(root), html[data-vt="page"]::view-transition-new(stage) { animation: vt-fade-in .7s ease both; }
+
+::view-transition-group(*.morph) { animation-duration: 1.05s; animation-timing-function: cubic-bezier(.2, .9, .1, 1); }
+
+/* ── entrance animations: replay every time a slide becomes active (not when going back) ── */
+
+.slide.active [data-anim] {
+  animation: var(--anim) var(--dur, .95s) var(--ease, var(--ease-out)) calc(var(--vt-wait) + var(--delay, 0ms)) backwards;
+}
+[data-anim="rise"] { --anim: a-rise; }
+[data-anim="fade"] { --anim: a-fade; }
+[data-anim="blur"] { --anim: a-blur; --dur: 1.3s; }
+[data-anim="scale"] { --anim: a-scale; }
+[data-anim="pop"] { --anim: a-pop; --ease: var(--ease-spring); --dur: 1.1s; }
+[data-anim="left"] { --anim: a-left; }
+[data-anim="right"] { --anim: a-right; }
+[data-anim="reveal"] { --anim: a-reveal; --dur: 1.1s; }
+[data-anim="wipe"] { --anim: a-wipe; --dur: 1.2s; --ease: var(--ease-in-out); }
+[data-anim="draw"] { --anim: a-draw; --dur: 2s; --ease: var(--ease-in-out); stroke-dasharray: 1; }
+[data-anim="kenburns"] { --anim: a-kenburns; --dur: 14s; }
+@keyframes a-rise { from { opacity: 0; transform: translateY(calc(48px * var(--motion))); filter: blur(calc(10px * var(--motion))); } }
+@keyframes a-fade { from { opacity: 0; } }
+@keyframes a-blur { from { opacity: 0; filter: blur(calc(28px * var(--motion))); transform: scale(calc(1 + .05 * var(--motion))); } }
+@keyframes a-scale { from { opacity: 0; transform: scale(calc(1 - .16 * var(--motion))); } }
+@keyframes a-pop { from { opacity: 0; transform: scale(calc(1 - .6 * var(--motion))); } }
+@keyframes a-left { from { opacity: 0; transform: translateX(calc(-90px * var(--motion))); filter: blur(calc(6px * var(--motion))); } }
+@keyframes a-right { from { opacity: 0; transform: translateX(calc(90px * var(--motion))); filter: blur(calc(6px * var(--motion))); } }
+@keyframes a-reveal { from { clip-path: inset(0 0 100% 0); transform: translateY(calc(40px * var(--motion))); } to { clip-path: inset(0 0 -25% 0); } }
+@keyframes a-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 -5% 0 0); } }
+@keyframes a-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes a-kenburns { from { transform: scale(calc(1 + .18 * var(--motion))) translate(2%, 1%); } }
+
+/* split text */
+[data-split] .w { display: inline-block; white-space: nowrap; }
+[data-split="chars"] .c { display: inline-block; }
+[data-split="words"] { --stagger-step: 75ms; }
+.slide.active :is([data-split="chars"] .c, [data-split="words"] .w, [data-split] .w:is([data-tpl], [data-bind])) {
+  animation: var(--split-anim, a-char) var(--dur, 1.05s) var(--ease-out)
+    calc(var(--vt-wait) + var(--delay, 0ms) + var(--i) * var(--stagger-step, 32ms)) backwards;
+}
+@keyframes a-char { from { opacity: 0; transform: translateY(calc(.45em * var(--motion))) rotate(calc(4deg * var(--motion))); filter: blur(calc(10px * var(--motion))); } }
+
+/* no replay when arriving backwards or in the overview */
+.slide.settled :is([data-anim], [data-split] .c, [data-split] .w),
+html.overview :is([data-anim], [data-split] .c, [data-split] .w) { animation: none !important; }
+
+/* ── builds (data-step) and focus (data-focus) ─────────────────────── */
+
+[data-step] { transition: opacity .7s var(--ease-out), transform .8s var(--ease-out), filter .7s var(--ease-out), stroke-dashoffset 1.4s var(--ease-in-out); }
+[data-step]:not(.on) { opacity: 0; transform: translateY(calc(26px * var(--motion))); filter: blur(calc(8px * var(--motion))); pointer-events: none; }
+[data-step][data-draw] { stroke-dasharray: 1; }
+[data-step][data-draw]:not(.on) { opacity: 1; transform: none; filter: none; stroke-dashoffset: 1; }
+[data-step][data-draw].on { stroke-dashoffset: 0; }
+.steps-dim [data-step].on:not(.current) { opacity: .35; }
+[data-focus-scope] > * { transition: opacity .5s var(--ease-out), filter .5s var(--ease-out), background-color .5s; }
+.slide.focusing [data-focus-scope] > :not(.focus) { opacity: .25; filter: blur(1px); }
+html.overview [data-step]:not([data-step-until]) { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important; }
+
+/* data-require: shake the hint when "next" is blocked */
+.slide.blocked [data-require-hint] { animation: a-shake .5s var(--ease-out); }
+@keyframes a-shake { 20%, 60% { translate: -10px 0; } 40%, 80% { translate: 10px 0; } }
+
+/* pointer parallax: translate is independent of transform, so it composes with entrances */
+[data-depth] { translate: calc(var(--px, 0) * var(--depth) * var(--motion) * 1px) calc(var(--py, 0) * var(--depth) * var(--motion) * 1px); }
+
+/* ── HUD ───────────────────────────────────────────────────────────── */
+
+.hud {
+  position: fixed; inset: auto 0 0 0; z-index: 10;
+  display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+  padding: 0 18px 14px;
+  view-transition-name: hud;
+  transition: opacity .6s;
+  pointer-events: none;
+  color: var(--muted, GrayText);
+  font-family: var(--font-mono, monospace);
+}
+.hud-progress { position: absolute; inset: auto 0 0 0; height: 3px; background: color-mix(in oklab, currentColor 15%, transparent); }
+.hud-progress i { display: block; height: 100%; transform-origin: left; background: var(--progress, var(--accent, currentColor)); transition: transform .9s var(--ease-out); }
+.hud-count { font-size: 12px; line-height: 1; letter-spacing: .12em; padding: 0 4px; }
+.hud-btn {
+  pointer-events: auto; cursor: pointer;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid color-mix(in oklab, currentColor 30%, transparent); background: transparent; color: inherit;
+  font: 14px/1 system-ui, sans-serif; opacity: 0; transition: opacity .3s, background .3s;
+}
+.hud:hover .hud-btn, .hud-btn:focus-visible { opacity: 1; }
+.hud-btn:hover { background: color-mix(in oklab, currentColor 15%, transparent); }
+html.idle { cursor: none; }
+html.idle .hud { opacity: 0; }
+
+/* ── overview (O) ──────────────────────────────────────────────────── */
+
+html.overview .deck { overflow-y: auto; }
+html.overview .stage {
+  position: relative; left: auto; top: auto; transform: none;
+  width: auto; height: auto; box-sizing: border-box; padding: 48px;
+  display: grid; grid-template-columns: repeat(var(--ov-cols, 4), 1fr); gap: 28px;
+}
+html.overview .slide {
+  position: relative; inset: auto; width: 1920px; height: 1080px; zoom: var(--ov-zoom, .2);
+  border-radius: 48px; outline: 6px solid var(--line, color-mix(in oklab, currentColor 20%, transparent)); cursor: pointer;
+  background: color-mix(in oklab, var(--bg, Canvas) 85%, transparent); transition: outline-color .3s;
+}
+html.overview .slide:hover { outline-color: var(--muted, GrayText); }
+html.overview .slide.active { outline: 12px solid var(--accent, Highlight); }
+html.overview .slide * { pointer-events: none; }
+html.overview .hud { opacity: 0; }
+
+/* ── speaker view (?presenter) ─────────────────────────────────────── */
+
+.presenter-panel { display: none; }
+html.presenter body { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(340px, 1fr); }
+html.presenter .deck { position: relative; inset: auto; grid-column: 1; grid-row: 1; height: 100vh; }
+html.presenter .presenter-panel {
+  position: relative; z-index: 2; grid-column: 2; grid-row: 1;
+  display: flex; flex-direction: column; gap: 20px; height: 100vh; box-sizing: border-box; overflow: auto;
+  padding: 28px; border-left: 1px solid var(--line, GrayText);
+  background: var(--surface-solid, Canvas); color: var(--fg, CanvasText);
+  font: 18px/1.55 var(--font-sans, system-ui, sans-serif);
+}
+.presenter-panel header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.pp-timer { all: unset; cursor: pointer; font: 600 44px/1 var(--font-mono, monospace); font-variant-numeric: tabular-nums; }
+.pp-count, .pp-next small { font: 500 13px/1.4 var(--font-mono, monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--muted, GrayText); }
+.pp-next { padding: 16px 18px; border-radius: 14px; background: color-mix(in oklab, currentColor 7%, transparent); }
+.pp-next-title { font-size: 22px; font-weight: 600; margin-top: 4px; }
+.pp-notes { font-size: 21px; }
+.pp-notes :first-child { margin-top: 0; }
+.pp-notes ul { padding-left: 1.2em; }
+.pp-empty { color: var(--muted, GrayText); font-style: italic; }
+
+/* ── reduced motion ────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion: 0 !important; transition-duration: .3s; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: .25s !important; animation-delay: 0s !important; }
+  :is([data-anim], [data-split] .c, [data-split] .w) { animation: none !important; }
+  [data-step] { transition-duration: .2s !important; }
+}
